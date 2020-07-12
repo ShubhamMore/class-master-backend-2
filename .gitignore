@@ -1,0 +1,3 @@
+node_modules
+lecture-contents/*
+!lecture-contents/.gitkeep
