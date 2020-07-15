@@ -1,13 +1,12 @@
 const User = require('../../models/user.model');
 const Institute = require('../../models/institute.model');
-const InstituteBilling = require('../../models/institute-billing.model');
 const Employee = require('../../models/employee.model');
 const Student = require('../../models/student.model');
 const errorHandler = require('../../handler/error.handler');
-const getClassMasterId = require('../../functions/getClassMasterIds');
+const getImsMasterId = require('../../functions/getImsMasterId');
 const newUser = async (req, res) => {
   try {
-    req.body.classMasterId = await getClassMasterId(req.body.userRole);
+    req.body.imsMasterId = await getImsMasterId(req.body.userRole);
 
     const user = new User(req.body);
 
@@ -17,23 +16,19 @@ const newUser = async (req, res) => {
       name: user.name,
       email: user.email,
       phone: user.phone,
-      classMasterId: user.classMasterId,
+      imsMasterId: user.imsMasterId,
     };
 
     let userRoleData = null;
 
     if (user.userRole === 'institute') {
       userRoleData = new Institute(userData);
-
-      const billingDetails = {
-        name: user.name,
-        classMasterId: user.classMasterId,
-      };
-      new InstituteBilling(billingDetails).save();
     } else if (user.userRole === 'employee') {
       userRoleData = new Employee(userData);
     } else if (user.userRole === 'student') {
       userRoleData = new Student(userData);
+    } else {
+      throw new Error('Invalid User Role');
     }
 
     await userRoleData.save();

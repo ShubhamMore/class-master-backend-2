@@ -29,6 +29,18 @@ const batchSchema = new mongoose.Schema({
     type: String,
     default: null,
   },
+  subjects: [
+    {
+      subject: {
+        type: String,
+        required: true,
+      },
+      teacher: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
   status: {
     type: Boolean,
     default: true,

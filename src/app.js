@@ -25,7 +25,9 @@ const branchRouter = require('./routers/branch.route');
 // const scheduleRouter = require('./routers/schedule.route');
 // const staffRouter = require('./routers/staff.route');
 // const studentRouter = require('./routers/student.route');
-const InstituteBillingRouter = require('./routers/institute-billing.route');
+const orderRouter = require('./routers/order.route');
+const paymentRouter = require('./routers/payment.route');
+const instituteBillingRouter = require('./routers/institute-billing.route');
 const profileRouter = require('./routers/profile.route');
 const userRouter = require('./routers/user.route');
 
@@ -81,7 +83,9 @@ app.use(branchRouter);
 // app.use(staffRouter);
 // app.use(scheduleRouter);
 // app.use(studentRouter);
-app.use(InstituteBillingRouter);
+app.use(orderRouter);
+app.use(paymentRouter);
+app.use(instituteBillingRouter);
 app.use(profileRouter);
 app.use(userRouter);
 

@@ -3,7 +3,7 @@ const errorHandler = require('../../handler/error.handler');
 
 const getBranch = async (req, res) => {
   try {
-    const branch = await Branch.findById(req.body._id);
+    const branch = await Branch.findById(req.body.id);
     if (!branch) {
       throw new Error('No Branch Found');
     }

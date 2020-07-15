@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    classMasterId: {
+    imsMasterId: {
       type: String,
       unique: true,
       required: true,

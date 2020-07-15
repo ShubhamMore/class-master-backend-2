@@ -3,7 +3,7 @@ const User = require('../../models/user.model');
 
 const logout = async (req, res) => {
   try {
-    const user = await User.findOne({ classMasterId: req.user.classMasterId });
+    const user = await User.findOne({ imsMasterId: req.user.imsMasterId });
 
     if (!user) {
       throw new Error('User Not Found');

@@ -7,11 +7,11 @@ const getProfile = async (req, res) => {
   try {
     let profile = null;
     if (req.user.userRole === 'institute') {
-      profile = await Institute.findOne({ classMasterId: req.user.classMasterId });
+      profile = await Institute.findOne({ imsMasterId: req.user.imsMasterId });
     } else if (req.user.userRole === 'employee') {
-      profile = await Employee.findOne({ classMasterId: req.user.classMasterId });
+      profile = await Employee.findOne({ imsMasterId: req.user.imsMasterId });
     } else if (req.user.userRole === 'student') {
-      profile = await Student.findOne({ classMasterId: req.user.classMasterId });
+      profile = await Student.findOne({ imsMasterId: req.user.imsMasterId });
     } else {
       throw new Error('Invalid User Role');
     }

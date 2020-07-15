@@ -1,5 +1,10 @@
 const mongoose = require('mongoose');
 const instituteBillingSchema = new mongoose.Schema({
+  branch: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   name: {
     type: String,
     required: true,
@@ -16,10 +21,13 @@ const instituteBillingSchema = new mongoose.Schema({
     type: String,
     default: null,
   },
-  classMasterId: {
-    type: String,
-    unique: true,
-    required: true,
+  studentReceipt: {
+    type: Number,
+    default: 0,
+  },
+  employeeSalary: {
+    type: Number,
+    default: 0,
   },
 });
 

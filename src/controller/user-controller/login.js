@@ -29,7 +29,7 @@ const login = async (req, res) => {
       email: user.email,
       phone: user.phone,
       userRole: user.userRole,
-      classMasterId: user.classMasterId,
+      imsMasterId: user.imsMasterId,
       token,
       expiresIn: 3600,
     };

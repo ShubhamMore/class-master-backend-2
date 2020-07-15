@@ -5,7 +5,7 @@ const updateBranch = async (req, res) => {
   try {
     const branch = await Branch.findByIdAndUpdate(req.body._id, req.body);
     if (!branch) {
-      throw new Error('Branch Updation Failed');
+      throw new Error('Branch not Found, Branch Updation Failed');
     }
     res.status(200).send({ success: true });
   } catch (e) {

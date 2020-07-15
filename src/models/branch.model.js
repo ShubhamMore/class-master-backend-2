@@ -1,43 +1,41 @@
 const mongoose = require('mongoose');
 
 const branchSchema = new mongoose.Schema({
-  branchName: {
-    type: String,
-    require: true,
+  basicDetails: {
+    branchName: {
+      type: String,
+      require: true,
+    },
+    email: {
+      type: String,
+      // require: true,
+    },
+    phone: {
+      type: String,
+      require: true,
+    },
   },
-  branchCode: {
-    type: String,
-    require: true,
-  },
-  state: {
-    type: String,
-    require: true,
-  },
-  city: {
-    type: String,
-    require: true,
-  },
-  address1: {
-    type: String,
-    require: true,
-  },
-  address2: {
-    type: String,
-    require: true,
-  },
-  pinCode: {
-    type: String,
-    require: true,
-  },
-  email: {
-    type: String,
-    unique: true,
-    require: true,
-  },
-  phone: {
-    type: String,
-    unique: true,
-    require: true,
+  address: {
+    state: {
+      type: String,
+      require: true,
+    },
+    city: {
+      type: String,
+      require: true,
+    },
+    address1: {
+      type: String,
+      require: true,
+    },
+    address2: {
+      type: String,
+      default: null,
+    },
+    pinCode: {
+      type: String,
+      require: true,
+    },
   },
   categories: [
     {
@@ -51,17 +49,19 @@ const branchSchema = new mongoose.Schema({
       },
     },
   ],
-  company: {
-    type: String,
-    require: true,
-  },
-  studentReceipt: {
-    type: Number,
-    default: 0,
-  },
-  employeeSalary: {
-    type: Number,
-    default: 0,
+  currentPlanDetails: {
+    planType: {
+      type: String,
+      default: null,
+    },
+    activationDate: {
+      type: String,
+      default: null,
+    },
+    expiryDate: {
+      type: String,
+      default: null,
+    },
   },
   parentUser: {
     type: String,
@@ -69,7 +69,7 @@ const branchSchema = new mongoose.Schema({
   },
   status: {
     type: Boolean,
-    default: true,
+    default: false,
   },
 });
 

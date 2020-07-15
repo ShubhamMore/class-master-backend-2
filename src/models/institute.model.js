@@ -17,7 +17,7 @@ const instituteSchema = new mongoose.Schema({
     type: String,
     default: null,
   },
-  classMasterId: {
+  imsMasterId: {
     type: String,
     unique: true,
     required: true,
