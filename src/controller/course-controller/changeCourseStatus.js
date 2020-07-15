@@ -7,7 +7,9 @@ const changeCourseStatus = async (req, res) => {
       status: req.body.status,
     });
     if (!course) {
-      throw new Error('Status Updation Failed, No Course Found');
+      throw new Error(
+        `Course ${req.body.status ? 'Activation' : 'Deactivation'}  Failed, No Course Found`
+      );
     }
     res.status(200).send({ success: true });
   } catch (e) {

@@ -1,5 +1,5 @@
 const Course = require('../../models/course.model');
-const findBranchName = require('../../functions/findBranchName');
+// const findBranchName = require('../../functions/findBranchName');
 const errorHandler = require('../../handler/error.handler');
 
 const getCourse = async (req, res) => {
@@ -9,8 +9,8 @@ const getCourse = async (req, res) => {
       throw new Error('No Course Found');
     }
 
-    const branch = await findBranchName(course.branch);
-    course.branch = branch;
+    // const branch = await findBranchName(course.branch);
+    // course.branch = branch;
 
     res.status(200).send(course);
   } catch (e) {

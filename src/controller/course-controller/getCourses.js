@@ -1,11 +1,12 @@
 const Course = require('../../models/course.model');
 const errorHandler = require('../../handler/error.handler');
 
-const getCoursesByBranch = async (req, res) => {
+const getCourses = async (req, res) => {
   try {
+    console.lgo('c');
     const courses = await Course.find({
       branch: req.body.branch,
-      courseType: req.body.courseType,
+      category: req.body.category,
     });
     res.status(200).send(courses);
   } catch (e) {
@@ -13,4 +14,4 @@ const getCoursesByBranch = async (req, res) => {
   }
 };
 
-module.exports = getCoursesByBranch;
+module.exports = getCourses;
