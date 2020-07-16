@@ -3,9 +3,9 @@ const errorHandler = require('../../handler/error.handler');
 
 const newBranchEmployee = async (req, res) => {
   try {
-    const employee = new BranchEmployee(req.body);
+    const branchEmployee = new BranchEmployee(req.body);
 
-    await employee.save();
+    await branchEmployee.save();
 
     res.status(200).send({ success: true });
   } catch (e) {
