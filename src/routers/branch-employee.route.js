@@ -2,14 +2,14 @@ const express = require('express');
 
 const auth = require('../middleware/auth');
 
-const getBranchEmployees = require('../controller/employee-branch-controller/getBranchEmployees');
-const getBranchEmployee = require('../controller/employee-branch-controller/getBranchEmployee');
-const getBranchEmployeeForSalary = require('../controller/employee-branch-controller/getBranchEmployeeForSalary');
-const newBranchEmployee = require('../controller/employee-branch-controller/newBranchEmployee');
-const getBranchEmployeeForEditing = require('../controller/employee-branch-controller/getBranchEmployeeForEditing');
-const updateBranchEmployee = require('../controller/employee-branch-controller/updateBranchEmployee');
-const changeBranchEmployeeStatus = require('../controller/employee-branch-controller/changeBranchEmployeeStatus');
-const deleteBranchEmployee = require('../controller/employee-branch-controller/deleteBranchEmployee');
+const getBranchEmployees = require('../controller/branch-employee-controller/getBranchEmployees');
+const getBranchEmployee = require('../controller/branch-employee-controller/getBranchEmployee');
+const getBranchEmployeeForSalary = require('../controller/branch-employee-controller/getBranchEmployeeForSalary');
+const newBranchEmployee = require('../controller/branch-employee-controller/newBranchEmployee');
+const getBranchEmployeeForEditing = require('../controller/branch-employee-controller/getBranchEmployeeForEditing');
+const updateBranchEmployee = require('../controller/branch-employee-controller/updateBranchEmployee');
+const changeBranchEmployeeStatus = require('../controller/branch-employee-controller/changeBranchEmployeeStatus');
+const deleteBranchEmployee = require('../controller/branch-employee-controller/deleteBranchEmployee');
 
 const router = new express.Router();
 

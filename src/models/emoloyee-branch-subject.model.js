@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const employeeBranchSubjectSchema = new mongoose.Schema({
+const branchEmployeeSubjectSchema = new mongoose.Schema({
   employee: {
     type: String,
     required: true,
@@ -30,15 +30,15 @@ const employeeBranchSubjectSchema = new mongoose.Schema({
   },
 });
 
-employeeBranchSubjectSchema.methods.toJSON = function () {
-  const employeeBranchSubject = this;
-  const employeeBranchSubjectObject = employeeBranchSubject.toObject();
+branchEmployeeSubjectSchema.methods.toJSON = function () {
+  const branchEmployeeSubject = this;
+  const branchEmployeeSubjectObject = branchEmployeeSubject.toObject();
 
-  delete employeeBranchSubjectObject.__v;
+  delete branchEmployeeSubjectObject.__v;
 
-  return employeeBranchSubjectObject;
+  return branchEmployeeSubjectObject;
 };
 
-const EmployeeBranchSubject = mongoose.model('EmployeeBranchSubject', employeeBranchSubjectSchema);
+const BranchEmployeeSubject = mongoose.model('BranchEmployeeSubject', branchEmployeeSubjectSchema);
 
-module.exports = EmployeeBranchSubject;
+module.exports = BranchEmployeeSubject;

@@ -3,9 +3,7 @@ const errorHandler = require('../../handler/error.handler');
 
 const getEmployee = async (req, res) => {
   try {
-    const employee = await Employee.findById({
-      $or: [{ email: req.body.employee }, { imsMasterId: req.body.employee }],
-    });
+    const employee = await Employee.findById(req.body.id);
 
     if (!employee) {
       throw new Error('Employee not Found');

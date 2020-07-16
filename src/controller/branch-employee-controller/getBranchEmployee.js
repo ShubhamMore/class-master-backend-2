@@ -1,8 +1,8 @@
 const Employee = require('../../models/employee.model');
-const EmployeeBranch = require('../../models/employee-branch.model');
+const BranchEmployee = require('../../models/branch-employee.model');
 const errorHandler = require('../../handler/error.handler');
 
-const deleteBranchEmployee = async (req, res) => {
+const getBranchEmployee = async (req, res) => {
   try {
     const employee = await Employee.findByIdAndUpdate(req.body._id, {
       status: req.body.status,
@@ -17,4 +17,4 @@ const deleteBranchEmployee = async (req, res) => {
   }
 };
 
-module.exports = deleteBranchEmployee;
+module.exports = getBranchEmployee;

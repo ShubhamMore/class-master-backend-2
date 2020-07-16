@@ -1,18 +1,18 @@
-const Employee = require('../../models/employee.model');
-const EmployeeBranch = require('../../models/employee-branch.model');
+const BranchEmployee = require('../../models/branch-employee.model');
 const errorHandler = require('../../handler/error.handler');
 
 const changeBranchEmployeeStatus = async (req, res) => {
   try {
-    const employee = await Employee.findByIdAndUpdate(req.body._id, {
+    const branchEmployee = await BranchEmployee.findByIdAndUpdate(req.body.id, {
       status: req.body.status,
     });
-    if (!employee) {
-      throw new Error('No employee Found, Status Updation Failed');
+    if (!branchEmployee) {
+      throw new Error('No Branch Employee Found, Status Updation Failed');
     }
 
     res.status(200).send({ success: true });
   } catch (e) {
+    console.log(e);
     errorHandler(e, 400, res);
   }
 };
