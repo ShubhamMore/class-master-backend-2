@@ -3,13 +3,22 @@ const errorHandler = require('../../handler/error.handler');
 
 const getCourses = async (req, res) => {
   try {
-    console.lgo('c');
-    const courses = await Course.find({
+    const query = {
       branch: req.body.branch,
-      category: req.body.category,
-    });
+    };
+
+    const category = req.body.category;
+
+    if (category !== '') {
+      query['basicDetails.category'] = category;
+    }
+
+    query;
+
+    const courses = await Course.find(query);
     res.status(200).send(courses);
   } catch (e) {
+    e;
     errorHandler(e, 400, res);
   }
 };

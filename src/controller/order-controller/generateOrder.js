@@ -54,7 +54,7 @@ const generateOrder = async (req, res) => {
       await paymentReceipt.save();
     });
   } catch (e) {
-    console.log(e);
+    e;
     errorHandler(e, 400, res);
   }
 };

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const salarySchema = new mongoose.Schema({
+const employeeSalarySchema = new mongoose.Schema({
   employee: {
     type: String,
     required: true,
@@ -74,15 +74,15 @@ const salarySchema = new mongoose.Schema({
   },
 });
 
-salarySchema.methods.toJSON = function () {
-  const salary = this;
-  const salaryObject = salary.toObject();
+employeeSalarySchema.methods.toJSON = function () {
+  const employeeSalary = this;
+  const employeeSalaryObject = employeeSalary.toObject();
 
-  delete salaryObject.__v;
+  delete employeeSalaryObject.__v;
 
-  return salaryObject;
+  return employeeSalaryObject;
 };
 
-const salary = mongoose.model('Salary', salarySchema);
+const EmployeeSalary = mongoose.model('EmployeeSalary', employeeSalarySchema);
 
-module.exports = salary;
+module.exports = EmployeeSalary;

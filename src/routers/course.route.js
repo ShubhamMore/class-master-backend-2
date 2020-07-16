@@ -6,7 +6,7 @@ const newCourse = require('../controller/course-controller/newCourse');
 const getCourses = require('../controller/course-controller/getCourses');
 const getCourse = require('../controller/course-controller/getCourse');
 const getCourseForEditing = require('../controller/course-controller/getCourseForEditing');
-const updateCourse = require('../controller/course-controller/editCourse');
+const updateCourse = require('../controller/course-controller/updateCourse');
 const changeCourseStatus = require('../controller/course-controller/changeCourseStatus');
 
 const router = new express.Router();

@@ -1,21 +1,23 @@
 const mongoose = require('mongoose');
 
 const courseSchema = new mongoose.Schema({
-  courseName: {
-    type: String,
-    require: true,
-  },
   branch: {
     type: String,
     require: true,
   },
-  category: {
-    type: String,
-    require: true,
-  },
-  description: {
-    type: String,
-    default: null,
+  basicDetails: {
+    courseName: {
+      type: String,
+      require: true,
+    },
+    category: {
+      type: String,
+      require: true,
+    },
+    description: {
+      type: String,
+      default: null,
+    },
   },
   subjects: [
     {
@@ -29,21 +31,23 @@ const courseSchema = new mongoose.Schema({
       },
     },
   ],
-  fees: {
-    type: String,
-    require: true,
-  },
-  gst: {
-    type: String,
-    require: true,
-  },
-  inclusiveGST: {
-    type: String,
-    require: true,
-  },
-  totalFees: {
-    type: String,
-    require: true,
+  feeDetails:{
+    fees: {
+      type: String,
+      require: true,
+    },
+    gst: {
+      type: String,
+      require: true,
+    },
+    inclusiveGST: {
+      type: Boolean,
+      require: true,
+    },
+    totalFees: {
+      type: String,
+      require: true,
+    },
   },
   status: {
     type: Boolean,

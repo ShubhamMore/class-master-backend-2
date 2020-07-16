@@ -3,7 +3,7 @@ const errorHandler = require('../../handler/error.handler');
 
 const changeCourseStatus = async (req, res) => {
   try {
-    const course = await Course.findByIdAndUpdate(req.body._id, {
+    const course = await Course.findByIdAndUpdate(req.body.id, {
       status: req.body.status,
     });
     if (!course) {

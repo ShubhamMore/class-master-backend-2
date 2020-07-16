@@ -15,7 +15,7 @@ const saveBillingDetails = async (req, res) => {
     }
     res.status(200).send({ success: true });
   } catch (e) {
-    console.log(e);
+    e;
     errorHandler(e, 400, res);
   }
 };

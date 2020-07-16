@@ -7,9 +7,8 @@ const getImsMasterId = require('../../functions/getImsMasterId');
 const newUser = async (req, res) => {
   try {
     req.body.imsMasterId = await getImsMasterId(req.body.userRole);
-
     const user = new User(req.body);
-
+    user;
     await user.save();
 
     const userData = {
