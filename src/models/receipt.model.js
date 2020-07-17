@@ -30,27 +30,27 @@ const receiptSchema = new mongoose.Schema({
   },
   amount: {
     type: Number,
-    require: true,
+    required: true,
   },
   lateFee: {
     type: Number,
-    require: true,
+    required: true,
   },
   totalAmount: {
     type: Number,
-    require: true,
+    required: true,
   },
   totalAmountInWords: {
     type: String,
-    require: true,
+    required: true,
   },
   paymentMode: {
     type: String,
-    require: true,
+    required: true,
   },
   description: {
     type: String,
-    require: true,
+    required: true,
   },
   bankDetails: {
     type: String,
@@ -62,7 +62,7 @@ const receiptSchema = new mongoose.Schema({
   },
   amountDue: {
     type: Number,
-    require: true,
+    required: true,
   },
   status: {
     type: Boolean,

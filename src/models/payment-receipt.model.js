@@ -3,27 +3,27 @@ const mongoose = require('mongoose');
 const paymentReceiptSchema = mongoose.Schema({
   userId: {
     type: String,
-    require: true,
+    required: true,
   },
   userName: {
     type: String,
-    require: true,
+    required: true,
   },
   userPhone: {
     type: String,
-    require: true,
+    required: true,
   },
   userEmail: {
     type: String,
-    require: true,
+    required: true,
   },
   amount: {
     type: String,
-    require: true,
+    required: true,
   },
   planType: {
     type: String,
-    require: true,
+    required: true,
   },
   status: {
     type: Boolean,
@@ -31,7 +31,7 @@ const paymentReceiptSchema = mongoose.Schema({
   },
   orderId: {
     type: String,
-    require: true,
+    required: true,
   },
 });
 

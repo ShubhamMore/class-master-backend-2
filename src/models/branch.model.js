@@ -4,29 +4,29 @@ const branchSchema = new mongoose.Schema({
   basicDetails: {
     branchName: {
       type: String,
-      require: true,
+      required: true,
     },
     email: {
       type: String,
-      require: true,
+      required: true,
     },
     phone: {
       type: String,
-      require: true,
+      required: true,
     },
   },
   address: {
     state: {
       type: String,
-      require: true,
+      required: true,
     },
     city: {
       type: String,
-      require: true,
+      required: true,
     },
     address1: {
       type: String,
-      require: true,
+      required: true,
     },
     address2: {
       type: String,
@@ -34,14 +34,14 @@ const branchSchema = new mongoose.Schema({
     },
     pinCode: {
       type: String,
-      require: true,
+      required: true,
     },
   },
   categories: [
     {
       category: {
         type: String,
-        require: true,
+        required: true,
       },
       status: {
         type: Boolean,

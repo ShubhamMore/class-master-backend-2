@@ -44,11 +44,11 @@ const examSchema = new mongoose.Schema({
     {
       student: {
         type: String,
-        require: true,
+        required: true,
       },
       marks: {
         type: Number,
-        require: true,
+        required: true,
       },
     },
   ],

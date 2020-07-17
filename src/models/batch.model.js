@@ -3,28 +3,28 @@ const mongoose = require('mongoose');
 const batchSchema = new mongoose.Schema({
   branch: {
     type: String,
-    require: true,
+    required: true,
   },
   category: {
     type: String,
-    require: true,
+    required: true,
   },
   course: {
     type: String,
-    require: true,
+    required: true,
   },
   basicDetails: {
     batchName: {
       type: String,
-      require: true,
+      required: true,
     },
     startDate: {
       type: String,
-      require: true,
+      required: true,
     },
     rollNoPrefix: {
       type: String,
-      require: true,
+      required: true,
     },
     rollNo: {
       type: Number,

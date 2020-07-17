@@ -3,25 +3,33 @@ const mongoose = require('mongoose');
 const discountAndOfferSchema = new mongoose.Schema({
   branch: {
     type: String,
-    require: true,
+    required: true,
+  },
+  offerName: {
+    type: String,
+    required: true,
   },
   code: {
     type: String,
-    require: true,
+    required: true,
   },
   discountType: {
     type: String,
-    require: true,
+    required: true,
   },
   discountAmount: {
     type: String,
-    require: true,
+    required: true,
   },
   startDate: {
     type: String,
-    require: true,
+    required: true,
   },
   expiryDate: {
+    type: String,
+    default: null,
+  },
+  description: {
     type: String,
     default: null,
   },

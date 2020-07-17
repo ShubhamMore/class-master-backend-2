@@ -32,11 +32,11 @@ const employeeSalarySchema = new mongoose.Schema({
     {
       deduction: {
         type: String,
-        require: true,
+        required: true,
       },
       amount: {
         type: Number,
-        require: true,
+        required: true,
       },
     },
   ],
@@ -46,19 +46,19 @@ const employeeSalarySchema = new mongoose.Schema({
   },
   basicAmount: {
     type: Number,
-    require: true,
+    required: true,
   },
   netAmount: {
     type: Number,
-    require: true,
+    required: true,
   },
   netAmountInWords: {
     type: String,
-    require: true,
+    required: true,
   },
   paymentMode: {
     type: String,
-    require: true,
+    required: true,
   },
   bankDetails: {
     type: String,

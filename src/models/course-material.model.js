@@ -34,7 +34,7 @@ const courseMaterialSchema = new mongoose.Schema({
   },
   publicId: {
     type: String,
-    require: true,
+    required: true,
   },
   createdAt: {
     type: String,

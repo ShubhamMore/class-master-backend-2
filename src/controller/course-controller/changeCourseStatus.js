@@ -14,7 +14,7 @@ const changeCourseStatus = async (req, res) => {
     }
 
     await Batch.updateMany(
-      { branch: course.branch, category: course.category, course: course._id },
+      { branch: course.branch, category: course.basicDetails.category, course: course._id },
       {
         status: req.body.status,
       }

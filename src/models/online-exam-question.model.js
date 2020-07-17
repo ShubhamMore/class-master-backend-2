@@ -22,7 +22,7 @@ const onlineExamQuestionSchema = new mongoose.Schema({
   ],
   marks: {
     type: Number,
-    require: true,
+    required: true,
   },
   status: {
     type: Boolean,

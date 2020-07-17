@@ -4,47 +4,47 @@ const mongoose = require('mongoose');
 const orderSchema = mongoose.Schema({
   order_id: {
     type: String,
-    require: true,
+    required: true,
   },
   entity: {
     type: String,
-    require: true,
+    required: true,
   },
   amount: {
     type: String,
-    require: true,
+    required: true,
   },
   amount_paid: {
     type: String,
-    require: true,
+    required: true,
   },
   amount_due: {
     type: String,
-    require: true,
+    required: true,
   },
   currency: {
     type: String,
-    require: true,
+    required: true,
   },
   receipt: {
     type: String,
-    require: true,
+    required: true,
   },
   offer_id: {
     type: String,
   },
   status: {
     type: String,
-    require: true,
+    required: true,
   },
   attempts: {
     type: String,
-    require: true,
+    required: true,
   },
   notes: [],
   created_at: {
     type: Date,
-    require: true,
+    required: true,
   },
 });
 
