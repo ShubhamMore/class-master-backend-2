@@ -3,8 +3,8 @@ const errorHandler = require('../../handler/error.handler');
 
 const updateBranchEmployee = async (req, res) => {
   try {
-    const employee = await BranchEmployee.findByIdAndUpdate(req.body._id, req.body);
-    if (!employee) {
+    const branchEmployee = await BranchEmployee.findByIdAndUpdate(req.body._id, req.body);
+    if (!branchEmployee) {
       throw new Error('No employee Found, Branch Employee Updation Failed');
     }
 

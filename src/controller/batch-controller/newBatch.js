@@ -5,10 +5,8 @@ const newBatch = async (req, res) => {
   try {
     const batch = new Batch(req.body);
     await batch.save();
-    const data = {
-      success: true,
-    };
-    res.status(201).send(data);
+
+    res.status(201).send({ success: true });
   } catch (e) {
     errorHandler(e, 400, res);
   }

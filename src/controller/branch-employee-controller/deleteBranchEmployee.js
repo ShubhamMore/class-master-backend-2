@@ -1,14 +1,11 @@
-const Employee = require('../../models/employee.model');
 const BranchEmployee = require('../../models/branch-employee.model');
 const errorHandler = require('../../handler/error.handler');
 
 const deleteBranchEmployee = async (req, res) => {
   try {
-    const employee = await Employee.findByIdAndUpdate(req.body._id, {
-      status: req.body.status,
-    });
+    const employee = await BranchEmployee.findByIdAndDelete(req.body.id);
     if (!employee) {
-      throw new Error('No employee Found, Status Updation Failed');
+      throw new Error('No Branch employee Found, Employee Deletion Failed');
     }
 
     res.status(200).send({ success: true });

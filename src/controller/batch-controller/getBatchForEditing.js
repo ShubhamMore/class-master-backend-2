@@ -3,7 +3,7 @@ const errorHandler = require('../../handler/error.handler');
 
 const getBatchForEditing = async (req, res) => {
   try {
-    const batch = await Batch.findById(req.body._id);
+    const batch = await Batch.findById(req.body.id);
     if (!batch) {
       throw new Error('No batch Found');
     }

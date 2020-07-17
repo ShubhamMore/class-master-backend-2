@@ -8,7 +8,7 @@ const branchSchema = new mongoose.Schema({
     },
     email: {
       type: String,
-      // require: true,
+      require: true,
     },
     phone: {
       type: String,

@@ -14,6 +14,10 @@ const courseSchema = new mongoose.Schema({
       type: String,
       require: true,
     },
+    duration: {
+      type: Number,
+      require: true,
+    },
     description: {
       type: String,
       default: null,
@@ -31,7 +35,7 @@ const courseSchema = new mongoose.Schema({
       },
     },
   ],
-  feeDetails:{
+  feeDetails: {
     fees: {
       type: String,
       require: true,

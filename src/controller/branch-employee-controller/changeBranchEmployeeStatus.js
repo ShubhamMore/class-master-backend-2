@@ -12,7 +12,6 @@ const changeBranchEmployeeStatus = async (req, res) => {
 
     res.status(200).send({ success: true });
   } catch (e) {
-    console.log(e);
     errorHandler(e, 400, res);
   }
 };

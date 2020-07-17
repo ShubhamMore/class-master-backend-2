@@ -3,6 +3,7 @@ const express = require('express');
 const auth = require('../middleware/auth');
 
 const getBranchEmployees = require('../controller/branch-employee-controller/getBranchEmployees');
+const getBranchEmployeesForBatch = require('../controller/branch-employee-controller/getBranchEmployeesForBatch');
 const getBranchEmployee = require('../controller/branch-employee-controller/getBranchEmployee');
 const getBranchEmployeeForSalary = require('../controller/branch-employee-controller/getBranchEmployeeForSalary');
 const newBranchEmployee = require('../controller/branch-employee-controller/newBranchEmployee');
@@ -15,6 +16,10 @@ const router = new express.Router();
 
 router.post('/getBranchEmployees', auth, async (req, res) => {
   await getBranchEmployees(req, res);
+});
+
+router.post('/getBranchEmployeesForBatch', auth, async (req, res) => {
+  await getBranchEmployeesForBatch(req, res);
 });
 
 router.post('/getBranchEmployee', auth, async (req, res) => {

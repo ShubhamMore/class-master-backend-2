@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const batchSchema = new mongoose.Schema({
-  batchName: {
-    type: String,
-    require: true,
-  },
   branch: {
     type: String,
     require: true,
@@ -17,17 +13,27 @@ const batchSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
-  rollNoPrefix: {
-    type: String,
-    require: true,
-  },
-  rollNo: {
-    type: Number,
-    default: 0,
-  },
-  description: {
-    type: String,
-    default: null,
+  basicDetails: {
+    batchName: {
+      type: String,
+      require: true,
+    },
+    startDate: {
+      type: String,
+      require: true,
+    },
+    rollNoPrefix: {
+      type: String,
+      require: true,
+    },
+    rollNo: {
+      type: Number,
+      default: 0,
+    },
+    description: {
+      type: String,
+      default: null,
+    },
   },
   subjects: [
     {
@@ -37,7 +43,11 @@ const batchSchema = new mongoose.Schema({
       },
       teacher: {
         type: String,
-        required: true,
+        default: '',
+      },
+      status: {
+        type: Boolean,
+        default: false,
       },
     },
   ],
@@ -56,11 +66,11 @@ batchSchema.methods.toJSON = function () {
   return batchObject;
 };
 
-batchSchema.pre('remove', async function (next) {
-  const batch = this;
-  await Student.deleteMany({ batch: batch._id });
-  next();
-});
+// batchSchema.pre('remove', async function (next) {
+//   const batch = this;
+//   await Student.deleteMany({ batch: batch._id });
+//   next();
+// });
 
 const Batch = mongoose.model('Batch', batchSchema);
 

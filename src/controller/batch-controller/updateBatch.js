@@ -1,7 +1,7 @@
 const Batch = require('../../models/batch.model');
 const errorHandler = require('../../handler/error.handler');
 
-const editBatch = async (req, res) => {
+const updateBatch = async (req, res) => {
   try {
     const batch = await Batch.findByIdAndUpdate(req.body._id, req.body);
     if (!batch) {
@@ -14,4 +14,4 @@ const editBatch = async (req, res) => {
   }
 };
 
-module.exports = editBatch;
+module.exports = updateBatch;
