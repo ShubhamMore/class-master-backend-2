@@ -1,5 +1,7 @@
 const Course = require('../../models/course.model');
 const Batch = require('../../models/batch.model');
+const BatchSubjectTeacher = require('../../models/batch-subject-teacher.model');
+
 const errorHandler = require('../../handler/error.handler');
 
 const changeCourseStatus = async (req, res) => {
@@ -13,14 +15,25 @@ const changeCourseStatus = async (req, res) => {
       );
     }
 
-    await Batch.updateMany(
+    const batchStatusUpdate = Batch.updateMany(
       { branch: course.branch, category: course.basicDetails.category, course: course._id },
       {
         status: req.body.status,
       }
     );
 
-    res.status(200).send({ success: true });
+    const batchSubjectTeacherStatusUpdate = BatchSubjectTeacher.updateMany(
+      { branch: course.branch, category: course.basicDetails.category, course: course._id },
+      { status: req.body.status }
+    );
+
+    Promise.all([batchStatusUpdate, batchSubjectTeacherStatusUpdate])
+      .then(() => {
+        res.status(200).send({ success: true });
+      })
+      .catch((e) => {
+        throw new Error(e);
+      });
   } catch (e) {
     errorHandler(e, 400, res);
   }
