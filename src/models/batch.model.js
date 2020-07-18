@@ -59,7 +59,6 @@ const batchSchema = new mongoose.Schema({
 
 // Hash the plain text password before saving
 batchSchema.pre('findOneAndUpdate', async function (next) {
-  console.log(this);
   next();
 });
 
