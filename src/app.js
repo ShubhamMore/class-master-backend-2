@@ -67,6 +67,9 @@ app.use((req, res, next) => {
   // Pass to next layer of middleware
   next();
 });
+app.get('/hello', async (req, res) => {
+  res.send('hello world');
+});
 
 // MANAGEMENT
 // app.use(attendanceRouter);

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const studentFeeSchema = new mongoose.Schema({
+const studentCourseInstallmentSchema = new mongoose.Schema({
   student: {
     type: String,
     required: true,
@@ -70,15 +70,18 @@ const studentFeeSchema = new mongoose.Schema({
   ],
 });
 
-studentFeeSchema.methods.toJSON = function () {
-  const studentFee = this;
-  const studentFeeObject = studentFee.toObject();
+studentCourseInstallmentSchema.methods.toJSON = function () {
+  const studentCourseInstallment = this;
+  const studentCourseInstallmentObject = studentCourseInstallment.toObject();
 
-  delete studentFeeObject.__v;
+  delete studentCourseInstallmentObject.__v;
 
-  return studentFeeObject;
+  return studentCourseInstallmentObject;
 };
 
-const StudentFee = mongoose.model('StudentFee', studentFeeSchema);
+const StudentCourseInstallment = mongoose.model(
+  'StudentCourseInstallment',
+  studentCourseInstallmentSchema
+);
 
-module.exports = StudentFee;
+module.exports = StudentCourseInstallment;

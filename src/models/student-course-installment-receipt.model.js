@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const receiptSchema = new mongoose.Schema({
+const studentCourseInstallmentReceiptSchema = new mongoose.Schema({
   student: {
     type: String,
     required: true,
@@ -70,15 +70,18 @@ const receiptSchema = new mongoose.Schema({
   },
 });
 
-receiptSchema.methods.toJSON = function () {
-  const receipt = this;
-  const receiptObject = receipt.toObject();
+studentCourseInstallmentReceiptSchema.methods.toJSON = function () {
+  const studentCourseInstallmentReceipt = this;
+  const studentCourseInstallmentReceiptObject = studentCourseInstallmentReceipt.toObject();
 
-  delete receiptObject.__v;
+  delete studentCourseInstallmentReceiptObject.__v;
 
-  return receiptObject;
+  return studentCourseInstallmentReceiptObject;
 };
 
-const receipt = mongoose.model('Receipt', receiptSchema);
+const StudentCourseInstallmentReceipt = mongoose.model(
+  'StudentCourseInstallmentReceipt',
+  studentCourseInstallmentReceiptSchema
+);
 
-module.exports = receipt;
+module.exports = StudentCourseInstallmentReceipt;
