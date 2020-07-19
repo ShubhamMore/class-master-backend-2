@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const studentCourseSchema = new mongoose.Schema({
+const branchStudentSchema = new mongoose.Schema({
   student: {
     type: String,
     required: true,
@@ -26,15 +26,15 @@ const studentCourseSchema = new mongoose.Schema({
   },
 });
 
-studentCourseSchema.methods.toJSON = function () {
-  const studentCourse = this;
-  const studentCourseObject = studentCourse.toObject();
+branchStudentSchema.methods.toJSON = function () {
+  const branchStudent = this;
+  const branchStudentObject = branchStudent.toObject();
 
-  delete studentCourseObject.__v;
+  delete branchStudentObject.__v;
 
-  return studentCourseObject;
+  return branchStudentObject;
 };
 
-const StudentCourse = mongoose.model('StudentCourse', studentCourseSchema);
+const BranchStudent = mongoose.model('BranchStudent', branchStudentSchema);
 
-module.exports = StudentCourse;
+module.exports = BranchStudent;

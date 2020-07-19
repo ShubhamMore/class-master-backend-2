@@ -24,9 +24,11 @@ const employeeSalaryRouter = require('./routers/employee-salary.route');
 // const onlineExamQuestionRouter = require('./routers/online-exam-question.route');
 // const lectureContentRouter = require('./routers/lecture-content.route');
 // const lectureRouter = require('./routers/lecture.route');
-// const receiptRouter = require('./routers/receipt.route');
 // const leadRouter = require('./routers/lead.route');
 // const scheduleRouter = require('./routers/schedule.route');
+const studentCourseInstallmentReceiptRouter = require('./routers/student-course-installment-receipt.route');
+const studentCourseInstallmentRouter = require('./routers/student-course-installment.route');
+const studentCourseRouter = require('./routers/student-course.route');
 const studentRouter = require('./routers/student.route');
 const orderRouter = require('./routers/order.route');
 const paymentRouter = require('./routers/payment.route');
@@ -67,9 +69,6 @@ app.use((req, res, next) => {
   // Pass to next layer of middleware
   next();
 });
-app.get('/hello', async (req, res) => {
-  res.send('hello world');
-});
 
 // MANAGEMENT
 // app.use(attendanceRouter);
@@ -88,9 +87,11 @@ app.use(employeeSalaryRouter);
 // app.use(onlineExamQuestionRouter);
 // app.use(lectureContentRouter);
 // app.use(lectureRouter);
-// app.use(receiptRouter);
 // app.use(leadRouter);
 // app.use(scheduleRouter);
+app.use(studentCourseInstallmentReceiptRouter);
+app.use(studentCourseInstallmentRouter);
+app.use(studentCourseRouter);
 app.use(studentRouter);
 app.use(orderRouter);
 app.use(paymentRouter);
