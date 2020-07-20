@@ -3,9 +3,13 @@ const errorHandler = require('../../handler/error.handler');
 
 const getStudentCourses = async (req, res) => {
   try {
-    const studentCourse = await StudentCourse.find({ student: req.body.student });
+    const studentCourses = await StudentCourse.find({
+      branch: req.body.branch,
+      category: req.body.category,
+      student: req.body.student,
+    });
 
-    res.status(200).send(studentCourse);
+    res.status(200).send(studentCourses);
   } catch (e) {
     errorHandler(e, 400, res);
   }

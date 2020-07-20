@@ -3,7 +3,7 @@ const errorHandler = require('../../handler/error.handler');
 
 const getStudentForEditing = async (req, res) => {
   try {
-    const student = await Student.findById(req.body._id);
+    const student = await Student.findById(req.body.id);
     if (!student) {
       throw new Error('No student Found');
     }

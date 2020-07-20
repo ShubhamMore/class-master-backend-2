@@ -1,11 +1,12 @@
 const Student = require('../../models/student.model');
 const errorHandler = require('../../handler/error.handler');
 
-const getStudentForEditing = async (req, res) => {
+const getStudentByImsId = async (req, res) => {
   try {
-    const student = await Student.findById(req.body.id);
+    const student = await Student.findOne({ imsMasterId: req.body.studentImsId });
+
     if (!student) {
-      throw new Error('No Student Found');
+      throw new Error('No student Found, Invalid IMS Id');
     }
 
     res.status(200).send(student);
@@ -14,4 +15,4 @@ const getStudentForEditing = async (req, res) => {
   }
 };
 
-module.exports = getStudentForEditing;
+module.exports = getStudentByImsId;

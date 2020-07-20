@@ -3,7 +3,7 @@ const errorHandler = require('../../handler/error.handler');
 
 const updateStudent = async (req, res) => {
   try {
-    const student = await Student.findByIdAndUpdate(req.body._id, req.body);
+    const student = await Student.findByIdAndUpdate(req.body.id, req.body);
     if (!student) {
       throw new Error('No student Found, Updation Failed');
     }

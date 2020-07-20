@@ -5,6 +5,7 @@ const auth = require('../middleware/auth');
 const newStudent = require('../controller/student-controller/newStudent');
 const getStudents = require('../controller/student-controller/getStudents');
 const getStudent = require('../controller/student-controller/getStudent');
+const getStudentByImsId = require('../controller/student-controller/getStudentByImsId');
 const searchStudent = require('../controller/student-controller/searchStudent');
 const getStudentForEditing = require('../controller/student-controller/getStudentForEditing');
 const updateStudent = require('../controller/student-controller/updateStudent');
@@ -25,6 +26,10 @@ router.post('/getStudents', auth, async (req, res) => {
 
 router.post('/getStudent', auth, async (req, res) => {
   await getStudent(req, res);
+});
+
+router.post('/getStudentByImsId', auth, async (req, res) => {
+  await getStudentByImsId(req, res);
 });
 
 router.post('/searchStudent', auth, async (req, res) => {
