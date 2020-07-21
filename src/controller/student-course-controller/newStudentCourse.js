@@ -4,13 +4,25 @@ const errorHandler = require('../../handler/error.handler');
 
 const newStudentCourse = async (req, res) => {
   try {
-    const studentCourse = new StudentCourse(req.body.studentCourse);
-    await studentCourse.save();
+    const studentCourse = await StudentCourse.findOne({
+      branch: req.body.studentCourse.branch,
+      category: req.body.studentCourse.category,
+      course: req.body.studentCourse.course,
+      batch: req.body.studentCourse.batch,
+      rollNumber: req.body.studentCourse.rollNumber,
+    });
 
-    const studentCourseInstallment = new StudentCourseInstallment(
+    if (studentCourse) {
+      throw new Error('Student Roll Number for this Batch already Exist');
+    }
+
+    const newStudentCourse = new StudentCourse(req.body.studentCourse);
+    await newStudentCourse.save();
+
+    const newStudentCourseInstallment = new StudentCourseInstallment(
       req.body.studentCourseInstallment
     );
-    await studentCourseInstallment.save();
+    await newStudentCourseInstallment.save();
 
     await StudentCourse.findByIdAndUpdate(studentCourse._id, {
       studentCourseInstallment: studentCourseInstallment._id,

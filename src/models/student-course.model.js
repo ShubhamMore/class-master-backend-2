@@ -6,7 +6,8 @@ const studentCourseSchema = new mongoose.Schema({
   },
   studentCourseInstallment: {
     type: String,
-    required: true,
+    unique: true,
+    default: null,
   },
   branch: {
     type: String,

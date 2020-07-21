@@ -11,9 +11,6 @@ const getStudentCourseForEditing = async (req, res) => {
     const studentCourseInstallment = await StudentCourseInstallment.findById(
       studentCourse.studentCourseInstallment
     );
-    if (!studentCourseInstallment) {
-      throw new Error('No Student Course Installment Found');
-    }
 
     res.status(200).send({ studentCourse, studentCourseInstallment });
   } catch (e) {

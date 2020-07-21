@@ -3,8 +3,14 @@ const errorHandler = require('../../handler/error.handler');
 
 const newStudentCourseInstallment = async (req, res) => {
   try {
-    const studentCourseInstallment = new StudentCourseInstallment(req.body);
+    const studentCourseInstallment = new StudentCourseInstallment(
+      req.body.studentCourseInstallment
+    );
     await studentCourseInstallment.save();
+
+    await StudentCourse.findByIdAndUpdate(req.body.studentCourse, {
+      studentCourseInstallment: studentCourseInstallment._id,
+    });
 
     res.status(201).send({ success: true });
   } catch (e) {
