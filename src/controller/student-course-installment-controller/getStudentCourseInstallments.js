@@ -3,12 +3,13 @@ const errorHandler = require('../../handler/error.handler');
 
 const getStudentCourseInstallments = async (req, res) => {
   try {
-    const studentCourseInstallment = await StudentCourseInstallment.find({
+    const studentCourseInstallments = await StudentCourseInstallment.find({
+      branch: req.body.branch,
+      category: req.body.category,
       student: req.body.student,
-      course: req.body.course,
     });
 
-    res.status(200).send(studentCourseInstallment);
+    res.status(200).send(studentCourseInstallments);
   } catch (e) {
     errorHandler(e, 400, res);
   }

@@ -9,6 +9,8 @@ const getStudentCourses = async (req, res) => {
       student: req.body.student,
     });
 
+    console.log(studentCourses);
+
     res.status(200).send(studentCourses);
   } catch (e) {
     errorHandler(e, 400, res);

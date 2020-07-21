@@ -4,6 +4,10 @@ const studentCourseSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  studentCourseInstallment: {
+    type: String,
+    required: true,
+  },
   branch: {
     type: String,
     required: true,

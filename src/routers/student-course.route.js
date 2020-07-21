@@ -5,6 +5,7 @@ const auth = require('../middleware/auth');
 const newStudentCourse = require('../controller/student-course-controller/newStudentCourse');
 const getStudentCourses = require('../controller/student-course-controller/getStudentCourses');
 const getStudentCourse = require('../controller/student-course-controller/getStudentCourse');
+const checkBatchRollNumber = require('../controller/student-course-controller/checkStudentCourseBatchRollNumber');
 const getStudentCourseForEditing = require('../controller/student-course-controller/getStudentCourseForEditing');
 const updateStudentCourse = require('../controller/student-course-controller/updateStudentCourse');
 const changeStudentCourseStatus = require('../controller/student-course-controller/changeStudentCourseStatus');
@@ -24,6 +25,10 @@ router.post('/getStudentCourses', auth, async (req, res) => {
 
 router.post('/getStudentCourse', auth, async (req, res) => {
   await getStudentCourse(req, res);
+});
+
+router.post('/checkBatchRollNumber', auth, async (req, res) => {
+  await checkBatchRollNumber(req, res);
 });
 
 router.post('/getStudentCourseForEditing', auth, async (req, res) => {

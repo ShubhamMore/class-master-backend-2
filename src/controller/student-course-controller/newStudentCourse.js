@@ -12,6 +12,10 @@ const newStudentCourse = async (req, res) => {
     );
     await studentCourseInstallment.save();
 
+    await StudentCourse.findByIdAndUpdate(studentCourse._id, {
+      studentCourseInstallment: studentCourseInstallment._id,
+    });
+
     res.status(201).send({ success: true });
   } catch (e) {
     errorHandler(e, 400, res);
