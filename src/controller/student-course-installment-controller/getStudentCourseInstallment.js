@@ -3,6 +3,7 @@ const errorHandler = require('../../handler/error.handler');
 
 const getStudentCourseInstallment = async (req, res) => {
   try {
+    console.log(req.body);
     const studentCourseInstallment = await StudentCourseInstallment.findById(req.body.id);
     if (!studentCourseInstallment) {
       throw new Error('No Student Course Installment Found');
@@ -10,6 +11,7 @@ const getStudentCourseInstallment = async (req, res) => {
 
     res.status(200).send(studentCourseInstallment);
   } catch (e) {
+    console.log(e);
     errorHandler(e, 400, res);
   }
 };
