@@ -4,8 +4,13 @@ const errorHandler = require('../../handler/error.handler');
 const getStudentCourseInstallmentReceipt = async (req, res) => {
   try {
     const studentCourseInstallmentReceipt = await StudentCourseInstallmentReceipt.findById(
-      req.body._id
+      req.body.id
     );
+
+    if (!studentCourseInstallmentReceipt) {
+      throw new Error('Receipt Not Available');
+    }
+
     res.status(200).send(studentCourseInstallmentReceipt);
   } catch (e) {
     errorHandler(e, 400, res);

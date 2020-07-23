@@ -5,6 +5,7 @@ const auth = require('../middleware/auth');
 const newStudentCourseInstallmentReceipt = require('../controller/student-course-installment-receipt-controller/newStudentCourseInstallmentReceipt');
 const getAllStudentCourseInstallmentReceipts = require('../controller/student-course-installment-receipt-controller/getAllStudentCourseInstallmentReceipts');
 const getStudentCourseInstallmentReceipt = require('../controller/student-course-installment-receipt-controller/getStudentCourseInstallmentReceipt');
+const editStudentCourseInstallmentReceipt = require('../controller/student-course-installment-receipt-controller/editStudentCourseInstallmentReceipt');
 const changeStudentCourseInstallmentReceiptStatus = require('../controller/student-course-installment-receipt-controller/changeStudentCourseInstallmentReceiptStatus');
 const deleteStudentCourseInstallmentReceipt = require('../controller/student-course-installment-receipt-controller/deleteStudentCourseInstallmentReceipt');
 
@@ -20,6 +21,10 @@ router.post('/getAllStudentCourseInstallmentReceipts', auth, async (req, res) =>
 
 router.post('/getStudentCourseInstallmentReceipt', auth, async (req, res) => {
   await getStudentCourseInstallmentReceipt(req, res);
+});
+
+router.post('/editStudentCourseInstallmentReceipt', auth, async (req, res) => {
+  await editStudentCourseInstallmentReceipt(req, res);
 });
 
 router.post('/changeStudentCourseInstallmentReceiptStatus', auth, async (req, res) => {

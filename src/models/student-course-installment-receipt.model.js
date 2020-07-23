@@ -1,5 +1,13 @@
 const mongoose = require('mongoose');
 const studentCourseInstallmentReceiptSchema = new mongoose.Schema({
+  studentCourseInstallmentId: {
+    type: String,
+    required: true,
+  },
+  courseInstallmentId: {
+    type: String,
+    required: true,
+  },
   student: {
     type: String,
     required: true,
@@ -24,10 +32,6 @@ const studentCourseInstallmentReceiptSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  feeType: {
-    type: String,
-    required: true,
-  },
   amount: {
     type: Number,
     required: true,
@@ -44,13 +48,17 @@ const studentCourseInstallmentReceiptSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  paymentDate: {
+    type: String,
+    required: true,
+  },
   paymentMode: {
     type: String,
     required: true,
   },
   description: {
     type: String,
-    required: true,
+    default: null,
   },
   bankDetails: {
     type: String,
