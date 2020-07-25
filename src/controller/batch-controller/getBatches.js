@@ -8,6 +8,8 @@ const getBatchesByCourse = async (req, res) => {
       category: req.body.category,
     };
 
+    console.log(req.body.course);
+
     if (req.body.course && req.body.course !== '') {
       searchQuery.course = req.body.course;
     }

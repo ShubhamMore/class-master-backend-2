@@ -24,7 +24,6 @@ const newStudentCourseInstallmentReceipt = async (req, res) => {
 
     const amountCollected =
       studentCourseInstallment.amountCollected + studentCourseInstallmentReceipt.amount;
-    const pendingAmount = studentCourseInstallment.installments[installmentIndex].amountPending;
 
     studentCourseInstallment.amountCollected = amountCollected;
     studentCourseInstallment.pendingAmount = studentCourseInstallment.totalAmount - amountCollected;
