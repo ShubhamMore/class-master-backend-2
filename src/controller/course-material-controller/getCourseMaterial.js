@@ -3,7 +3,7 @@ const errorHandler = require('../../handler/error.handler');
 
 const getCourseMaterial = async (req, res) => {
   try {
-    const courseMaterial = await CourseMaterial.findById(req.body._id);
+    const courseMaterial = await CourseMaterial.findById(req.body.id);
 
     if (!courseMaterial) {
       throw new Error('No Course Material');

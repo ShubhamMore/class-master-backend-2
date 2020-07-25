@@ -7,29 +7,36 @@ const newCourseMaterials = async (req, res) => {
     if (files !== undefined && files.length > 0) {
       const courseMaterials = new Array();
       for (let i = 0; i < files.length; i++) {
-        let contentType;
-        const fileType = files[i].filename.substring(files[i].filename.lastIndexOf('.') + 1);
+        let fileType;
+        const curFileType = files[i].filename.substring(files[i].filename.lastIndexOf('.') + 1);
 
-        if (fileType === 'pdf') {
-          contentType = 'PDF';
-        } else if (fileType === 'mp4') {
-          contentType = 'MP4';
+        if (curFileType === 'pdf') {
+          fileType = 'PDF';
+        } else if (curFileType === 'mp4') {
+          fileType = 'MP4';
         } else {
-          contentType = 'IMAGE';
+          fileType = 'IMAGE';
         }
+
+        const title = `${files[i].filename.substring(0, files[i].filename.lastIndexOf('-'))}`
+          .split('-')
+          .join(' ')
+          .toUpperCase();
+
+        const fileName = `${files[i].filename.substring(
+          0,
+          files[i].filename.lastIndexOf('-')
+        )}.${fileType}`;
 
         const materialData = {
           branch: req.body.branch,
           category: req.body.category,
           course: req.body.course,
           subject: req.body.subject,
-          title: `${files[i].filename.substring(0, files[i].filename.lastIndexOf('-'))}`,
-          fileName: `${files[i].filename.substring(
-            0,
-            files[i].filename.lastIndexOf('-')
-          )}.${fileType}`,
-          contentType: contentType,
-          secureUrl: process.env.API_URI + '/' + files[i].path,
+          title: title,
+          fileName: fileName,
+          fileType: fileType,
+          secureUrl: process.env.API_URI + '\\' + files[i].path,
           publicId: files[i].path,
           createdAst: Date.now().toLocaleString(),
           status: true,

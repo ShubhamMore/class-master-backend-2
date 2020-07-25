@@ -44,9 +44,9 @@ app.use(express.json());
 app.use(cors());
 app.use(compression());
 
-app.use('/lecture-contents', express.static(path.join('lecture-contents')));
+app.use('/course-materials', express.static(path.join('course-materials')));
 
-app.use(express.static(path.join(__dirname, '../dist')));
+app.use('/', express.static(path.join(__dirname, '../dist')));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

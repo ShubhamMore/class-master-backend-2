@@ -24,7 +24,7 @@ const courseMaterialSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  contentType: {
+  fileType: {
     type: String,
     required: true,
   },
