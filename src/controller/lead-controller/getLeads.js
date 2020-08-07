@@ -3,14 +3,22 @@ const errorHandler = require('../../handler/error.handler');
 
 const getLeads = async (req, res) => {
   try {
-    const searchQuery = { course: req.body.course };
+    const searchQuery = { branch: req.body.branch };
 
-    if (req.body.leadType === '1') {
-      searchQuery.status = '0';
-    } else if (req.body.leadType === '0') {
-      searchQuery.$or = [{ status: '1' }, { status: '2' }];
+    if (req.body.leadType === 'active') {
+      searchQuery.status = 'open';
+    } else if (req.body.leadType === 'inactive') {
+      searchQuery.$or = [{ status: 'lost' }, { status: 'won' }];
     } else {
       throw new Error('Lead Type is Required');
+    }
+
+    if (req.body.category !== '') {
+      searchQuery.category = req.body.category;
+    }
+
+    if (req.body.course !== '') {
+      searchQuery.course = req.body.course;
     }
 
     const lead = await Lead.find(searchQuery);

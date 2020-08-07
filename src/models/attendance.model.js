@@ -36,6 +36,10 @@ const attendanceSchema = new mongoose.Schema({
       },
     },
   ],
+  status: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Attendance = mongoose.model('Attendance', attendanceSchema);

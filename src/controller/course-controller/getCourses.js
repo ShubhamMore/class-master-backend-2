@@ -13,8 +13,6 @@ const getCourses = async (req, res) => {
       query['basicDetails.category'] = category;
     }
 
-    query;
-
     const courses = await Course.find(query);
     res.status(200).send(courses);
   } catch (e) {

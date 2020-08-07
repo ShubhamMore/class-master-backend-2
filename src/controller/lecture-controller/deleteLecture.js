@@ -6,7 +6,7 @@ const errorHandler = require('../../handler/error.handler');
 
 const deleteLecture = async (req, res) => {
   try {
-    const lecture = await Lecture.findByIdAndDelete(req.body._id);
+    const lecture = await Lecture.findByIdAndDelete(req.body.id);
     if (!lecture) {
       throw new Error('No Lecture Found');
     }
@@ -17,7 +17,7 @@ const deleteLecture = async (req, res) => {
 
     const n = lectureContents.length;
     for (let i = 0; i < n; i++) {
-      const lectureContentToDelete = lectureContents[i].public_id;
+      const lectureContentToDelete = lectureContents[i].publicId;
       fs.unlink(path.join(__dirname, '../../../', lectureContentToDelete), (err) => {
         if (err) {
           throw new Error(err);

@@ -3,7 +3,7 @@ const errorHandler = require('../../handler/error.handler');
 
 const changeLeadStatus = async (req, res) => {
   try {
-    const lead = await Lead.findByIdAndUpdate(req.body._id, { status: req.body.status });
+    const lead = await Lead.findByIdAndUpdate(req.body.id, { status: req.body.status });
 
     if (!lead) {
       throw new Error('No lead Found');
