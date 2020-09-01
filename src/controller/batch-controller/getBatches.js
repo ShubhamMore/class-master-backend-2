@@ -3,6 +3,8 @@ const errorHandler = require('../../handler/error.handler');
 
 const getBatchesByCourse = async (req, res) => {
   try {
+    console.log(req.body);
+
     const searchQuery = {
       branch: req.body.branch,
     };
@@ -16,6 +18,7 @@ const getBatchesByCourse = async (req, res) => {
     }
 
     const batches = await Batch.find(searchQuery);
+
     res.status(200).send(batches);
   } catch (e) {
     errorHandler(err, 400, res);

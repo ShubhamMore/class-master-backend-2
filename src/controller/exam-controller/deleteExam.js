@@ -3,7 +3,7 @@ const errorHandler = require('../../handler/error.handler');
 
 const deleteExam = async (req, res) => {
   try {
-    const exam = await Exam.findByIdAndRemove(req.body._id);
+    const exam = await Exam.findByIdAndRemove(req.body.id);
 
     if (!exam) {
       throw new Error('No Exam Found');

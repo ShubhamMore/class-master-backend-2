@@ -1,9 +1,9 @@
 const Exam = require('../../models/exam.model');
 const errorHandler = require('../../handler/error.handler');
 
-const getExam = async (req, res) => {
+const getExamForEditing = async (req, res) => {
   try {
-    const exam = await Exam.findById(req.body.id);
+    const exam = await Exam.findById(req.body._id);
 
     if (!exam) {
       throw new Error('No Exam Found');
@@ -15,4 +15,4 @@ const getExam = async (req, res) => {
   }
 };
 
-module.exports = getExam;
+module.exports = getExamForEditing;

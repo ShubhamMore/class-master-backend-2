@@ -1,18 +1,18 @@
 const Exam = require('../../models/exam.model');
 const errorHandler = require('../../handler/error.handler');
 
-const getExam = async (req, res) => {
+const changeExamStatus = async (req, res) => {
   try {
-    const exam = await Exam.findById(req.body.id);
+    const exam = await Exam.findByIdAndUpdate(req.body._id, req.body.status);
 
     if (!exam) {
       throw new Error('No Exam Found');
     }
 
-    res.status(200).send(exam);
+    res.status(200).send({ success: true });
   } catch (e) {
     errorHandler(e, 400, res);
   }
 };
 
-module.exports = getExam;
+module.exports = changeExamStatus;
