@@ -1,9 +1,9 @@
 const Schedule = require('../../models/schedule.model');
 const errorHandler = require('../../handler/error.handler');
 
-const day = 24 * 60 * 60 * 1000;
+const day = 24 * 60 * 60 * 1000; // 1 Day mille-seconds
 
-const convertToDateString = async (date) => {
+const convertToDateString = (date) => {
   if (!date) {
     return '--';
   }
@@ -17,13 +17,13 @@ const convertToDateString = async (date) => {
   );
 };
 
-const dateToMilliseconds = async (date) => {
+const dateToMilliseconds = (date) => {
   return new Date(date).getTime();
 };
 
 const getNoOfDays = async (date, repeatUpTo) => {
-  dateInMS = await dateToMilliseconds(date);
-  repeatUpTpDateInMS = await dateToMilliseconds(repeatUpTo);
+  dateInMS = dateToMilliseconds(date);
+  repeatUpTpDateInMS = dateToMilliseconds(repeatUpTo);
 
   const noOfDays = (repeatUpTpDateInMS - dateInMS) / day;
   return noOfDays;
@@ -39,13 +39,13 @@ const newSchedule = async (req, res) => {
     const repeatSchedule = req.body.scheduleRepeat;
 
     if (repeatSchedule.repeat) {
-      const n = await getNoOfDays(schedule.date, repeatSchedule.repeatUpTo);
+      const n = getNoOfDays(schedule.date, repeatSchedule.repeatUpTo);
       let dateInMS = dateToMilliseconds(schedule.date);
       for (let i = 0; i < n; i++) {
         dateInMS += day;
         const date = new Date(dateInMS);
         if (repeatSchedule.repeatDays.includes(date.getDay())) {
-          schedule.date = await convertToDateString(date).split('-').reverse().join('-');
+          schedule.date = convertToDateString(date);
 
           schedules.push(schedule);
         }
