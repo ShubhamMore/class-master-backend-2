@@ -29,7 +29,6 @@ const getBranchEmployeesForBatch = async (req, res) => {
     });
 
     // const teachers = await getTeachers(branchEmployees);
-
     res.status(200).send(branchEmployees);
   } catch (e) {
     errorHandler(e, 400, res);

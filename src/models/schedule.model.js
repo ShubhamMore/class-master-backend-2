@@ -16,54 +16,35 @@ const scheduleSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  scheduleStartDate: {
+  subject: {
+    type: String,
+    default: null,
+  },
+  date: {
     type: String,
     required: true,
   },
-  scheduleEndDate: {
+  startTime: {
     type: String,
     required: true,
   },
-  schedule: [
-    {
-      day: {
-        type: String,
-        required: true,
-      },
-      date: {
-        type: String,
-        required: true,
-      },
-      startTime: {
-        type: String,
-        default: null,
-      },
-      duration: {
-        type: Number,
-        default: null,
-      },
-      type: {
-        type: String,
-        default: null,
-      },
-      subject: {
-        type: String,
-        default: null,
-      },
-      topic: {
-        type: String,
-        default: null,
-      },
-      teacher: {
-        type: String,
-        default: null,
-      },
-      status: {
-        type: Boolean,
-        default: true,
-      },
-    },
-  ],
+  endTime: {
+    type: String,
+    required: true,
+  },
+
+  topic: {
+    type: String,
+    default: null,
+  },
+  teacher: {
+    type: String,
+    default: null,
+  },
+  sessionType: {
+    type: String,
+    default: null,
+  },
   status: {
     type: Boolean,
     default: true,

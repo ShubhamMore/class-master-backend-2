@@ -1,8 +1,6 @@
 const express = require('express');
 
 const auth = require('../middleware/auth');
-const adminBranchAuth = require('../middleware/admin-branch-auth');
-const adminBranchStaffAuth = require('../middleware/admin-branch-staff-auth');
 
 const newSchedule = require('../controller/schedule-controller/newSchedule');
 const getAllSchedules = require('../controller/schedule-controller/getAllSchedule');
@@ -13,27 +11,27 @@ const deleteSchedule = require('../controller/schedule-controller/deleteSchedule
 
 const router = new express.Router();
 
-router.post('/newSchedule', auth, adminBranchAuth, async (req, res) => {
+router.post('/newSchedule', auth, async (req, res) => {
   await newSchedule(req, res);
 });
 
-router.post('/getAllSchedules', auth, adminBranchAuth, async (req, res) => {
+router.post('/getAllSchedule', auth, async (req, res) => {
   await getAllSchedules(req, res);
 });
 
-router.post('/getSchedule', auth, adminBranchStaffAuth, async (req, res) => {
+router.post('/getSchedule', auth, async (req, res) => {
   await getSchedule(req, res);
 });
 
-router.post('/getScheduleForEditing', auth, adminBranchStaffAuth, async (req, res) => {
+router.post('/getScheduleForEditing', auth, async (req, res) => {
   await getScheduleForEditing(req, res);
 });
 
-router.post('/changeScheduleStatus', auth, adminBranchAuth, async (req, res) => {
+router.post('/changeScheduleStatus', auth, async (req, res) => {
   await changeScheduleStatus(req, res);
 });
 
-router.post('/deleteSchedule', auth, adminBranchAuth, async (req, res) => {
+router.post('/deleteSchedule', auth, async (req, res) => {
   await deleteSchedule(req, res);
 });
 
