@@ -3,7 +3,7 @@ const errorHandler = require('../../handler/error.handler');
 
 const getSchedule = async (req, res) => {
   try {
-    const schedule = await Schedule.findById(req.body._id);
+    const schedule = await Schedule.findById(req.body.id);
 
     if (!schedule) {
       throw new Error('Schedule Not Found');
@@ -11,6 +11,7 @@ const getSchedule = async (req, res) => {
 
     res.status(200).send(schedule);
   } catch (e) {
+    console.log(e);
     errorHandler(e, 400, res);
   }
 };

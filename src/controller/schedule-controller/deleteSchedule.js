@@ -3,7 +3,7 @@ const errorHandler = require('../../handler/error.handler');
 
 const deleteSchedule = async (req, res) => {
   try {
-    const schedule = await Schedule.findByIdAndDelete(req.body._id);
+    const schedule = await Schedule.findByIdAndDelete(req.body.id);
 
     if (!schedule) {
       throw new Error('Schedule Not Found');

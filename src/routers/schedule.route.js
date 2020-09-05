@@ -3,6 +3,7 @@ const express = require('express');
 const auth = require('../middleware/auth');
 
 const newSchedule = require('../controller/schedule-controller/newSchedule');
+const editSchedule = require('../controller/schedule-controller/editSchedule');
 const getAllSchedules = require('../controller/schedule-controller/getAllSchedule');
 const getSchedule = require('../controller/schedule-controller/getSchedule');
 const getScheduleForEditing = require('../controller/schedule-controller/getScheduleForEditing');
@@ -13,6 +14,10 @@ const router = new express.Router();
 
 router.post('/newSchedule', auth, async (req, res) => {
   await newSchedule(req, res);
+});
+
+router.post('/editSchedule', auth, async (req, res) => {
+  await editSchedule(req, res);
 });
 
 router.post('/getAllSchedule', auth, async (req, res) => {
