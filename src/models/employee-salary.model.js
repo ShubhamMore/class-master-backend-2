@@ -8,51 +8,52 @@ const employeeSalarySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  generatedBy: {
+  date: {
     type: String,
     required: true,
   },
-  date: {
+  month: {
+    type: String,
+    required: true,
+  },
+  year: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    default: null,
+  },
+  basicAmount: {
     type: String,
     required: true,
   },
   earnings: [
     {
-      earning: {
+      description: {
         type: String,
         required: true,
       },
       amount: {
-        type: Number,
+        type: String,
         required: true,
       },
     },
   ],
   deductions: [
     {
-      deduction: {
+      description: {
         type: String,
         required: true,
       },
       amount: {
-        type: Number,
+        type: String,
         required: true,
       },
     },
   ],
-  description: {
-    type: String,
-    required: true,
-  },
-  basicAmount: {
-    type: Number,
-    required: true,
-  },
-  netAmount: {
-    type: Number,
-    required: true,
-  },
-  netAmountInWords: {
+
+  generatedBy: {
     type: String,
     required: true,
   },
@@ -67,6 +68,14 @@ const employeeSalarySchema = new mongoose.Schema({
   transactionDetails: {
     type: String,
     default: null,
+  },
+  netSalary: {
+    type: String,
+    required: true,
+  },
+  netSalaryInWords: {
+    type: String,
+    required: true,
   },
   status: {
     type: Boolean,

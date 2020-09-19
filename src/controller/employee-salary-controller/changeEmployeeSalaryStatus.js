@@ -3,7 +3,7 @@ const errorHandler = require('../../handler/error.handler');
 
 const changeEmployeeSalaryStatus = async (req, res) => {
   try {
-    const employeeSalary = await EmployeeSalary.findByIdAndUpdate(req.body._id, {
+    const employeeSalary = await EmployeeSalary.findByIdAndUpdate(req.body.id, {
       status: req.body.status,
     });
 
