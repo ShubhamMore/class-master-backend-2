@@ -32,7 +32,6 @@ const scheduleSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-
   topic: {
     type: String,
     default: null,

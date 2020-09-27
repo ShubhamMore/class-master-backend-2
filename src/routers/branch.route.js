@@ -4,6 +4,7 @@ const auth = require('../middleware/auth');
 
 const newBranch = require('../controller/branch-controller/newBranch');
 const getBranches = require('../controller/branch-controller/getBranches');
+const getBranchCoursesAndBatches = require('../controller/branch-controller/getBranchCoursesAndBatches');
 const getBranchesForEmployee = require('../controller/branch-controller/getBranchesForEmployee');
 const getBranchesForStudent = require('../controller/branch-controller/getBranchesForStudent');
 const getBranch = require('../controller/branch-controller/getBranch');
@@ -22,6 +23,10 @@ router.post('/newBranch', auth, async (req, res) => {
 
 router.post('/getBranches', auth, async (req, res) => {
   await getBranches(req, res);
+});
+
+router.post('/getBranchCoursesAndBatches', auth, async (req, res) => {
+  await getBranchCoursesAndBatches(req, res);
 });
 
 router.post('/getBranchesForEmployee', auth, async (req, res) => {

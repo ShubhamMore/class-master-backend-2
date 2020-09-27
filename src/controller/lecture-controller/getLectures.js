@@ -1,4 +1,4 @@
-const Lecture = require('../../models/lecture.model');
+const Schedule = require('../../models/schedule.model');
 const errorHandler = require('../../handler/error.handler');
 
 const getLectures = async (req, res) => {
@@ -6,14 +6,20 @@ const getLectures = async (req, res) => {
     const query = {
       branch: req.body.branch,
       category: req.body.category,
-      course: req.body.course,
+      date: req.body.date,
     };
+
+    if (req.body.course) {
+      query.course = req.body.course;
+    }
 
     if (req.body.batch) {
       query.batch = req.body.batch;
     }
 
-    const lectures = await Lecture.find(query);
+    console.log(query);
+
+    const lectures = await Schedule.find(query);
 
     res.status(200).send(lectures);
   } catch (e) {
