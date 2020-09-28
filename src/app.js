@@ -8,7 +8,7 @@ var cors = require('cors');
 require('./database/mongoose');
 
 // MANAGEMENT
-// const attendanceRouter = require('./routers/attendance.route');
+const attendanceRouter = require('./routers/attendance.route');
 const branchRouter = require('./routers/branch.route');
 // const budgetRouter = require('./routers/budget.route');
 const courseRouter = require('./routers/course.route');
@@ -72,7 +72,7 @@ app.use((req, res, next) => {
 });
 
 // MANAGEMENT
-// app.use(attendanceRouter);
+app.use(attendanceRouter);
 app.use(branchRouter);
 // app.use(budgetRouter);
 app.use(courseRouter);

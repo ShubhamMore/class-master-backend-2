@@ -3,9 +3,21 @@ const errorHandler = require('../../handler/error.handler');
 
 const saveAttendance = async (req, res) => {
   try {
-    const attendance = new Attendance(req.body);
+    console.log(req.body);
 
-    await attendance.save();
+    const attendance = await Attendance.findOneAndUpdate(
+      {
+        branch: req.body.branch,
+        category: req.body.category,
+        course: req.body.course,
+        batch: req.body.batch,
+        lecture: req.body.lecture,
+      },
+      req.body,
+      { upsert: true }
+    );
+
+    console.log(attendance);
 
     res.status(200).send(attendance);
   } catch (e) {

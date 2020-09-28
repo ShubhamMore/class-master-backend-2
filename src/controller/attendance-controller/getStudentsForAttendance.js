@@ -1,42 +1,88 @@
-const Attendance = require('../../models/attendance.model');
-const Student = require('../../models/student.model');
-const findStudentNames = require('../../functions/findStudentNames');
+const StudentCourse = require('../../models/student-course.model');
 const errorHandler = require('../../handler/error.handler');
+const Attendance = require('../../models/attendance.model');
 
 const getStudentsForAttendance = async (req, res) => {
   try {
-    let attendance = await Attendance.findOne({
-      date: req.body.date,
+    let students = null;
+
+    const attendance = await Attendance.findOne({
+      branch: req.body.branch,
+      category: req.body.category,
       course: req.body.course,
       batch: req.body.batch,
+      lecture: req.body.lecture,
     });
 
     if (attendance) {
-      let prepareAttendance = new Array();
-      const students = await findStudentNames(attendance.attendance);
-      const len = students.length;
-      for (let i = 0; i < len; i++) {
-        const atten = {
-          _id: attendance.attendance[i]._id,
-          student: students[i].name,
-          attendanceStatus: attendance.attendance[i].attendanceStatus,
-        };
-        prepareAttendance.push(atten);
-      }
-
-      res.status(200).send({ atten: true, attendance: prepareAttendance });
-      return;
+      students = await Attendance.aggregate([
+        {
+          $match: {
+            branch: req.body.branch,
+            category: req.body.category,
+            course: req.body.course,
+            batch: req.body.batch,
+            lecture: req.body.lecture,
+          },
+        },
+        {
+          $unwind: '$attendance',
+        },
+        {
+          $project: {
+            _id: 0,
+            atten: '$attendance',
+          },
+        },
+        {
+          $replaceRoot: {
+            newRoot: { $mergeObjects: ['$atten', '$$ROOT'] },
+          },
+        },
+        { $project: { _id: 0, atten: 0 } },
+        {
+          $lookup: {
+            from: 'students',
+            localField: 'student', // field in the attendance collection
+            foreignField: 'imsMasterId', // field in the Students collection
+            as: 'students',
+          },
+        },
+        {
+          $replaceRoot: {
+            newRoot: { $mergeObjects: [{ $arrayElemAt: ['$students', 0] }, '$$ROOT'] },
+          },
+        },
+        { $project: { students: 0 } },
+        { $project: { _id: 0, name: 1, rollNumber: 1, student: 1, attendance: 1 } },
+      ]);
+    } else {
+      students = await StudentCourse.aggregate([
+        {
+          $match: {
+            branch: req.body.branch,
+            category: req.body.category,
+            course: req.body.course,
+            batch: req.body.batch,
+          },
+        },
+        {
+          $lookup: {
+            from: 'students',
+            localField: 'student', // field in the studentCourses collection
+            foreignField: 'imsMasterId', // field in the Students collection
+            as: 'students',
+          },
+        },
+        {
+          $replaceRoot: {
+            newRoot: { $mergeObjects: [{ $arrayElemAt: ['$students', 0] }, '$$ROOT'] },
+          },
+        },
+        { $project: { students: 0 } },
+        { $project: { _id: 0, name: 1, rollNumber: 1, student: 1 } },
+      ]);
     }
-
-    // SELECT ALL FROM STUDENTS WHERE COURSE = req.body.course AND BATCH = req.body.batch AND (STATUS = "0" OR STATUS = "1")
-    const students = await Student.find(
-      {
-        course: req.body.course,
-        batch: req.body.batch,
-        $or: [{ status: '0' }, { status: '1' }],
-      },
-      { _id: 1, name: 1 }
-    );
 
     res.status(200).send(students);
   } catch (e) {

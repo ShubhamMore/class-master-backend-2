@@ -2,7 +2,7 @@ const express = require('express');
 
 const auth = require('../middleware/auth');
 
-const saveAttendance = require('../controller/attendance-controller/getStudentsForAttendance');
+const saveAttendance = require('../controller/attendance-controller/saveAttendance');
 const editAttendance = require('../controller/attendance-controller/getStudentsForAttendance');
 const getStudentAttendance = require('../controller/attendance-controller/getStudentsForAttendance');
 const getStudentsForAttendance = require('../controller/attendance-controller/getStudentsForAttendance');

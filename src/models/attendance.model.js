@@ -24,14 +24,22 @@ const attendanceSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  lecture: {
+    type: String,
+    required: true,
+  },
   attendance: [
     {
       student: {
         type: String,
         required: true,
       },
-      attendance: {
+      rollNumber: {
         type: String,
+        required: true,
+      },
+      attendance: {
+        type: Boolean,
         required: true,
       },
     },
