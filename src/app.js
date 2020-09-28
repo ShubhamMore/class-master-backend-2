@@ -24,7 +24,7 @@ const employeeSalaryRouter = require('./routers/employee-salary.route');
 // const onlineExamRouter = require('./routers/online-exam.route');
 // const onlineExamQuestionRouter = require('./routers/online-exam-question.route');
 const lectureRouter = require('./routers/lecture.route');
-const lectureContentRouter = require('./routers/lecture-content.route');
+const lectureMaterialRouter = require('./routers/lecture-material.route');
 const leadRouter = require('./routers/lead.route');
 const scheduleRouter = require('./routers/schedule.route');
 const studentCourseInstallmentReceiptRouter = require('./routers/student-course-installment-receipt.route');
@@ -45,6 +45,7 @@ app.use(cors());
 app.use(compression());
 
 app.use('/course-materials', express.static(path.join('course-materials')));
+app.use('/lecture-materials', express.static(path.join('lecture-materials')));
 
 app.use('/', express.static(path.join(__dirname, '../dist')));
 
@@ -88,7 +89,7 @@ app.use(examRouter);
 // app.use(onlineExamRouter);
 // app.use(onlineExamQuestionRouter);
 app.use(lectureRouter);
-app.use(lectureContentRouter);
+app.use(lectureMaterialRouter);
 app.use(leadRouter);
 app.use(scheduleRouter);
 app.use(studentCourseInstallmentReceiptRouter);

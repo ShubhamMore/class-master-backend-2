@@ -3,7 +3,7 @@ const multer = require('multer');
 
 const auth = require('../middleware/auth');
 
-const storage = require('../uploads/file.upload');
+const storage = require('../uploads/course-material.upload');
 
 const newCourseMaterials = require('../controller/course-material-controller/newCourseMaterials');
 const getCourseMaterial = require('../controller/course-material-controller/getCourseMaterial');

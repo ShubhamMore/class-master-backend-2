@@ -1,11 +1,11 @@
-const CourseMaterial = require('../../models/course-material.model');
+const LectureMaterial = require('../../models/lecture-material.model');
 const errorHandler = require('../../handler/error.handler');
 
-const newCourseMaterials = async (req, res) => {
+const newLectureMaterials = async (req, res) => {
   try {
     const files = req.files;
     if (files !== undefined && files.length > 0) {
-      const courseMaterials = new Array();
+      const lectureMaterials = new Array();
       for (let i = 0; i < files.length; i++) {
         let fileType;
         const curFileType = files[i].filename.substring(files[i].filename.lastIndexOf('.') + 1);
@@ -32,7 +32,8 @@ const newCourseMaterials = async (req, res) => {
           branch: req.body.branch,
           category: req.body.category,
           course: req.body.course,
-          subject: req.body.subject,
+          batch: req.body.batch,
+          lecture: req.body.lecture,
           title: title,
           fileName: fileName,
           fileType: fileType,
@@ -42,20 +43,21 @@ const newCourseMaterials = async (req, res) => {
           status: true,
         };
 
-        const courseMaterial = new CourseMaterial(materialData);
+        const lectureMaterial = new LectureMaterial(materialData);
 
-        courseMaterials.push(courseMaterial);
+        lectureMaterials.push(lectureMaterial);
       }
 
-      await CourseMaterial.insertMany(courseMaterials);
+      await LectureMaterial.insertMany(lectureMaterials);
 
       res.status(200).send({ success: true });
     } else {
       throw new Error('files Not Found');
     }
   } catch (e) {
+    console.log(e);
     errorHandler(e, 400, res);
   }
 };
 
-module.exports = newCourseMaterials;
+module.exports = newLectureMaterials;

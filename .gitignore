@@ -1,3 +1,5 @@
 node_modules
-lecture-contents/*
-!lecture-contents/.gitkeep
+course-materials/*
+!course-materials/.gitkeep
+lecture-materials/*
+!lecture-materials/.gitkeep

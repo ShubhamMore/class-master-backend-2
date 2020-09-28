@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const lectureContentSchema = new mongoose.Schema({
+const lectureMaterialSchema = new mongoose.Schema({
   branch: {
     type: String,
     required: true,
@@ -16,15 +16,11 @@ const lectureContentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  subject: {
-    type: String,
-    required: true,
-  },
-  teacher: {
-    type: String,
-    required: true,
-  },
   lecture: {
+    type: String,
+    required: true,
+  },
+  title: {
     type: String,
     required: true,
   },
@@ -54,15 +50,15 @@ const lectureContentSchema = new mongoose.Schema({
   },
 });
 
-lectureContentSchema.methods.toJSON = function () {
-  const lectureContent = this;
-  const lectureContentObject = lectureContent.toObject();
+lectureMaterialSchema.methods.toJSON = function () {
+  const lectureMaterial = this;
+  const lectureMaterialObject = lectureMaterial.toObject();
 
-  delete lectureContentObject.__v;
+  delete lectureMaterialObject.__v;
 
-  return lectureContentObject;
+  return lectureMaterialObject;
 };
 
-const lectureContent = mongoose.model('LectureContent', lectureContentSchema);
+const lectureMaterial = mongoose.model('LectureMaterial', lectureMaterialSchema);
 
-module.exports = lectureContent;
+module.exports = lectureMaterial;
