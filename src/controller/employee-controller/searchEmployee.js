@@ -3,7 +3,6 @@ const errorHandler = require('../../handler/error.handler');
 
 const searchEmployee = async (req, res) => {
   try {
-    console.log(req.body);
     const employee = await Employee.findOne({
       $or: [{ email: req.body.employeeId }, { imsMasterId: req.body.employeeId }],
     });

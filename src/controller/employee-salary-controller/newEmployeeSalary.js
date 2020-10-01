@@ -4,8 +4,6 @@ const errorHandler = require('../../handler/error.handler');
 
 const newEmployeeSalary = async (req, res) => {
   try {
-    console.log(req.body);
-
     const employeeSalary = new EmployeeSalary(req.body);
     await employeeSalary.save();
 
@@ -22,7 +20,6 @@ const newEmployeeSalary = async (req, res) => {
 
     res.status(201).send({ success: true });
   } catch (e) {
-    console.log(e);
     errorHandler(e, 400, res);
   }
 };

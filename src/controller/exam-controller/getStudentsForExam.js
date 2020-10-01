@@ -3,8 +3,6 @@ const errorHandler = require('../../handler/error.handler');
 
 const getStudentsForExam = async (req, res) => {
   try {
-    console.log(req.body);
-
     // SELECT ALL FROM STUDENTS WHERE COURSE = req.body.course AND BATCH = req.body.batch AND (STATUS = "0" OR STATUS = "1") AND STUDENT.SUBJECTS.includes(req.body.subject)
     const students = await StudentCourse.find(
       {

@@ -3,7 +3,6 @@ const errorHandler = require('../../handler/error.handler');
 
 const searchStudent = async (req, res) => {
   try {
-    console.log(req.body);
     const student = await Student.findOne({
       $or: [{ email: req.body.studentId }, { imsMasterId: req.body.studentId }],
     });

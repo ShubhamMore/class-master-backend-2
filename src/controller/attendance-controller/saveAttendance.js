@@ -3,8 +3,6 @@ const errorHandler = require('../../handler/error.handler');
 
 const saveAttendance = async (req, res) => {
   try {
-    console.log(req.body);
-
     const attendance = await Attendance.findOneAndUpdate(
       {
         branch: req.body.branch,
@@ -16,8 +14,6 @@ const saveAttendance = async (req, res) => {
       req.body,
       { upsert: true }
     );
-
-    console.log(attendance);
 
     res.status(200).send(attendance);
   } catch (e) {

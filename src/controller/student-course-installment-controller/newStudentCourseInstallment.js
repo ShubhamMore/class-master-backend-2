@@ -15,7 +15,6 @@ const newStudentCourseInstallment = async (req, res) => {
 
     res.status(201).send({ success: true });
   } catch (e) {
-    console.log(e);
     errorHandler(e, 400, res);
   }
 };

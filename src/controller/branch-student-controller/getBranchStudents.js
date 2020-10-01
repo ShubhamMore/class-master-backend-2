@@ -17,7 +17,6 @@ const getBranchStudents = async (req, res) => {
 
     res.status(200).send(branchStudent);
   } catch (e) {
-    console.log(e);
     errorHandler(e, 400, res);
   }
 };

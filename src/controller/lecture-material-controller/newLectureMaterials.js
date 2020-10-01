@@ -55,7 +55,6 @@ const newLectureMaterials = async (req, res) => {
       throw new Error('files Not Found');
     }
   } catch (e) {
-    console.log(e);
     errorHandler(e, 400, res);
   }
 };

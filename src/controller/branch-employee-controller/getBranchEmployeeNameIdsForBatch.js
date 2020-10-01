@@ -31,8 +31,6 @@ const getBranchEmployeeNameIdsForBatch = async (req, res) => {
     //   role: req.body.role,
     // });
 
-    console.log(req.body, branchEmployees);
-
     // const teachers = await getTeachers(branchEmployees);
     res.status(200).send(branchEmployees);
   } catch (e) {

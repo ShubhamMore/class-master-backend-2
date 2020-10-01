@@ -57,7 +57,6 @@ const newStudentCourseInstallmentReceipt = async (req, res) => {
     // await budget.save();
     res.status(201).send({ receiptId: studentCourseInstallmentReceipt._id });
   } catch (e) {
-    console.log(e);
     errorHandler(e, 400, res);
   }
 };

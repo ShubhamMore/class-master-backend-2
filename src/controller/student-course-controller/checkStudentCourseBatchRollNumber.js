@@ -3,7 +3,6 @@ const errorHandler = require('../../handler/error.handler');
 
 const checkBatchRollNumber = async (req, res) => {
   try {
-    console.log(req.body);
     const studentCourse = await StudentCourse.findOne({
       branch: req.body.branch,
       category: req.body.category,
@@ -19,7 +18,6 @@ const checkBatchRollNumber = async (req, res) => {
 
     res.status(200).send({ rollNumberExist });
   } catch (e) {
-    console.log(e);
     errorHandler(e, 400, res);
   }
 };

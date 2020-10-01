@@ -3,8 +3,6 @@ const errorHandler = require('../../handler/error.handler');
 
 const getEmployeeByIMSId = async (req, res) => {
   try {
-    console.log(req.body);
-
     const employee = await Employee.findOne({
       imsMasterId: req.body.id,
     });

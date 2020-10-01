@@ -17,8 +17,6 @@ const updateBatch = async (req, res) => {
       batch: batch._id,
     });
 
-    console.log(batchSubjectTeachers);
-
     batch.subjects.forEach(async (subject) => {
       batchSubjectTeacher = batchSubjectTeachers.find(
         (employeeSubject) => employeeSubject.subject === subject.subject

@@ -32,7 +32,6 @@ const getExams = async (req, res) => {
 
     res.status(200).send(exams);
   } catch (e) {
-    console.log(e);
     errorHandler(e, 400, res);
   }
 };

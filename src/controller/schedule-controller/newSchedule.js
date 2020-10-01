@@ -5,7 +5,6 @@ const newSchedule = async (req, res) => {
   try {
     const schedules = req.body;
 
-    console.log(req.body);
     await Schedule.insertMany(schedules);
 
     res.status(200).send(schedules);

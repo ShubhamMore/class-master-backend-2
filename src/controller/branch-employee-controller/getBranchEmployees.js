@@ -11,7 +11,6 @@ const getBranchEmployees = async (req, res) => {
 
     res.status(200).send(branchEmployee);
   } catch (e) {
-    console.log(e);
     errorHandler(e, 400, res);
   }
 };

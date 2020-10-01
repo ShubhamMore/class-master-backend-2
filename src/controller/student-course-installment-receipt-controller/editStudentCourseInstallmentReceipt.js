@@ -3,8 +3,6 @@ const errorHandler = require('../../handler/error.handler');
 
 const editStudentCourseInstallmentReceipt = async (req, res) => {
   try {
-    console.log(req.body);
-
     const studentCourseInstallmentReceipt = await StudentCourseInstallmentReceipt.findByIdAndUpdate(
       req.body._id,
       req.body

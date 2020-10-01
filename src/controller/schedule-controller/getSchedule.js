@@ -11,7 +11,6 @@ const getSchedule = async (req, res) => {
 
     res.status(200).send(schedule);
   } catch (e) {
-    console.log(e);
     errorHandler(e, 400, res);
   }
 };

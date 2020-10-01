@@ -3,8 +3,6 @@ const errorHandler = require('../../handler/error.handler');
 
 const getLectureMaterials = async (req, res) => {
   try {
-    console.log(req.body);
-
     const lectureMaterials = await LectureMaterial.find({
       branch: req.body.branch,
       category: req.body.category,

@@ -80,7 +80,6 @@ const getAllSchedule = async (req, res) => {
 
     res.status(200).send(schedules);
   } catch (e) {
-    console.log(e);
     errorHandler(e, 400, res);
   }
 };
