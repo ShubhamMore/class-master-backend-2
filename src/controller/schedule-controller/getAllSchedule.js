@@ -13,13 +13,28 @@ const getAllSchedule = async (req, res) => {
         },
       },
       {
+        $lookup: {
+          from: 'employees',
+          localField: 'teacher', // field in the schedules collection
+          foreignField: 'imsMasterId', // field in the employees collection
+          as: 'teachers',
+        },
+      },
+
+      {
+        $replaceRoot: {
+          newRoot: { $mergeObjects: [{ $arrayElemAt: ['$teachers', 0] }, '$$ROOT'] },
+        },
+      },
+      { $project: { teachers: 0 } },
+      {
         $project: {
           _id: true,
           date: true,
           startTime: true,
           endTime: true,
           subject: true,
-          teacher: true,
+          teacher: '$name',
           topic: true,
           sessionType: true,
           isBetween: {
