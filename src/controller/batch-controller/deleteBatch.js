@@ -10,7 +10,7 @@ const deleteBatch = async (req, res) => {
 
     res.status(200).send({ success: true });
   } catch (e) {
-    errorHandler(err, 400, res);
+    errorHandler(e, e.status || 400, res);
   }
 };
 

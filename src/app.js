@@ -34,8 +34,10 @@ const studentRouter = require('./routers/student.route');
 const orderRouter = require('./routers/order.route');
 const paymentRouter = require('./routers/payment.route');
 const instituteBillingRouter = require('./routers/institute-billing.route');
+const instituteKeysRouter = require('./routers/institute-keys.route');
 const profileRouter = require('./routers/profile.route');
 const userRouter = require('./routers/user.route');
+const zoomRouter = require('./routers/zoom.route');
 
 const app = express();
 
@@ -99,8 +101,10 @@ app.use(studentRouter);
 app.use(orderRouter);
 app.use(paymentRouter);
 app.use(instituteBillingRouter);
+app.use(instituteKeysRouter);
 app.use(profileRouter);
 app.use(userRouter);
+app.use(zoomRouter);
 
 app.use((req, res, next) => {
   const error = new Error('NOT FOUND');

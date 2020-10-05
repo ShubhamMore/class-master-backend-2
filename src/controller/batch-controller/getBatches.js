@@ -19,7 +19,7 @@ const getBatchesByCourse = async (req, res) => {
 
     res.status(200).send(batches);
   } catch (e) {
-    errorHandler(err, 400, res);
+    errorHandler(e, e.status || 400, res);
   }
 };
 

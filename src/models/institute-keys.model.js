@@ -14,6 +14,18 @@ const instituteKeysSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
+    accessToken: {
+      type: String,
+      default: null,
+    },
+    refreshToken: {
+      type: String,
+      default: null,
+    },
+    expiresIn: {
+      type: Number,
+      default: null,
+    },
   },
   paymentGatewayKeys: {
     accessKey: {

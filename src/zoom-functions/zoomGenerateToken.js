@@ -1,21 +1,9 @@
-const Zoomuser = require('../model/zoomCredentials.model');
-const errorHandler = require('../service/errorHandler');
-const request = require('request');
 const rp = require('request-promise');
 
 const zoomToken = async (req, res) => {
   try {
-    const user = await Zoomuser.findOne({
-      userId: req.query.userId,
-    });
-
-    if (!user) {
-      throw new Error('No Zoom Credentials Found');
-    }
     const redirectURL =
-      process.env.ZOOM_REDIRECT_URL +
-      '/institute/zoom/generateZoomAuthToken?userId=' +
-      req.query.userId;
+      process.env.ZOOM_REDIRECT_URL + '/generateZoomAuthToken?userId=' + req.query.userId;
     let options = {
       method: 'POST',
       url: 'https://zoom.us/oauth/token',

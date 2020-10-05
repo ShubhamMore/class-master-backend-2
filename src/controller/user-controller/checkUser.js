@@ -14,7 +14,7 @@ const checkUser = async (req, res) => {
     if (e.code == 11000) {
       err = 'User already register, Please login';
     }
-    errorHandler(err, 400, res);
+    errorHandler(e, e.status || 400, res);
   }
 };
 

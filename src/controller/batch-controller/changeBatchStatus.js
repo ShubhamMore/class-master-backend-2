@@ -18,8 +18,8 @@ const changeBatchStatus = async (req, res) => {
     );
 
     res.status(200).send({ success: true });
-  } catch (err) {
-    errorHandler(err, 400, res);
+  } catch (e) {
+    errorHandler(e, 400, res);
   }
 };
 

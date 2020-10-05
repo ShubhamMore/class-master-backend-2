@@ -15,6 +15,7 @@
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
+    "crypto-js": "^4.0.0",
     "env-cmd": "^9.0.3",
     "express": "^4.16.4",
     "googleapis": "^46.0.0",
@@ -29,6 +30,8 @@
     "number-to-words": "^1.2.4",
     "prettier": "^2.0.5",
     "razorpay": "^2.0.6",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6",
     "validator": "^10.11.0"
   },
   "devDependencies": {
