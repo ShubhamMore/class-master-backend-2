@@ -20,7 +20,7 @@ const newSchedule = async (req, res) => {
 
       const newSchedule = {
         scheduleId: schedule._id,
-        duration: duration,
+        duration: duration === 0 ? 40 : duration,
         password: password,
         branch: schedule.branch,
         category: schedule.category,

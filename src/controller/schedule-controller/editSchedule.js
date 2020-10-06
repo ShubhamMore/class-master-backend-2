@@ -25,7 +25,7 @@ const editSchedule = async (req, res) => {
 
       const newSchedule = {
         scheduleId: req.body._id,
-        duration: duration,
+        duration: duration === 0 ? 40 : duration,
         password: password,
         branch: req.body.branch,
         category: req.body.category,
@@ -56,7 +56,7 @@ const editSchedule = async (req, res) => {
 
       const updatedSchedule = {
         scheduleId: req.body._id,
-        duration: duration,
+        duration: duration === 0 ? 40 : duration,
         password: password,
         branch: req.body.branch,
         category: req.body.category,
