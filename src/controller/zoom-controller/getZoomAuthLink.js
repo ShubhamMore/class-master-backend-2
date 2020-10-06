@@ -1,5 +1,4 @@
 const InstituteKeys = require('../../models/institute-keys.model');
-const CryptoJS = require('crypto-js');
 const errorHandler = require('../../handler/error.handler');
 
 const getZoomAuthLink = async (req, res, next) => {
@@ -11,15 +10,13 @@ const getZoomAuthLink = async (req, res, next) => {
       { onlineClassesKeys: 1 }
     );
 
-    const encryptedImsMasterId = CryptoJS.AES.encrypt(
-      req.user.imsMasterId,
-      process.env.AESSecretKey
-    ).toString();
+    const encryptedImsMasterId = Buffer.from(req.user.imsMasterId, 'utf8').toString('hex');
 
-    const redirectURL =
+    const redirectURL = encodeURIComponent(
       process.env.ZOOM_REDIRECT_URL +
-      '/generateZoomAuthToken?instituteImsId=' +
-      encryptedImsMasterId;
+        '/generateZoomAuthToken?instituteImsId=' +
+        encryptedImsMasterId
+    ).toString();
 
     const authLink =
       'https://zoom.us/oauth/authorize?response_type=code&client_id=' +

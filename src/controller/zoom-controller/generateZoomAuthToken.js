@@ -1,12 +1,36 @@
 const InstituteKeys = require('../../models/institute-keys.model');
 const promiseRequest = require('request-promise');
-const CryptoJS = require('crypto-js');
 const errorHandler = require('../../handler/error.handler');
+
+const success = () => {
+  return `
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+          <title>Verification of Zoom Credentials</title>
+      </head>
+      <body>
+          <div class="container">
+              <div class="row">
+                  <div class="col-12">
+                      <h3 class="text-center">Zoom User Authenticated Successfully</h3>
+                  </div>
+              </div>
+          </div>
+      </body>
+    </html>
+  `;
+};
 
 const generateZoomAuthToken = async (req, res) => {
   try {
-    const bytes = CryptoJS.AES.decrypt(req.query.instituteImsId, process.env.AESSecretKey);
-    const decryptedImsMasterId = bytes.toString(CryptoJS.enc.Utf8);
+    const decryptedImsMasterId = Buffer.from(req.query.instituteImsId, 'hex').toString('utf8');
 
     const zoomCredentials = await InstituteKeys.findOne(
       {
@@ -71,7 +95,7 @@ const generateZoomAuthToken = async (req, res) => {
       }
     );
 
-    res.status(200).send({ success: true });
+    res.status(200).send(success());
   } catch (e) {
     errorHandler(e, 400, res);
   }

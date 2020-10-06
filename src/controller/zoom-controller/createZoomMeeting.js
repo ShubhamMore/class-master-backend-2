@@ -1,5 +1,6 @@
-const OnlineClass = require('../model/onlineClass.model');
+const OnlineClass = require('../../models/online-class.model');
 const request = require('request-promise');
+const errorHandler = require('../../handler/error.handler');
 
 const createZoomMeeting = async (req, res) => {
   try {
@@ -66,7 +67,11 @@ const createZoomMeeting = async (req, res) => {
 
     const newOnlineClass = new OnlineClass(newMeeting);
     await newOnlineClass.save();
-  } catch (error) {}
+
+    res.status(400).send(newOnlineClass);
+  } catch (e) {
+    errorHandler(e, 400, res);
+  }
 };
 
 module.exports = createZoomMeeting;
