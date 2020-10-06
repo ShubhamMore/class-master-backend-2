@@ -18,26 +18,23 @@ const zoomAuth = async (req, res, next) => {
       throw new Error('Institute Not Found');
     }
 
-    const instituteKeys = await InstituteKeys.findOne(
-      {
-        imsMasterId,
-      },
-      { onlineCLassesKeys: 1 }
-    );
+    const instituteKeys = await InstituteKeys.findOne({
+      imsMasterId,
+    });
 
     if (!instituteKeys) {
       throw new Error('Invalid Zoom Credentials');
     }
 
-    const currentTimeStamp = new Date().getTime() / 1000;
+    const currentTimeStamp = new Date().getTime();
 
-    if (currentTimeStamp > instituteKeys.onlineCLassesKeys.expiresIn) {
+    if (currentTimeStamp > instituteKeys.onlineClassesKeys.expiresIn) {
       const options = {
         method: 'POST',
         url: 'https://zoom.us/oauth/token',
         qs: {
           grant_type: 'refresh_token',
-          refresh_token: instituteKeys.onlineCLassesKeys.refreshToken,
+          refresh_token: instituteKeys.onlineClassesKeys.refreshToken,
         },
         headers: {
           /**The credential below is a sample base64 encoded credential. Replace it with "Authorization: 'Basic ' + Buffer.from(your_app_client_id + ':' + your_app_client_secret).toString('base64')"
@@ -45,24 +42,24 @@ const zoomAuth = async (req, res, next) => {
           Authorization:
             'Basic ' +
             Buffer.from(
-              instituteKeys.onlineCLassesKeys.accessKey +
+              instituteKeys.onlineClassesKeys.accessKey +
                 ':' +
-                instituteKeys.onlineCLassesKeys.secretKey
+                instituteKeys.onlineClassesKeys.secretKey
             ).toString('base64'),
         },
       };
 
       let response = await promiseRequest(options);
 
-      response = JSON.parse(responseBody);
+      response = JSON.parse(response);
 
-      const currentTime = new Date().getTime() / 1000;
+      const currentTime = new Date().getTime();
 
-      const expiresIn = response.expires_in + currentTime;
+      const expiresIn = response.expires_in * 1000 + currentTime;
 
       await InstituteKeys.findOneAndUpdate(
         {
-          imsMasterId: decryptedImsMasterId,
+          imsMasterId: imsMasterId,
         },
         {
           $set: {
@@ -76,9 +73,9 @@ const zoomAuth = async (req, res, next) => {
         }
       );
 
-      instituteKeys.onlineCLassesKeys.accessToken = response.access_token;
-      instituteKeys.onlineCLassesKeys.refreshToken = response.refresh_token;
-      instituteKeys.onlineCLassesKeys.expiresIn = expiresIn;
+      instituteKeys.onlineClassesKeys.accessToken = response.access_token;
+      instituteKeys.onlineClassesKeys.refreshToken = response.refresh_token;
+      instituteKeys.onlineClassesKeys.expiresIn = expiresIn;
     }
 
     req.zoomCredentials = instituteKeys;

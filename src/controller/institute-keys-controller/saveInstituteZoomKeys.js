@@ -3,7 +3,6 @@ const errorHandler = require('../../handler/error.handler');
 
 const saveInstituteZoomKeys = async (req, res) => {
   try {
-    console.log(req.body);
     const instituteKeys = await InstituteKeys.findOneAndUpdate(
       { imsMasterId: req.user.imsMasterId },
 

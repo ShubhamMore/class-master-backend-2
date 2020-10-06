@@ -2,23 +2,44 @@ const mongoose = require('mongoose');
 
 // onlineClass registration schema
 const onlineClassSchema = mongoose.Schema({
+  schedule: {
+    type: String,
+    require: true,
+    unique: true,
+  },
+  branch: {
+    type: String,
+    require: true,
+  },
+  category: {
+    type: String,
+    require: true,
+  },
+  batch: {
+    type: String,
+    require: true,
+  },
+  course: {
+    type: String,
+    require: true,
+  },
+  subject: {
+    type: String,
+    require: true,
+  },
   topic: {
     type: String,
     require: true,
   },
-  duration: {
-    type: String,
-    require: true,
-  },
-  password: {
-    type: String,
-    require: true,
-  },
-  agenda: {
+  teacher: {
     type: String,
     require: true,
   },
   meetingId: {
+    type: String,
+    require: true,
+  },
+  password: {
     type: String,
     require: true,
   },
@@ -34,31 +55,7 @@ const onlineClassSchema = mongoose.Schema({
     type: String,
     require: true,
   },
-  instituteId: {
-    type: String,
-    require: true,
-  },
-  batchId: {
-    type: String,
-    require: true,
-  },
-  courseId: {
-    type: String,
-    require: true,
-  },
-  topic: {
-    type: String,
-    require: true,
-  },
-  hostId: {
-    type: String,
-    require: true,
-  },
-  hostEmail: {
-    type: String,
-    require: true,
-  },
-  hostName: {
+  duration: {
     type: String,
     require: true,
   },

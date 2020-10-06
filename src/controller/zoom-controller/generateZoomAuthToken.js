@@ -75,9 +75,9 @@ const generateZoomAuthToken = async (req, res) => {
 
     response = JSON.parse(response);
 
-    const currentTime = new Date().getTime() / 1000;
+    const currentTime = new Date().getTime();
 
-    const expiresIn = response.expires_in + currentTime;
+    const expiresIn = response.expires_in * 1000 + currentTime;
 
     await InstituteKeys.findOneAndUpdate(
       {

@@ -26,7 +26,6 @@ const getZoomAuthLink = async (req, res, next) => {
 
     res.status(200).send({ authLink });
   } catch (e) {
-    console.log(e);
     errorHandler(e, 400, res);
   }
 };

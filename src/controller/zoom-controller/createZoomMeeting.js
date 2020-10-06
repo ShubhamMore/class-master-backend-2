@@ -1,9 +1,12 @@
 const OnlineClass = require('../../models/online-class.model');
+const Employee = require('../../models/employee.model');
 const request = require('request-promise');
 const errorHandler = require('../../handler/error.handler');
 
 const createZoomMeeting = async (req, res) => {
   try {
+    const teacher = await Employee.findOne({ imsMasterId: req.body.teacher });
+
     const createMeeting = {
       topic: req.body.topic,
       type: 2,
@@ -25,7 +28,7 @@ const createZoomMeeting = async (req, res) => {
         approval_type: 2,
         registration_type: 1,
         audio: 'both',
-        alternative_hosts: teacher.email,
+        alternative_hosts: teacher ? teacher.email : req.user.email,
         auto_recording: 'cloud',
         enforce_login: false,
         enforce_login_domains: null,
@@ -40,35 +43,36 @@ const createZoomMeeting = async (req, res) => {
       url: 'https://api.zoom.us/v2/users/me/meetings',
       headers: {
         'Content-Type': 'application/json',
-        authorization: 'Bearer ' + req.zoom.accessToken,
+        authorization: 'Bearer ' + req.zoomCredentials.onlineClassesKeys.accessToken,
       },
       body: createMeeting,
       json: true,
     };
 
-    const meetingDetails = await request(options);
+    const zoomMeetingDetails = await request(options);
 
-    const newMeeting = {
+    const newClass = {
+      schedule: req.body.scheduleId,
+      branch: req.body.branch,
+      category: req.body.category,
+      batch: req.body.batch,
+      course: req.body.course,
+      subject: req.body.subject,
       topic: req.body.topic,
-      duration: req.body.duration,
+      teacher: req.body.teacher,
+      meetingId: zoomMeetingDetails.id,
       password: req.body.password,
-      agenda: req.body.agenda,
-      joinUrl: meetingDetails.join_url,
-      meetingId: meetingDetails.id,
-      startUrl: meetingDetails.start_url,
+      joinUrl: zoomMeetingDetails.join_url,
+      startUrl: zoomMeetingDetails.start_url,
       startTime: req.body.startTime,
-      batchId: req.body.batchId,
-      courseId: req.body.courseId,
-      instituteId: req.body.instituteId,
-      hostId: req.body.teacherId,
-      hostEmail: teacher.basicDetails.employeeEmail,
-      hostName: teacher.basicDetails.name,
+      duration: req.body.duration,
     };
 
-    const newOnlineClass = new OnlineClass(newMeeting);
+    const newOnlineClass = new OnlineClass(newClass);
+
     await newOnlineClass.save();
 
-    res.status(400).send(newOnlineClass);
+    res.status(200).send(newOnlineClass);
   } catch (e) {
     errorHandler(e, 400, res);
   }
