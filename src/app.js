@@ -3,7 +3,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const morgan = require('morgan');
-var cors = require('cors');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 require('./database/mongoose');
 
@@ -32,6 +33,7 @@ const studentCourseInstallmentRouter = require('./routers/student-course-install
 const studentCourseRouter = require('./routers/student-course.route');
 const studentRouter = require('./routers/student.route');
 const orderRouter = require('./routers/order.route');
+const notificationRouter = require('./routers/notification.route');
 const paymentRouter = require('./routers/payment.route');
 const instituteBillingRouter = require('./routers/institute-billing.route');
 const instituteKeysRouter = require('./routers/institute-keys.route');
@@ -43,8 +45,12 @@ const app = express();
 
 app.use(express.json());
 
+app.use(express.json({ limit: '100mb' }));
+
 app.use(cors());
 app.use(compression());
+
+app.use(cookieParser());
 
 app.use('/course-materials', express.static(path.join('course-materials')));
 app.use('/lecture-materials', express.static(path.join('lecture-materials')));
@@ -90,19 +96,20 @@ app.use(employeeSalaryRouter);
 app.use(examRouter);
 // app.use(onlineExamRouter);
 // app.use(onlineExamQuestionRouter);
+app.use(instituteKeysRouter);
+app.use(instituteBillingRouter);
 app.use(lectureRouter);
 app.use(lectureMaterialRouter);
 app.use(leadRouter);
+app.use(orderRouter);
+app.use(profileRouter);
+app.use(paymentRouter);
+app.use(notificationRouter);
 app.use(scheduleRouter);
 app.use(studentCourseInstallmentReceiptRouter);
 app.use(studentCourseInstallmentRouter);
 app.use(studentCourseRouter);
 app.use(studentRouter);
-app.use(orderRouter);
-app.use(paymentRouter);
-app.use(instituteBillingRouter);
-app.use(instituteKeysRouter);
-app.use(profileRouter);
 app.use(userRouter);
 app.use(zoomRouter);
 

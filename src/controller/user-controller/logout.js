@@ -1,5 +1,6 @@
 const errorHandler = require('../../handler/error.handler');
 const User = require('../../models/user.model');
+const UserSocket = require('../../socket/user-socket');
 
 const logout = async (req, res) => {
   try {
@@ -13,6 +14,8 @@ const logout = async (req, res) => {
       return token.token !== req.token;
     });
     await user.save();
+
+    UserSocket.deleteSocket(req.user.imsMasterId);
 
     res.send({ success: true });
   } catch (e) {
