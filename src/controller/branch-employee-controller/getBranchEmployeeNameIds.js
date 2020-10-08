@@ -25,6 +25,11 @@ const getBranchEmployeeNameIds = async (req, res) => {
       },
       { $project: { employees: 0 } },
       {
+        $match: {
+          employee: { $ne: req.user.imsMasterId },
+        },
+      },
+      {
         $project: {
           _id: 1,
           employee: 1,
