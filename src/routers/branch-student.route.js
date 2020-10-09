@@ -3,6 +3,7 @@ const express = require('express');
 const auth = require('../middleware/auth');
 
 const getBranchStudents = require('../controller/branch-student-controller/getBranchStudents');
+const getBranchStudentNameIds = require('../controller/branch-student-controller/getBranchStudentNameIds');
 const getBranchStudent = require('../controller/branch-student-controller/getBranchStudent');
 const newBranchStudent = require('../controller/branch-student-controller/newBranchStudent');
 const getBranchStudentForEditing = require('../controller/branch-student-controller/getBranchStudentForEditing');
@@ -14,6 +15,10 @@ const router = new express.Router();
 
 router.post('/getBranchStudents', auth, async (req, res) => {
   await getBranchStudents(req, res);
+});
+
+router.post('/getBranchStudentNameIds', auth, async (req, res) => {
+  await getBranchStudentNameIds(req, res);
 });
 
 router.post('/getBranchStudent', auth, async (req, res) => {

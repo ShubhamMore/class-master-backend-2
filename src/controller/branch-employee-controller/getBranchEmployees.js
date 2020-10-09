@@ -1,4 +1,3 @@
-const Employee = require('../../models/employee.model');
 const BranchEmployee = require('../../models/branch-employee.model');
 const errorHandler = require('../../handler/error.handler');
 

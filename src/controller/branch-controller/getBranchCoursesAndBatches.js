@@ -16,9 +16,8 @@ const getBranchCoursesAndBatches = async (req, res) => {
 
     Promise.all([branch, courses, batches])
       .then((result) => {
-
-        if(!result[0]) {
-            throw new Error('Branch Not Found')
+        if (!result[0]) {
+          throw new Error('Branch Not Found');
         }
 
         res.status(200).send({

@@ -7,7 +7,7 @@ const updateCourse = async (req, res) => {
     if (!course) {
       throw new Error('Course not found, Course Updation Failed');
     }
-   
+
     res.status(200).send({ success: true });
   } catch (e) {
     errorHandler(e, 400, res);
