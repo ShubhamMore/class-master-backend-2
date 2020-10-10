@@ -62,8 +62,6 @@ const getBatchesByCourse = async (req, res) => {
         categories.push(category._id);
       });
 
-      console.log(categories);
-
       searchQuery.category = { $all: categories };
     }
 

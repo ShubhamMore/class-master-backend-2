@@ -20,7 +20,6 @@ const getBudgetForBranch = async (req, res) => {
 
     Promise.all([income, expense])
       .then((incomeExpense) => {
-        console.log(incomeExpense);
         res.status(200).send({ incomes: incomeExpense[0], expenses: incomeExpense[1] });
       })
       .catch((e) => {

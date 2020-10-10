@@ -27,7 +27,6 @@ const socket = async (server) => {
       }
     })
     .on('connection', (socket) => {
-      console.log('connected');
       new UserSocket(socket.user.imsMasterId, socket);
       socket.on('disconnect', () => {
         UserSocket.deleteSocket(socket.user.imsMasterId);

@@ -77,7 +77,6 @@ const updateZoomMeeting = async (req, res) => {
 
     res.status(200).send(response);
   } catch (e) {
-    console.log(e);
     errorHandler(e, 400, res);
   }
 };

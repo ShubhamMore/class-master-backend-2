@@ -5,20 +5,27 @@ const errorHandler = require('../../handler/error.handler');
 const newEmployeeSalary = async (req, res) => {
   try {
     const employeeSalary = new EmployeeSalary(req.body);
-    await employeeSalary.save();
+    const saveEmployeeSalary = employeeSalary.save();
 
-    // const budget = new Budget({
-    //   employeeSalary: employeeSalary._id,
-    //   generatedBy: employeeSalary.generatedBy,
-    //   branch: employeeSalary.branch,
-    //   title: 'Employee Salary',
-    //   amount: employeeSalary.netAmount,
-    //   type: '0',
-    //   date: employeeSalary.date,
-    // });
-    // await budget.save();
+    const budget = new Budget({
+      salary: employeeSalary._id,
+      generatedBy: employeeSalary.generatedBy,
+      branch: employeeSalary.branch,
+      title: 'Employee Salary',
+      amount: employeeSalary.netSalary,
+      type: 'expense',
+      date: employeeSalary.date,
+    });
 
-    res.status(201).send({ success: true });
+    const saveBudget = budget.save();
+
+    Promise.all([saveEmployeeSalary, saveBudget])
+      .then((resData) => {
+        res.status(201).send({ success: true });
+      })
+      .catch((e) => {
+        errorHandler(e, 400, res);
+      });
   } catch (e) {
     errorHandler(e, 400, res);
   }

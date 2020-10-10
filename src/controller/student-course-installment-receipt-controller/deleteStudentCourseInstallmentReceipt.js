@@ -48,6 +48,8 @@ const deleteStudentCourseInstallmentReceipt = async (req, res) => {
     //   }
     // );
 
+    await Budget.findOneAndDelete({ receipt: studentCourseInstallmentReceipt._id });
+
     res.status(200).send({ success: true });
   } catch (e) {
     errorHandler(e, 400, res);

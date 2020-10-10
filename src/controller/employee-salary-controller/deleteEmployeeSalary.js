@@ -10,7 +10,7 @@ const deleteEmployeeSalary = async (req, res) => {
       throw new Error('Employee Salary Status Deletion Failed');
     }
 
-    await Budget.findOneAndDelete({ employeeSalary: employeeSalary._id });
+    await Budget.findOneAndDelete({ salary: employeeSalary._id });
 
     res.status(200).send({ success: true });
   } catch (e) {
