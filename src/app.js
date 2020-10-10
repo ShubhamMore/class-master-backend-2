@@ -11,7 +11,7 @@ require('./database/mongoose');
 // MANAGEMENT
 const attendanceRouter = require('./routers/attendance.route');
 const branchRouter = require('./routers/branch.route');
-// const budgetRouter = require('./routers/budget.route');
+const budgetRouter = require('./routers/budget.route');
 const courseRouter = require('./routers/course.route');
 const courseMaterialRouter = require('./routers/course-material.route');
 const batchRouter = require('./routers/batch.route');
@@ -83,7 +83,7 @@ app.use((req, res, next) => {
 // MANAGEMENT
 app.use(attendanceRouter);
 app.use(branchRouter);
-// app.use(budgetRouter);
+app.use(budgetRouter);
 app.use(courseRouter);
 app.use(courseMaterialRouter);
 app.use(batchRouter);

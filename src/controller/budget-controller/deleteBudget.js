@@ -3,7 +3,7 @@ const errorHandler = require('../../handler/error.handler');
 
 const deleteBudget = async (req, res) => {
   try {
-    const budget = await Budget.findByIdAndRemove(req.body._id);
+    const budget = await Budget.findByIdAndRemove(req.body.id);
 
     if (!budget) {
       throw new Error('No Budget Found');

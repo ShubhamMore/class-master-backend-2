@@ -3,27 +3,22 @@ const errorHandler = require('../../handler/error.handler');
 
 const getBudgetForBranch = async (req, res) => {
   try {
-    let searchDataForIncome = {
-      type: '1',
-    };
-    let searchDataForExpense = {
-      type: '0',
-    };
-
-    if (req.body.month && req.body.year) {
+    const query = {
+    
+      branch: req.body.branch,
+    }
+    if (req.body.month !=='' && req.body.year!=='') {
       const date = new RegExp('.*' + req.body.year + '-' + req.body.month + '.*');
-      searchDataForIncome.date = date;
-      searchDataForExpense.date = date;
-    } else if (req.body.year) {
+     query.date = date;
+      
+    } else if (req.body.year!=='') {
       const date = new RegExp('.*' + req.body.year + '.*');
-      searchDataForIncome.date = date;
-      searchDataForExpense.date = date;
+    query.date = date;
     }
 
-    searchDataForIncome.branch = req.body.branch;
-    searchDataForExpense.branch = req.body.branch;
-    const income = await Budget.find(searchDataForIncome);
-    const expense = await Budget.find(searchDataForExpense);
+  
+    const income = await Budget.find({...query, type: 'income'});
+    const expense = await Budget.find({...query, type: 'expense'});
 
     res.status(201).send({ income, expense });
   } catch (e) {

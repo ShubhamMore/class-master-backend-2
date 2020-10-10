@@ -1,30 +1,23 @@
 const Budget = require('../../models/budget.model');
 const errorHandler = require('../../handler/error.handler');
 
-const sortArrayOfObjects = require('../../functions/sortArrayOfObjects');
-
 const getBudgetSummery = async (req, res) => {
   try {
-    let budgetSummery;
-    let searchData = {};
+ const query = {
+   branch : req.body.branch
+ };
 
     if (req.body.month && req.body.year) {
       const date = new RegExp('.*' + req.body.year + '-' + req.body.month + '.*');
-      searchData.date = date;
+      query.date = date;
     } else if (req.body.year) {
       const date = new RegExp('.*' + req.body.year + '.*');
-      searchData.date = date;
+      query.date = date;
     }
 
-    if (req.body.searchType !== '0') {
-      searchData.branch = req.body.searchType;
-    }
+    const budgetSummery = await Budget.find(query);
 
-    budgetSummery = await Budget.find(searchData);
-
-    const statement = sortArrayOfObjects(budgetSummery, 'date');
-
-    res.status(201).send(statement);
+    res.status(201).send(budgetSummery);
   } catch (e) {
     errorHandler(e, 400, res);
   }
