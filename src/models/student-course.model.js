@@ -34,7 +34,7 @@ const studentCourseSchema = new mongoose.Schema({
     required: true,
   },
   discount: {
-    type: Number,
+    type: String,
     default: null,
   },
   additionalDiscountType: {

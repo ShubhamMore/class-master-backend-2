@@ -17,6 +17,7 @@ const newStudentCourse = async (req, res) => {
     }
 
     const newStudentCourse = new StudentCourse(req.body.studentCourse);
+
     await newStudentCourse.save();
 
     const newStudentCourseInstallment = new StudentCourseInstallment(
@@ -24,12 +25,13 @@ const newStudentCourse = async (req, res) => {
     );
     await newStudentCourseInstallment.save();
 
-    await StudentCourse.findByIdAndUpdate(studentCourse._id, {
-      studentCourseInstallment: studentCourseInstallment._id,
+    await StudentCourse.findByIdAndUpdate(newStudentCourse._id, {
+      studentCourseInstallment: newStudentCourseInstallment._id,
     });
 
     res.status(201).send({ success: true });
   } catch (e) {
+    console.log(e);
     errorHandler(e, 400, res);
   }
 };

@@ -24,7 +24,7 @@ const batchSchema = new mongoose.Schema({
     },
     rollNoPrefix: {
       type: String,
-      required: true,
+      default: '',
     },
     rollNo: {
       type: Number,
