@@ -25,8 +25,8 @@ router.post('/newLectureQuestion', auth, async (req, res) => {
   await newLectureQuestion(req, res);
 });
 
-router.post('/editLectureQuestion', auth, async (req, res) => {
-  await editLectureQuestion(req, res);
+router.post('/newLectureQuestionAnswer', auth, async (req, res) => {
+  await newLectureQuestionAnswer(req, res);
 });
 
 router.post('/deleteLectureQuestion', auth, async (req, res) => {

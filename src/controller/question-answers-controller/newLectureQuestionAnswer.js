@@ -13,7 +13,7 @@ const newLectureQuestionAnswer = async (req, res) => {
 
     await newLectureQuestionAnswer.save();
 
-    res.status(200).send({ success: true });
+    res.status(200).send(newLectureQuestionAnswer);
   } catch (e) {
     errorHandler(e, 400, res);
   }

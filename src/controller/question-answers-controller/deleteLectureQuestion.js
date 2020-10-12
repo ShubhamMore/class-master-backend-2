@@ -10,7 +10,7 @@ const deleteLectureQuestion = async (req, res) => {
       throw new Error('Question Not Found');
     }
 
-    if (lectureQuestion.createdBy !== req.user.insMasterId) {
+    if (lectureQuestion.createdBy !== req.user.imsMasterId) {
       throw new Error('You are not Authorized to Delete This Question.');
     }
 

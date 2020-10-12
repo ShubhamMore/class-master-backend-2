@@ -9,7 +9,7 @@ const editLectureQuestionAnswer = async (req, res) => {
       throw new Error('Question Answer Not Found');
     }
 
-    if (questionAnswer.createdBy !== req.user.insMasterId) {
+    if (questionAnswer.createdBy !== req.user.imsMasterId) {
       throw new Error('You are not Authorized to edit This Question.');
     }
 
