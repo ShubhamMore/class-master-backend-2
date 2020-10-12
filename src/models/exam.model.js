@@ -5,11 +5,11 @@ const examSchema = new mongoose.Schema({
     required: true,
   },
   onlineExam: {
-    type: String,
+    type: Number,
     default: null,
   },
   outOfMarks: {
-    type: String,
+    type: Number,
     required: true,
   },
   passingMarks: {
@@ -51,6 +51,10 @@ const examSchema = new mongoose.Schema({
   marks: [
     {
       student: {
+        type: String,
+        required: true,
+      },
+      rollNumber: {
         type: String,
         required: true,
       },

@@ -64,6 +64,7 @@ const getStudentsForAttendance = async (req, res) => {
             category: req.body.category,
             course: req.body.course,
             batch: req.body.batch,
+            status: true,
           },
         },
         {
