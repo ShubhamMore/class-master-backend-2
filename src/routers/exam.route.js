@@ -3,6 +3,7 @@ const express = require('express');
 const auth = require('../middleware/auth');
 
 const getStudentsForExam = require('../controller/exam-controller/getStudentsForExam');
+const getStudentCourseScore = require('../controller/exam-controller/getStudentCourseScore');
 const saveStudentsMarks = require('../controller/exam-controller/saveStudentsMarks');
 const saveExam = require('../controller/exam-controller/saveExam');
 const getExams = require('../controller/exam-controller/getExams');
@@ -16,6 +17,10 @@ const router = new express.Router();
 
 router.post('/getStudentsForExam', auth, async (req, res) => {
   await getStudentsForExam(req, res);
+});
+
+router.post('/getStudentCourseScore', auth, async (req, res) => {
+  await getStudentCourseScore(req, res);
 });
 
 router.post('/saveStudentsMarks', auth, async (req, res) => {
