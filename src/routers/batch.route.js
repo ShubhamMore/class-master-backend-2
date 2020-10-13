@@ -5,6 +5,7 @@ const auth = require('../middleware/auth');
 const newBatch = require('../controller/batch-controller/newBatch');
 const getBatches = require('../controller/batch-controller/getBatches');
 const getBatch = require('../controller/batch-controller/getBatch');
+const getBatchSubjects = require('../controller/batch-controller/getBatchSubjects');
 const getBatchForEditing = require('../controller/batch-controller/getBatchForEditing');
 const updateBatch = require('../controller/batch-controller/updateBatch');
 const changeBatchStatus = require('../controller/batch-controller/changeBatchStatus');
@@ -22,6 +23,10 @@ router.post('/getBatches', auth, async (req, res) => {
 
 router.post('/getBatch', auth, async (req, res) => {
   await getBatch(req, res);
+});
+
+router.post('/getBatchSubjects', auth, async (req, res) => {
+  await getBatchSubjects(req, res);
 });
 
 router.post('/getBatchForEditing', auth, async (req, res) => {

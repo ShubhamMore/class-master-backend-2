@@ -4,7 +4,7 @@ const auth = require('../middleware/auth');
 
 const saveAttendance = require('../controller/attendance-controller/saveAttendance');
 const editAttendance = require('../controller/attendance-controller/getStudentsForAttendance');
-const getStudentAttendance = require('../controller/attendance-controller/getStudentsForAttendance');
+const getStudentCourseAttendance = require('../controller/attendance-controller/getStudentCourseAttendance');
 const getStudentsForAttendance = require('../controller/attendance-controller/getStudentsForAttendance');
 
 const router = new express.Router();
@@ -21,8 +21,8 @@ router.post('/editAttendance', auth, async (req, res) => {
   await editAttendance(req, res);
 });
 
-router.post('/getStudentAttendance', auth, async (req, res) => {
-  await getStudentAttendance(req, res);
+router.post('/getStudentCourseAttendance', auth, async (req, res) => {
+  await getStudentCourseAttendance(req, res);
 });
 
 module.exports = router;
