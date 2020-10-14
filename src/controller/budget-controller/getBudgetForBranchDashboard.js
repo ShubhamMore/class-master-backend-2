@@ -9,7 +9,7 @@ const getBudgetForBranchDashboard = async (req, res) => {
 
     const date = new RegExp('.*' + req.body.year + '.*');
 
-    const budgetIncomeSummery = Budget.aggregate([
+    const monthlyBudgetIncome = Budget.aggregate([
       {
         $match: {
           branch: req.body.branch,
@@ -25,7 +25,7 @@ const getBudgetForBranchDashboard = async (req, res) => {
       },
     ]);
 
-    const budgetExpenseSummery = Budget.aggregate([
+    const monthlyBudgetExpense = Budget.aggregate([
       {
         $match: {
           branch: req.body.branch,
@@ -41,9 +41,9 @@ const getBudgetForBranchDashboard = async (req, res) => {
       },
     ]);
 
-    Promise.all([budgetIncomeSummery, budgetExpenseSummery])
+    Promise.all([monthlyBudgetIncome, monthlyBudgetExpense])
       .then((resData) => {
-        res.status(201).send({ budgetIncomeSummery: resData[0], budgetExpenseSummery: resData[1] });
+        res.status(201).send({ income: resData[0], expense: resData[1] });
       })
       .catch((e) => {
         errorHandler(e, 400, res);
