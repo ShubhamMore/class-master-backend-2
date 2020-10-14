@@ -2,10 +2,10 @@ const express = require('express');
 
 const auth = require('../middleware/auth');
 
-const getInstituteDashboard = require('../controller/dashboard-controller/getAdminDashboardData');
-const getBranchDashboard = require('../controller/dashboard-controller/getAdminDashboardData');
-const getEmployeeDashboard = require('../controller/dashboard-controller/getAdminDashboardData');
-const getStudentDashboard = require('../controller/dashboard-controller/getAdminDashboardData');
+const getInstituteDashboard = require('../controller/dashboard-controller/getInstituteDashboard');
+const getBranchDashboard = require('../controller/dashboard-controller/getBranchDashboard');
+const getEmployeeDashboard = require('../controller/dashboard-controller/getEmployeeDashboard');
+const getStudentDashboard = require('../controller/dashboard-controller/getStudentDashboard');
 
 const router = new express.Router();
 

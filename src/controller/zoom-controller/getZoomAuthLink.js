@@ -12,11 +12,10 @@ const getZoomAuthLink = async (req, res, next) => {
 
     const encryptedImsMasterId = Buffer.from(req.user.imsMasterId, 'utf8').toString('hex');
 
-    const redirectURL = encodeURIComponent(
+    const redirectURL =
       process.env.ZOOM_REDIRECT_URL +
-        '/generateZoomAuthToken?instituteImsId=' +
-        encryptedImsMasterId
-    ).toString();
+      '/generateZoomAuthToken?instituteImsId=' +
+      encryptedImsMasterId;
 
     const authLink =
       'https://zoom.us/oauth/authorize?response_type=code&client_id=' +
