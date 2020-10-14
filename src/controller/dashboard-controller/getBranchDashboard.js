@@ -7,8 +7,12 @@ const errorHandler = require('../../handler/error.handler');
 
 const getBranchDashboard = async (req, res) => {
   try {
+    console.log(req.body);
     const activeCourses = Course.find({ branch: req.body.branch, status: true }).countDocuments();
-    const inactiveCourses = Course.find({ branch: req.body.branch, status: true }).countDocuments();
+    const inactiveCourses = Course.find({
+      branch: req.body.branch,
+      status: false,
+    }).countDocuments();
     const activeStudents = BranchStudent.find({
       branch: req.body.branch,
       status: true,
@@ -41,6 +45,7 @@ const getBranchDashboard = async (req, res) => {
       wonLeads,
     ])
       .then((resData) => {
+        console.log(resData);
         const dashboardInfo = {
           activeCourses: resData[0],
           inactiveCourses: resData[1],
@@ -55,9 +60,11 @@ const getBranchDashboard = async (req, res) => {
         res.status(200).send(dashboardInfo);
       })
       .catch((e) => {
+        console.log(e);
         errorHandler(e, 400, res);
       });
   } catch (e) {
+    console.log(e);
     errorHandler(e, 400, res);
   }
 };

@@ -9,19 +9,19 @@ const getStudentDashboard = require('../controller/dashboard-controller/getStude
 
 const router = new express.Router();
 
-router.get('/getInstituteDashboard', auth, async (req, res) => {
+router.post('/getInstituteDashboard', auth, async (req, res) => {
   await getInstituteDashboard(req, res);
 });
 
-router.get('/getBranchDashboard', auth, async (req, res) => {
+router.post('/getBranchDashboard', auth, async (req, res) => {
   await getBranchDashboard(req, res);
 });
 
-router.get('/getEmployeeDashboard', auth, async (req, res) => {
+router.post('/getEmployeeDashboard', auth, async (req, res) => {
   await getEmployeeDashboard(req, res);
 });
 
-router.get('/getStudentDashboard', auth, async (req, res) => {
+router.post('/getStudentDashboard', auth, async (req, res) => {
   await getStudentDashboard(req, res);
 });
 
