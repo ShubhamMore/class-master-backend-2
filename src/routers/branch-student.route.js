@@ -4,6 +4,7 @@ const auth = require('../middleware/auth');
 
 const getBranchStudents = require('../controller/branch-student-controller/getBranchStudents');
 const getBranchStudentNameIds = require('../controller/branch-student-controller/getBranchStudentNameIds');
+const getBranchAllStudentNameIds = require('../controller/branch-student-controller/getBranchAllStudentNameIds');
 const getBranchStudent = require('../controller/branch-student-controller/getBranchStudent');
 const newBranchStudent = require('../controller/branch-student-controller/newBranchStudent');
 const getBranchStudentForEditing = require('../controller/branch-student-controller/getBranchStudentForEditing');
@@ -19,6 +20,10 @@ router.post('/getBranchStudents', auth, async (req, res) => {
 
 router.post('/getBranchStudentNameIds', auth, async (req, res) => {
   await getBranchStudentNameIds(req, res);
+});
+
+router.post('/getBranchAllStudentNameIds', auth, async (req, res) => {
+  await getBranchAllStudentNameIds(req, res);
 });
 
 router.post('/getBranchStudent', auth, async (req, res) => {
