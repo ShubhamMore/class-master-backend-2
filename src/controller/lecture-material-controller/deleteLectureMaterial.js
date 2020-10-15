@@ -1,6 +1,7 @@
 const LectureMaterial = require('../../models/lecture-material.model');
-const path = require('path');
-const fs = require('fs');
+const BranchStorage = require('../../models/branch-storage.model');
+const deleteFile = require('../../uploads/delete-file');
+
 const errorHandler = require('../../handler/error.handler');
 
 const deleteLectureMaterial = async (req, res) => {
@@ -12,11 +13,18 @@ const deleteLectureMaterial = async (req, res) => {
     }
     const publicId = lectureMaterial.publicId;
 
-    fs.unlink(path.join(__dirname, '../../../', publicId), (err) => {
-      if (err) {
-        throw new Error(err);
+    await deleteFile(publicId);
+
+    const branchStorageSizeToFree = lectureMaterial.fileSize * -1;
+
+    await BranchStorage.findOneAndUpdate(
+      { branch: courseMaterial.branch },
+      {
+        $inc: {
+          totalStorageUsed: branchStorageSizeToFree,
+        },
       }
-    });
+    );
 
     await LectureMaterial.findByIdAndDelete(req.body.id);
 

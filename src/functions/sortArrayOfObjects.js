@@ -1,7 +1,7 @@
 const sortArrayOfObjects = (array, element) => {
   const sortedArray = array.sort((a, b) => {
-    let data1 = a[element].toLowerCase();
-    let data2 = b[element].toLowerCase();
+    let data1 = a[element];
+    let data2 = b[element];
     if (data1 < data2)
       //sort string ascending
       return -1;
