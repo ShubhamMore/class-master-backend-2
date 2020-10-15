@@ -47,7 +47,6 @@ const getBranchDashboard = async (req, res) => {
       wonLeads,
     ])
       .then((resData) => {
-        console.log(resData);
         const dashboardInfo = {
           branchStorage: resData[0],
           activeCourses: resData[1],
@@ -63,11 +62,9 @@ const getBranchDashboard = async (req, res) => {
         res.status(200).send(dashboardInfo);
       })
       .catch((e) => {
-        console.log(e);
         errorHandler(e, 400, res);
       });
   } catch (e) {
-    console.log(e);
     errorHandler(e, 400, res);
   }
 };
