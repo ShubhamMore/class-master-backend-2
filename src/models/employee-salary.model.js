@@ -4,6 +4,10 @@ const employeeSalarySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  role: {
+    type: String,
+    required: true,
+  },
   branch: {
     type: String,
     required: true,

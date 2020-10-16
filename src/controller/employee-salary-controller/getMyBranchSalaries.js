@@ -6,6 +6,7 @@ const getMyBranchSalaries = async (req, res) => {
     const searchQuery = {
       branch: req.body.branch,
       employee: req.user.imsMasterId,
+      status: true,
     };
 
     let date = null;
@@ -22,7 +23,41 @@ const getMyBranchSalaries = async (req, res) => {
       searchQuery.date = date;
     }
 
-    const employeeSalary = await EmployeeSalary.find(searchQuery);
+    const employeeSalary = await EmployeeSalary.aggregate([
+      {
+        $match: searchQuery,
+      },
+      {
+        $lookup: {
+          from: 'employees',
+          localField: 'employee', // field in the studentCourses collection
+          foreignField: 'imsMasterId', // field in the Students collection
+          as: 'employees',
+        },
+      },
+      {
+        $addFields: {
+          employeeData: {
+            $arrayElemAt: ['$employees', 0],
+          },
+        },
+      },
+      {
+        $project: {
+          employees: 0,
+        },
+      },
+      {
+        $addFields: {
+          name: '$employeeData.name',
+        },
+      },
+      {
+        $project: {
+          employeeData: 0,
+        },
+      },
+    ]);
 
     if (!employeeSalary) {
       throw new Error('Employee Salary Not Found');
