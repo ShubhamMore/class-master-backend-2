@@ -10,6 +10,7 @@ const createZoomMeeting = require('../controller/zoom-controller/createZoomMeeti
 const updateZoomMeeting = require('../controller/zoom-controller/updateZoomMeeting');
 const deleteZoomMeeting = require('../controller/zoom-controller/deleteZoomMeeting');
 const getZoomMeeting = require('../controller/zoom-controller/getZoomMeeting');
+const getZoomMeetingSignature = require('../controller/zoom-controller/getZoomMeetingSignature');
 const getZoomMeetings = require('../controller/zoom-controller/getZoomMeetings');
 
 const router = new express.Router();
@@ -36,6 +37,10 @@ router.post('/deleteZoomMeeting', auth, zoomAuth, async (req, res) => {
 
 router.post('/getZoomMeeting', auth, async (req, res) => {
   await getZoomMeeting(req, res);
+});
+
+router.post('/getZoomMeetingSignature', async (req, res) => {
+  await getZoomMeetingSignature(req, res);
 });
 
 router.post('/getZoomMeetings', auth, async (req, res) => {

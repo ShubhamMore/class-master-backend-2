@@ -10,6 +10,8 @@ const getZoomAuthLink = async (req, res, next) => {
       { onlineClassesKeys: 1 }
     );
 
+    const accessKey = zoomCredentials.onlineClassesKeys.accessKey;
+
     const encryptedImsMasterId = Buffer.from(req.user.imsMasterId, 'utf8').toString('hex');
 
     const redirectURL =
@@ -19,7 +21,7 @@ const getZoomAuthLink = async (req, res, next) => {
 
     const authLink =
       'https://zoom.us/oauth/authorize?response_type=code&client_id=' +
-      zoomCredentials.onlineClassesKeys.accessKey +
+      accessKey +
       '&redirect_uri=' +
       redirectURL;
 

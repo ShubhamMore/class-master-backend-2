@@ -3,7 +3,7 @@ const errorHandler = require('../../handler/error.handler');
 
 const getZoomMeeting = async (req, res) => {
   try {
-    const meeting = await OnlineClass.findById(req.body.id);
+    const meeting = await OnlineClass.findOne({ schedule: req.body.lecture });
     if (!meeting) {
       throw new Error('Meeting Not Found');
     }
