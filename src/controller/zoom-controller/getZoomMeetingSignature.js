@@ -1,3 +1,4 @@
+const User = require('../../models/user.model');
 const OnlineClass = require('../../models/online-class.model');
 const errorHandler = require('../../handler/error.handler');
 const crypto = require('crypto');
@@ -5,7 +6,11 @@ const crypto = require('crypto');
 const getZoomMeetingSignature = async (req, res) => {
   try {
     const lecture = req.body.lecture;
-    const user = req.body.user;
+    const user = await User.findOne({ imsMasterId: req.body.user }, { imsMasterId: 1 });
+
+    if (!user) {
+      throw new Error('Invalid User');
+    }
 
     // const onlineClass = await OnlineClass.findById(req.body.id);
     const onlineClass = await OnlineClass.aggregate([
@@ -47,7 +52,7 @@ const getZoomMeetingSignature = async (req, res) => {
     }
 
     const meetingNumber = myClass.meetingNumber;
-    const role = myClass.teacher === user ? 1 : 0;
+    const role = myClass.teacher === user.imsMasterId ? 1 : 0;
 
     delete myClass.teacher;
 
