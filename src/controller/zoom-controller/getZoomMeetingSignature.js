@@ -49,6 +49,8 @@ const getZoomMeetingSignature = async (req, res) => {
     const meetingNumber = myClass.meetingNumber;
     const role = myClass.teacher === user ? 1 : 0;
 
+    delete myClass.teacher;
+
     const timestamp = new Date().getTime() - 30000;
     const msg = Buffer.from(
       process.env.ZOOM_JWT_API_KEY + meetingNumber + timestamp + role
