@@ -1,3 +1,4 @@
+const Branch = require('../../models/branch.model');
 const BranchStorage = require('../../models/branch-storage.model');
 const Course = require('../../models/course.model');
 const BranchEmployee = require('../../models/branch-employee.model');
@@ -8,6 +9,14 @@ const errorHandler = require('../../handler/error.handler');
 
 const getBranchDashboard = async (req, res) => {
   try {
+    const branch = await Branch.findById(req.body.branch, { status: 1, currentPlanDetails: 1 });
+
+    if (!branch) {
+      throw new Error('Branch Not Found');
+    } else if (!branch.status) {
+      throw new Error('Your membership is expired, Branch is now Inactive, Please renew your plan');
+    }
+
     const branchStorage = BranchStorage.findOne({ branch: req.body.branch });
     const activeCourses = Course.find({ branch: req.body.branch, status: true }).countDocuments();
     const inactiveCourses = Course.find({

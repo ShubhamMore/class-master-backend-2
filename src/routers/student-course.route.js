@@ -4,6 +4,7 @@ const auth = require('../middleware/auth');
 
 const newStudentCourse = require('../controller/student-course-controller/newStudentCourse');
 const getStudentCourses = require('../controller/student-course-controller/getStudentCourses');
+const getStudentAllCourses = require('../controller/student-course-controller/getStudentAllCourses');
 const getStudentCourse = require('../controller/student-course-controller/getStudentCourse');
 const checkBatchRollNumber = require('../controller/student-course-controller/checkStudentCourseBatchRollNumber');
 const getStudentCourseForEditing = require('../controller/student-course-controller/getStudentCourseForEditing');
@@ -21,6 +22,10 @@ router.post('/newStudentCourse', auth, async (req, res) => {
 
 router.post('/getStudentCourses', auth, async (req, res) => {
   await getStudentCourses(req, res);
+});
+
+router.post('/getStudentAllCourses', auth, async (req, res) => {
+  await getStudentAllCourses(req, res);
 });
 
 router.post('/getStudentCourse', auth, async (req, res) => {

@@ -1,5 +1,6 @@
 const User = require('../../models/user.model');
 const Institute = require('../../models/institute.model');
+const InstituteKeys = require('../../models/institute-keys.model');
 const Employee = require('../../models/employee.model');
 const Student = require('../../models/student.model');
 const errorHandler = require('../../handler/error.handler');
@@ -8,7 +9,7 @@ const newUser = async (req, res) => {
   try {
     req.body.imsMasterId = await getImsMasterId(req.body.userRole);
     const user = new User(req.body);
-    user;
+
     await user.save();
 
     const userData = {
@@ -22,6 +23,8 @@ const newUser = async (req, res) => {
 
     if (user.userRole === 'institute') {
       userRoleData = new Institute(userData);
+      const instituteKeys = new InstituteKeys({ imsMasterId: user.imsMasterId });
+      await instituteKeys.save();
     } else if (user.userRole === 'employee') {
       userRoleData = new Employee(userData);
     } else if (user.userRole === 'student') {

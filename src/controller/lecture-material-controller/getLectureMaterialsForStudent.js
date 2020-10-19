@@ -1,11 +1,10 @@
-const Lecture = require('../../models/lecture.model');
 const LectureMaterial = require('../../models/lecture-material.model');
 const errorHandler = require('../../handler/error.handler');
 
 const getLectureMaterialsForStudent = async (req, res) => {
   try {
     const lectureMaterials = await LectureMaterial.find({
-      lecture: req.body._id,
+      lecture: req.body.lecture,
       status: true,
     });
 

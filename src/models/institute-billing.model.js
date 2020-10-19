@@ -11,7 +11,7 @@ const instituteBillingSchema = new mongoose.Schema({
   },
   address: {
     type: String,
-    default: null,
+    required: true,
   },
   gstNumber: {
     type: String,

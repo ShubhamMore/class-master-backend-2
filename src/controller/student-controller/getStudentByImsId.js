@@ -3,7 +3,7 @@ const errorHandler = require('../../handler/error.handler');
 
 const getStudentByImsId = async (req, res) => {
   try {
-    const student = await Student.findOne({ imsMasterId: req.body.studentImsId });
+    const student = await Student.findOne({ imsMasterId: req.user.imsMasterId });
 
     if (!student) {
       throw new Error('No student Found, Invalid IMS Id');

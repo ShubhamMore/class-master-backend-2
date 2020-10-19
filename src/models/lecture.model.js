@@ -55,6 +55,6 @@ lectureSchema.methods.toJSON = function () {
   return lectureObject;
 };
 
-const lecture = mongoose.model('Lecture', lectureSchema);
+const Lecture = mongoose.model('Lecture', lectureSchema);
 
-module.exports = lecture;
+module.exports = Lecture;
