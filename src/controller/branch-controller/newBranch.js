@@ -28,11 +28,12 @@ const newBranch = async (req, res) => {
     const saveBranchStorage = branchStorage.save();
     const saveInstituteBilling = instituteBilling.save();
 
-    Promise.all(saveBranch, saveBranchStorage, saveInstituteBilling)
+    Promise.all([saveBranch, saveBranchStorage, saveInstituteBilling])
       .then((resData) => {
         res.status(201).send({ branchId: branch._id });
       })
       .catch((e) => {
+        console.log(e);
         errorHandler(e, 400, res);
       });
   } catch (e) {

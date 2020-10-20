@@ -1,5 +1,6 @@
 const Branch = require('../../models/branch.model');
 const BillingDetails = require('../../models/institute-billing.model');
+const BranchStorage = require('../../models/branch-storage.model');
 
 const errorHandler = require('../../handler/error.handler');
 
@@ -11,6 +12,7 @@ const deleteBranch = async (req, res) => {
     }
 
     await BillingDetails.deleteOne({ branch: branch._id });
+    await BranchStorage.deleteOne({ branch: branch._id });
 
     res.status(200).send({ success: true });
   } catch (e) {
