@@ -1,6 +1,6 @@
 const Razorpay = require('razorpay');
-const Order = require('../../models/order.model');
-const PaymentReceipt = require('../../models/payment-receipt.model');
+const InstituteOrder = require('../../models/institute-order.model');
+const InstitutePaymentReceipt = require('../../models/institute-payment-receipt.model');
 const errorHandler = require('../../handler/error.handler');
 
 const instance = new Razorpay({
@@ -8,14 +8,14 @@ const instance = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
-const generateOrder = async (req, res) => {
+const generateInstituteOrder = async (req, res) => {
   try {
     const receiptData = req.body;
 
     const gstCalculatedAmount = req.body.amount;
     receiptData.amount = gstCalculatedAmount;
 
-    const paymentReceipt = new PaymentReceipt(receiptData);
+    const paymentReceipt = new InstitutePaymentReceipt(receiptData);
 
     const options = {
       amount: +paymentReceipt.amount * 100, // amount in the smallest currency unit
@@ -44,13 +44,13 @@ const generateOrder = async (req, res) => {
         created_at: order.created_at,
       };
 
-      const generatedOrder = new Order(orderDetails);
+      const generatedInstituteOrder = new InstituteOrder(orderDetails);
 
-      paymentReceipt.orderId = generatedOrder._id;
+      paymentReceipt.orderId = generatedInstituteOrder._id;
 
       res.status(200).send({ paymentReceipt, order });
 
-      await generatedOrder.save();
+      await generatedInstituteOrder.save();
       await paymentReceipt.save();
     });
   } catch (e) {
@@ -59,4 +59,4 @@ const generateOrder = async (req, res) => {
   }
 };
 
-module.exports = generateOrder;
+module.exports = generateInstituteOrder;

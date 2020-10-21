@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const paymentReceiptSchema = mongoose.Schema({
+const institutePaymentReceiptSchema = mongoose.Schema({
   userId: {
     type: String,
     required: true,
@@ -21,14 +21,6 @@ const paymentReceiptSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  planType: {
-    type: String,
-    required: true,
-  },
-  packageType: {
-    type: String,
-    required: true,
-  },
   status: {
     type: Boolean,
     default: false,
@@ -39,7 +31,7 @@ const paymentReceiptSchema = mongoose.Schema({
   },
 });
 
-paymentReceiptSchema.methods.toJSON = function () {
+institutePaymentReceiptSchema.methods.toJSON = function () {
   const paymentReceipt = this;
   const paymentReceiptObject = paymentReceipt.toObject();
 
@@ -48,5 +40,8 @@ paymentReceiptSchema.methods.toJSON = function () {
   return paymentReceiptObject;
 };
 
-const PaymentReceipt = mongoose.model('PaymentReceipt', paymentReceiptSchema);
-module.exports = PaymentReceipt;
+const InstitutePaymentReceipt = mongoose.model(
+  'InstitutePaymentReceipt',
+  institutePaymentReceiptSchema
+);
+module.exports = InstitutePaymentReceipt;
