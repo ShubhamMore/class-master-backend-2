@@ -3,16 +3,16 @@ const instituteKeysSchema = new mongoose.Schema({
   imsMasterId: {
     type: String,
     unique: true,
-    required: true,
+    require: true,
   },
   onlineClassesKeys: {
     accessKey: {
       type: String,
-      required: true,
+      require: true,
     },
     secretKey: {
       type: String,
-      required: true,
+      require: true,
     },
     accessToken: {
       type: String,
@@ -30,11 +30,11 @@ const instituteKeysSchema = new mongoose.Schema({
   paymentGatewayKeys: {
     accessKey: {
       type: String,
-      required: true,
+      require: true,
     },
     secretKey: {
       type: String,
-      required: true,
+      require: true,
     },
   },
 });

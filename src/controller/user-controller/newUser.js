@@ -37,10 +37,7 @@ const newUser = async (req, res) => {
 
     res.status(201).send({ success: true });
   } catch (e) {
-    let err = '' + e;
-    if (e.code == 11000) {
-      err = 'User already register, Please login';
-    }
+    console.log(e);
     errorHandler(e, e.status || 400, res);
   }
 };
