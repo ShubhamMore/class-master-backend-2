@@ -5,7 +5,8 @@ const compression = require('compression');
 const morgan = require('morgan');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const checkExpiryOfBranch = require('./cron-jobs/branch.cronjob');
+
+const branchMembershipValidation = require('./cron-jobs/branch-membership.cron');
 
 require('./database/mongoose');
 
@@ -133,6 +134,6 @@ app.use((error, req, res, next) => {
   });
 });
 
-checkExpiryOfBranch();
+branchMembershipValidation();
 
 module.exports = app;

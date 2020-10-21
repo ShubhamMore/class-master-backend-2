@@ -12,9 +12,9 @@ const getDate = () => {
   return date;
 };
 
-const checkExpiryOfBranch = async () => {
+const branchMembershipValidation = async () => {
   cron.schedule(
-    '30 59 23 * * *',
+    '45 59 23 * * *', // Every day on 23:59:45
     async () => {
       const date = getDate();
       await Branch.updateMany(
@@ -30,4 +30,4 @@ const checkExpiryOfBranch = async () => {
   );
 };
 
-module.exports = checkExpiryOfBranch;
+module.exports = branchMembershipValidation;
