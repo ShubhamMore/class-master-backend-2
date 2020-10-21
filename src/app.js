@@ -60,6 +60,8 @@ app.use('/course-materials', express.static(path.join('course-materials')));
 app.use('/lecture-materials', express.static(path.join('lecture-materials')));
 
 app.use('/', express.static(path.join(__dirname, '../dist')));
+
+app.use(express.static(path.join(__dirname, '../dist/online-meeting')));
 app.use('/online-meeting', express.static(path.join(__dirname, '../dist/online-meeting')));
 
 app.use(bodyParser.urlencoded({ extended: false }));
