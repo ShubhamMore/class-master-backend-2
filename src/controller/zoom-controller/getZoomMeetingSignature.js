@@ -52,8 +52,7 @@ const getZoomMeetingSignature = async (req, res) => {
     }
 
     const meetingNumber = myClass.meetingNumber;
-    // const role = myClass.teacher === user.imsMasterId ? 1 : 0;
-    const role = 1;
+    const role = myClass.teacher === user.imsMasterId ? 1 : 0;
 
     delete myClass.teacher;
 
