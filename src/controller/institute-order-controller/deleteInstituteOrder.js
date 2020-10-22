@@ -4,14 +4,13 @@ const errorHandler = require('../../handler/error.handler');
 
 const deleteInstituteOrder = async (req, res) => {
   try {
-    req.body;
     const paymentReceipt = await InstitutePaymentReceipt.findByIdAndDelete(req.body.id);
 
     if (!paymentReceipt) {
       throw new Error('Payment Receipt Not Found');
     }
 
-    await Order.findByIdAndDelete(paymentReceipt.orderId);
+    await InstituteOrder.findByIdAndDelete(paymentReceipt.orderId);
     res.status(200).send({ success: true });
   } catch (e) {
     errorHandler(e, 400, res);

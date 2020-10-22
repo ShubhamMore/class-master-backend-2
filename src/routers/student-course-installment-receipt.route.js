@@ -3,6 +3,7 @@ const express = require('express');
 const auth = require('../middleware/auth');
 
 const newStudentCourseInstallmentReceipt = require('../controller/student-course-installment-receipt-controller/newStudentCourseInstallmentReceipt');
+const generateStudentCourseInstallmentReceipt = require('../controller/student-course-installment-receipt-controller/generateStudentCourseInstallmentReceipt');
 const getAllStudentCourseInstallmentReceipts = require('../controller/student-course-installment-receipt-controller/getAllStudentCourseInstallmentReceipts');
 const getStudentCourseInstallmentReceipt = require('../controller/student-course-installment-receipt-controller/getStudentCourseInstallmentReceipt');
 const getStudentCourseInstallmentReceiptForEditing = require('../controller/student-course-installment-receipt-controller/getStudentCourseInstallmentReceiptForEditing');
@@ -14,6 +15,10 @@ const router = new express.Router();
 
 router.post('/newStudentCourseInstallmentReceipt', auth, async (req, res) => {
   await newStudentCourseInstallmentReceipt(req, res);
+});
+
+router.post('/generateStudentCourseInstallmentReceipt', auth, async (req, res) => {
+  await generateStudentCourseInstallmentReceipt(req, res);
 });
 
 router.post('/getAllStudentCourseInstallmentReceipts', auth, async (req, res) => {

@@ -1,3 +1,4 @@
+const PaymentReceipt = require('../../models/payment-receipt.model');
 const Branch = require('../../models/branch.model');
 const errorHandler = require('../../handler/error.handler');
 
@@ -11,6 +12,12 @@ const getDate = (date) => {
 
 const activateBranch = async (req, res) => {
   try {
+    const paymentReceipt = await PaymentReceipt.findById(req.body.paymentDetails.receiptId);
+
+    if (!paymentReceipt || !paymentReceipt.status) {
+      throw new Error('Payment Not Done');
+    }
+
     const date = new Date();
     const dateMilliseconds = date.getTime();
     const month = date.getMonth();

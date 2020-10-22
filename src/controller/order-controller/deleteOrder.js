@@ -4,7 +4,6 @@ const errorHandler = require('../../handler/error.handler');
 
 const deleteOrder = async (req, res) => {
   try {
-    req.body;
     const paymentReceipt = await PaymentReceipt.findByIdAndDelete(req.body.id);
 
     if (!paymentReceipt) {

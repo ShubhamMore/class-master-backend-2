@@ -1,19 +1,79 @@
 const Razorpay = require('razorpay');
+const Branch = require('../../models/branch.model');
 const InstituteOrder = require('../../models/institute-order.model');
 const InstitutePaymentReceipt = require('../../models/institute-payment-receipt.model');
+const StudentCourseInstallment = require('../../models/student-course-installment.model');
+const mongoose = require('mongoose');
 const errorHandler = require('../../handler/error.handler');
 
-const instance = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
+const getRazorPayInstance = (RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET) => {
+  const instance = new Razorpay({
+    key_id: RAZORPAY_KEY_ID,
+    key_secret: RAZORPAY_KEY_SECRET,
+  });
+
+  return instance;
+};
 
 const generateInstituteOrder = async (req, res) => {
   try {
-    const receiptData = req.body;
+    const razorPayKeys = await Branch.aggregate([
+      {
+        $match: {
+          _id: mongoose.Types.ObjectId(req.body.branch),
+        },
+      },
+      {
+        $project: {
+          parentUser: 1,
+        },
+      },
+      {
+        $lookup: {
+          from: 'institutekeys',
+          localField: 'parentUser',
+          foreignField: 'imsMasterId',
+          as: 'keys',
+        },
+      },
+      {
+        $addFields: {
+          instituteKeys: { $arrayElemAt: ['$keys', 0] },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          accessKey: '$instituteKeys.paymentGatewayKeys',
+        },
+      },
+    ]);
 
-    const gstCalculatedAmount = req.body.amount;
-    receiptData.amount = gstCalculatedAmount;
+    if (!razorPayKeys.accessKey && !razorPayKeys.secretKey) {
+      throw new Error('Payment Gateway Not Found');
+    }
+
+    studentCourseInstallment = await StudentCourseInstallment.findOne(
+      { _id: mongoose.Types.ObjectId(req.body.studentInstallment) },
+      {
+        installments: {
+          $elemMatch: { _id: mongoose.Types.ObjectId(req.body.installment) },
+        },
+      }
+    );
+
+    if (studentCourseInstallment.installments.length === 0) {
+      throw new Error('Installment Not Found');
+    }
+
+    courseInstallment = studentCourseInstallment.installments[0];
+
+    delete req.body.branch;
+
+    const receiptData = { ...req.body };
+    receiptData.amount = courseInstallment.installmentAmount;
+
+    const instance = getRazorPayInstance(razorPayKeys.accessKey, razorPayKeys.secretKey);
 
     const paymentReceipt = new InstitutePaymentReceipt(receiptData);
 

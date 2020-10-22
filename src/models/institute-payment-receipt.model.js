@@ -21,6 +21,14 @@ const institutePaymentReceiptSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  studentInstallment: {
+    type: String,
+    required: true,
+  },
+  installment: {
+    type: String,
+    required: true,
+  },
   status: {
     type: Boolean,
     default: false,

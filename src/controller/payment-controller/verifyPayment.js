@@ -14,9 +14,9 @@ const verifyPayment = async (req, res) => {
     let generatedSignature = hmac.digest('hex');
 
     if (generatedSignature == payment.razorpay_signature) {
-      res.status(200).send({ orderId: paymentReceipt.orderId, receiptId: paymentReceipt._id });
+      await PaymentReceipt.findByIdAndUpdate(paymentReceipt._id, { status: true });
 
-      await PaymentReceipt.findByIdAndUpdate(paymentReceipt._id, { success: true });
+      res.status(200).send({ orderId: paymentReceipt.orderId, receiptId: paymentReceipt._id });
 
       const order = await Order.findById(paymentReceipt.orderId);
       order.amount_paid = order.amount;
