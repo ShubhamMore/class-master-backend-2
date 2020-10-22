@@ -55,6 +55,10 @@ const onlineClassSchema = mongoose.Schema({
     type: String,
     require: true,
   },
+  generatedOn: {
+    type: String, // admin, institute
+    require: true,
+  },
   duration: {
     type: String,
     require: true,
