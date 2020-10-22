@@ -1,4 +1,5 @@
 const InstituteKeys = require('../../models/institute-keys.model');
+const AdminKeys = require('../../models/admin-online-classes-keys.model');
 const promiseRequest = require('request-promise');
 const errorHandler = require('../../handler/error.handler');
 
@@ -30,23 +31,46 @@ const success = () => {
 
 const generateZoomAuthToken = async (req, res) => {
   try {
-    const decryptedImsMasterId = Buffer.from(req.query.instituteImsId, 'hex').toString('utf8');
+    let imsMasterId = null;
 
-    const zoomCredentials = await InstituteKeys.findOne(
-      {
-        imsMasterId: decryptedImsMasterId,
-      },
-      { onlineClassesKeys: 1 }
-    );
-
-    if (!zoomCredentials) {
-      throw new Error('No Zoom Credentials Found');
+    if (req.query.instituteImsId) {
+      imsMasterId = Buffer.from(req.query.instituteImsId, 'hex').toString('utf8');
     }
 
-    const redirectURL =
-      process.env.ZOOM_REDIRECT_URL +
-      '/generateZoomAuthToken?instituteImsId=' +
-      req.query.instituteImsId;
+    const zoomKeys = {};
+
+    let adminZoomCredentials = null;
+
+    if (imsMasterId) {
+      const zoomCredentials = await InstituteKeys.findOne(
+        {
+          imsMasterId,
+        },
+        { onlineClassesKeys: 1 }
+      );
+
+      if (zoomCredentials && zoomCredentials.onlineClassesKeys) {
+        zoomKeys.accessKey = zoomCredentials.onlineClassesKeys.accessKey;
+        zoomKeys.secretKey = zoomCredentials.onlineClassesKeys.secretKey;
+      }
+    } else {
+      adminZoomCredentials = await AdminKeys.findOne();
+
+      console.log(adminZoomCredentials);
+
+      if (!adminZoomCredentials) {
+        throw new Error('Invalid Zoom Credentials');
+      }
+
+      zoomKeys.accessKey = adminZoomCredentials.accessKey;
+      zoomKeys.secretKey = adminZoomCredentials.secretKey;
+    }
+
+    let redirectURL = process.env.ZOOM_REDIRECT_URL + '/generateZoomAuthToken';
+
+    if (imsMasterId) {
+      redirectURL = redirectURL + '?instituteImsId=' + req.query.instituteImsId;
+    }
 
     const options = {
       method: 'POST',
@@ -62,12 +86,7 @@ const generateZoomAuthToken = async (req, res) => {
         /**The credential below is a sample base64 encoded credential. Replace it with "Authorization: 'Basic ' + Buffer.from(your_app_client_id + ':' + your_app_client_secret).toString('base64')"
          **/
         Authorization:
-          'Basic ' +
-          Buffer.from(
-            zoomCredentials.onlineClassesKeys.accessKey +
-              ':' +
-              zoomCredentials.onlineClassesKeys.secretKey
-          ).toString('base64'),
+          'Basic ' + Buffer.from(zoomKeys.accessKey + ':' + zoomKeys.secretKey).toString('base64'),
       },
     };
 
@@ -79,24 +98,43 @@ const generateZoomAuthToken = async (req, res) => {
 
     const expiresIn = response.expires_in * 1000 + currentTime;
 
-    await InstituteKeys.findOneAndUpdate(
-      {
-        imsMasterId: decryptedImsMasterId,
-      },
-      {
-        $set: {
-          'onlineClassesKeys.accessToken': response.access_token,
-          'onlineClassesKeys.refreshToken': response.refresh_token,
-          'onlineClassesKeys.expiresIn': expiresIn,
+    if (adminZoomCredentials) {
+      await AdminKeys.findOneAndUpdate(
+        {
+          imsMasterId: adminZoomCredentials.imsMasterId,
         },
-      },
-      {
-        multi: true,
-      }
-    );
+        {
+          $set: {
+            accessToken: response.access_token,
+            refreshToken: response.refresh_token,
+            expiresIn: expiresIn,
+          },
+        },
+        {
+          multi: true,
+        }
+      );
+    } else {
+      await InstituteKeys.findOneAndUpdate(
+        {
+          imsMasterId: decryptedImsMasterId,
+        },
+        {
+          $set: {
+            'onlineClassesKeys.accessToken': response.access_token,
+            'onlineClassesKeys.refreshToken': response.refresh_token,
+            'onlineClassesKeys.expiresIn': expiresIn,
+          },
+        },
+        {
+          multi: true,
+        }
+      );
+    }
 
     res.status(200).send(success());
   } catch (e) {
+    console.log(e);
     errorHandler(e, 400, res);
   }
 };

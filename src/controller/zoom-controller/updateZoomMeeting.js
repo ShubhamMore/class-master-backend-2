@@ -67,7 +67,7 @@ const updateZoomMeeting = async (req, res) => {
       url: 'https://api.zoom.us/v2/meetings/' + meeting.meetingId,
       headers: {
         'content-type': 'application/json',
-        authorization: 'Bearer ' + req.zoomCredentials.onlineClassesKeys.accessToken,
+        authorization: 'Bearer ' + req.zoomCredentials.accessToken,
       },
       body: updatedMeeting,
       json: true,

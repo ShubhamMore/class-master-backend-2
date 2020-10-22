@@ -43,7 +43,7 @@ const createZoomMeeting = async (req, res) => {
       url: 'https://api.zoom.us/v2/users/me/meetings',
       headers: {
         'Content-Type': 'application/json',
-        authorization: 'Bearer ' + req.zoomCredentials.onlineClassesKeys.accessToken,
+        authorization: 'Bearer ' + req.zoomCredentials.accessToken,
       },
       body: createMeeting,
       json: true,
