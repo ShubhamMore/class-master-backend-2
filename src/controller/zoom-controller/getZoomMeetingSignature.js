@@ -37,6 +37,15 @@ const getZoomMeetingSignature = async (req, res) => {
       {
         $project: {
           meetingNumber: '$meetingId',
+          startUrl: {
+            $cond: {
+              if: {
+                $eq: ['$teacher', user.imsMasterId],
+              },
+              then: '$startUrl',
+              else: '$joinUrl',
+            },
+          },
           teacher: 1,
           password: 1,
           userName: '$host.name',
@@ -69,6 +78,7 @@ const getZoomMeetingSignature = async (req, res) => {
     ).toString('base64');
 
     myClass.signature = signature;
+    myClass.role = role;
 
     res.status(200).send(myClass);
   } catch (e) {
