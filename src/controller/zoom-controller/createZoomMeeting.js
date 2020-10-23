@@ -65,6 +65,7 @@ const createZoomMeeting = async (req, res) => {
       joinUrl: zoomMeetingDetails.join_url,
       startUrl: zoomMeetingDetails.start_url,
       startTime: req.body.startTime,
+      accountType: req.zoomCredentials.accountType,
       duration: req.body.duration,
     };
 

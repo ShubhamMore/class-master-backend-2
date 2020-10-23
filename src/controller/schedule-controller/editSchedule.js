@@ -35,6 +35,7 @@ const editSchedule = async (req, res) => {
         topic: req.body.topic,
         teacher: req.body.teacher,
         startTime: req.body.date + 'T' + req.body.startTime + ':00',
+        type: 'edit',
       };
 
       const options = {

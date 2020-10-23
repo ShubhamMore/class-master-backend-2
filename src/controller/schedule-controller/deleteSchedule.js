@@ -16,6 +16,7 @@ const deleteSchedule = async (req, res) => {
       const deleteBody = {
         scheduleId: req.body.id,
         branch: schedule.branch,
+        type: 'delete',
       };
 
       const options = {

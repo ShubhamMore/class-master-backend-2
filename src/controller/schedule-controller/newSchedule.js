@@ -30,6 +30,7 @@ const newSchedule = async (req, res) => {
         topic: schedule.topic,
         teacher: schedule.teacher,
         startTime: schedule.date + 'T' + schedule.startTime + ':00',
+        type: 'create',
       };
 
       const options = {

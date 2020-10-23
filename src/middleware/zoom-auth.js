@@ -1,5 +1,6 @@
 const Branch = require('../models/branch.model');
 const InstituteKeys = require('../models/institute-keys.model');
+const OnlineClass = require('../models/online-class.model');
 const AdminKeys = require('../models/admin-online-classes-keys.model');
 const promiseRequest = require('request-promise');
 const errorHandler = require('../handler/error.handler');
@@ -7,6 +8,23 @@ const errorHandler = require('../handler/error.handler');
 const zoomAuth = async (req, res, next) => {
   try {
     let imsMasterId = '';
+
+    let accountType = null;
+
+    if (req.body.type === 'delete' || req.body.type === 'edit') {
+      const onlineClass = OnlineClass.findOne(
+        {
+          schedule: req.body.scheduleId,
+        },
+        { accountType: 1 }
+      );
+
+      if (onlineClass && onlineClass.accountType) {
+        accountType = onlineClass.accountType;
+      }
+    }
+
+    delete req.body.type;
 
     if (req.user.userRole == 'institute') {
       imsMasterId = req.user.imsMasterId;
@@ -27,12 +45,17 @@ const zoomAuth = async (req, res, next) => {
       imsMasterId,
     });
 
-    if (instituteKeys && instituteKeys.onlineClassesKeys.refreshToken) {
+    if (
+      instituteKeys &&
+      instituteKeys.onlineClassesKeys.refreshToken &&
+      (!accountType || accountType === 'institute')
+    ) {
       zoomKeys.accessKey = instituteKeys.onlineClassesKeys.accessKey;
       zoomKeys.secretKey = instituteKeys.onlineClassesKeys.secretKey;
       zoomKeys.expiresIn = instituteKeys.onlineClassesKeys.expiresIn;
       zoomKeys.accessToken = instituteKeys.onlineClassesKeys.accessToken;
       zoomKeys.refreshToken = instituteKeys.onlineClassesKeys.refreshToken;
+      zoomKeys.accountType = 'institute';
     } else {
       adminZoomCredentials = await AdminKeys.findOne();
 
@@ -45,6 +68,7 @@ const zoomAuth = async (req, res, next) => {
       zoomKeys.expiresIn = adminZoomCredentials.expiresIn;
       zoomKeys.accessToken = adminZoomCredentials.accessToken;
       zoomKeys.refreshToken = adminZoomCredentials.refreshToken;
+      zoomKeys.accountType = 'admin';
     }
 
     if (!zoomKeys.refreshToken) {
