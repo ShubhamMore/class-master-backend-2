@@ -66,7 +66,7 @@ const generateInstituteOrder = async (req, res) => {
       throw new Error('Installment Not Found');
     }
 
-    courseInstallment = studentCourseInstallment.installments[0];
+    const courseInstallment = studentCourseInstallment.installments[0];
 
     delete req.body.branch;
 

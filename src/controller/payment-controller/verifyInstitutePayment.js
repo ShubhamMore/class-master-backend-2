@@ -1,3 +1,4 @@
+const Branch = require('../../models/branch.model');
 const InstituteOrder = require('../../models/institute-order.model');
 const InstitutePaymentReceipt = require('../../models/institute-payment-receipt.model');
 
