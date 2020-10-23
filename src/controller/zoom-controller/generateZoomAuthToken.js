@@ -117,7 +117,7 @@ const generateZoomAuthToken = async (req, res) => {
     } else {
       await InstituteKeys.findOneAndUpdate(
         {
-          imsMasterId: decryptedImsMasterId,
+          imsMasterId,
         },
         {
           $set: {

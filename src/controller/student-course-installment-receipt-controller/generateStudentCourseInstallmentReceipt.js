@@ -25,37 +25,44 @@ const generateStudentCourseInstallmentReceipt = async (req, res) => {
       throw new Error('Payment Not Done');
     }
 
-    studentCourseInstallment = await StudentCourseInstallment.findOne(
+    const courseInstallment = await StudentCourseInstallment.findOne(
       { _id: mongoose.Types.ObjectId(paymentReceipt.studentInstallment) },
       {
+        _id: 1,
+        branch: 1,
+        category: 1,
+        course: 1,
+        student: 1,
         installments: {
           $elemMatch: { _id: mongoose.Types.ObjectId(paymentReceipt.installment) },
         },
       }
     );
 
-    if (studentCourseInstallment.installments.length === 0) {
+    if (courseInstallment.installments.length === 0) {
       throw new Error('Installment Not Found');
     }
 
-    const courseInstallment = studentCourseInstallment.installments[0];
+    const installment = courseInstallment.installments[0];
 
     const newStudentCourseInstallmentReceipt = {
-      student: studentCourseInstallment.student,
-      branch: studentCourseInstallment.branch,
-      category: studentCourseInstallment.category,
-      course: studentCourseInstallment.course,
-      generatedBy: 'Self (Online Generated)',
-      date: courseInstallment.installmentDate,
-      amount: courseInstallment.installmentAmount,
-      lateFee: 0,
-      totalAmount: courseInstallment.installmentAmount,
-      paymentDate: getDate(),
-      paymentMode: 'online',
       description: '',
       bankDetails: 'Order Id: ' + req.body.order,
       transactionDetails: 'Receipt Id: ' + req.body.receipt,
-      amountDue: 0,
+      generatedBy: 'Self (Online Generated)',
+      date: installment.installmentDate,
+      amount: installment.installmentAmount,
+      lateFee: 0,
+      totalAmount: installment.installmentAmount,
+      paymentDate: getDate(),
+      paymentMode: 'online',
+      amountDue: installment.amountPending,
+      studentCourseInstallmentId: courseInstallment._id,
+      courseInstallmentId: installment._id,
+      branch: courseInstallment.branch,
+      category: courseInstallment.category,
+      course: courseInstallment.course,
+      student: courseInstallment.student,
     };
 
     newStudentCourseInstallmentReceipt.totalAmountInWords = await numToWords(

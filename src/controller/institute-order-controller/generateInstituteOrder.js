@@ -6,18 +6,17 @@ const StudentCourseInstallment = require('../../models/student-course-installmen
 const mongoose = require('mongoose');
 const errorHandler = require('../../handler/error.handler');
 
-const getRazorPayInstance = (RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET) => {
+const getRazorPayInstance = async (RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET) => {
   const instance = new Razorpay({
     key_id: RAZORPAY_KEY_ID,
     key_secret: RAZORPAY_KEY_SECRET,
   });
-
   return instance;
 };
 
 const generateInstituteOrder = async (req, res) => {
   try {
-    const razorPayKeys = await Branch.aggregate([
+    const instituteKeys = await Branch.aggregate([
       {
         $match: {
           _id: mongoose.Types.ObjectId(req.body.branch),
@@ -44,10 +43,16 @@ const generateInstituteOrder = async (req, res) => {
       {
         $project: {
           _id: 0,
-          accessKey: '$instituteKeys.paymentGatewayKeys',
+          paymentGatewayKeys: '$instituteKeys.paymentGatewayKeys',
         },
       },
     ]);
+
+    if (instituteKeys.length === 0) {
+      throw new Error('Payment Gateway Not Found');
+    }
+
+    const razorPayKeys = instituteKeys[0].paymentGatewayKeys;
 
     if (!razorPayKeys.accessKey && !razorPayKeys.secretKey) {
       throw new Error('Payment Gateway Not Found');
@@ -73,7 +78,7 @@ const generateInstituteOrder = async (req, res) => {
     const receiptData = { ...req.body };
     receiptData.amount = courseInstallment.installmentAmount;
 
-    const instance = getRazorPayInstance(razorPayKeys.accessKey, razorPayKeys.secretKey);
+    const instance = await getRazorPayInstance(razorPayKeys.accessKey, razorPayKeys.secretKey);
 
     const paymentReceipt = new InstitutePaymentReceipt(receiptData);
 
@@ -114,7 +119,6 @@ const generateInstituteOrder = async (req, res) => {
       await paymentReceipt.save();
     });
   } catch (e) {
-    e;
     errorHandler(e, 400, res);
   }
 };

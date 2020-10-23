@@ -1,6 +1,6 @@
 const adminAuth = async (req, res, next) => {
   try {
-    if (req.user.userType !== 'admin') {
+    if (req.user.userRole !== 'admin') {
       throw new Error();
     }
     next();

@@ -36,7 +36,7 @@ const getInstitutePaymentAccessKey = async (req, res) => {
       },
     ]);
 
-    res.status(200).send(instituteKeys);
+    res.status(200).send(instituteKeys[0]);
   } catch (e) {
     errorHandler(e, e.status || 400, res);
   }

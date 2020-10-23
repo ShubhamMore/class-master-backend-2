@@ -2,11 +2,12 @@ const Branch = require('../../models/branch.model');
 const InstituteOrder = require('../../models/institute-order.model');
 const InstitutePaymentReceipt = require('../../models/institute-payment-receipt.model');
 
+const mongoose = require('mongoose');
 const crypto = require('crypto');
 
 const verifyInstitutePayment = async (req, res) => {
   try {
-    const razorPayKeys = await Branch.aggregate([
+    const instituteKeys = await Branch.aggregate([
       {
         $match: {
           _id: mongoose.Types.ObjectId(req.body.branch),
@@ -33,10 +34,16 @@ const verifyInstitutePayment = async (req, res) => {
       {
         $project: {
           _id: 0,
-          accessKey: '$instituteKeys.paymentGatewayKeys',
+          paymentGatewayKeys: '$instituteKeys.paymentGatewayKeys',
         },
       },
     ]);
+
+    if (instituteKeys.length === 0) {
+      throw new Error('Payment Gateway Not Found');
+    }
+
+    const razorPayKeys = instituteKeys[0].paymentGatewayKeys;
 
     if (!razorPayKeys.accessKey && !razorPayKeys.secretKey) {
       throw new Error('Payment Gateway Not Found');
