@@ -90,33 +90,37 @@ const generateInstituteOrder = async (req, res) => {
     };
 
     instance.orders.create(options, async (err, order) => {
-      if (err) {
-        throw new Error(err);
+      try {
+        if (err) {
+          throw new Error(err.error.description);
+        }
+
+        const orderDetails = {
+          order_id: order.id,
+          entity: order.entity,
+          amount: order.amount.toString(),
+          amount_paid: order.amount_paid.toString(),
+          amount_due: order.amount_due.toString(),
+          currency: order.currency,
+          receipt: order.receipt,
+          offer_id: order.offer_id,
+          status: order.status,
+          attempts: order.attempts.toString(),
+          notes: order.notes,
+          created_at: order.created_at,
+        };
+
+        const generatedInstituteOrder = new InstituteOrder(orderDetails);
+
+        paymentReceipt.orderId = generatedInstituteOrder._id;
+
+        res.status(200).send({ paymentReceipt, order });
+
+        await generatedInstituteOrder.save();
+        await paymentReceipt.save();
+      } catch (e) {
+        errorHandler(e, 400, res);
       }
-
-      const orderDetails = {
-        order_id: order.id,
-        entity: order.entity,
-        amount: order.amount.toString(),
-        amount_paid: order.amount_paid.toString(),
-        amount_due: order.amount_due.toString(),
-        currency: order.currency,
-        receipt: order.receipt,
-        offer_id: order.offer_id,
-        status: order.status,
-        attempts: order.attempts.toString(),
-        notes: order.notes,
-        created_at: order.created_at,
-      };
-
-      const generatedInstituteOrder = new InstituteOrder(orderDetails);
-
-      paymentReceipt.orderId = generatedInstituteOrder._id;
-
-      res.status(200).send({ paymentReceipt, order });
-
-      await generatedInstituteOrder.save();
-      await paymentReceipt.save();
     });
   } catch (e) {
     errorHandler(e, 400, res);
