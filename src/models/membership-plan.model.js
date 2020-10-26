@@ -14,7 +14,7 @@ const membershipPlanSchema = new mongoose.Schema({
   },
   status: {
     type: Boolean,
-    required: false,
+    default: true,
   },
 });
 

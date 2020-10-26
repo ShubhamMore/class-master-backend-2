@@ -14,7 +14,11 @@ const getDate = () => {
 
 const validateCoupon = async (req, res) => {
   try {
-    const coupon = await Coupon.findOne({ code: req.body.code });
+    const coupon = await Coupon.findOne(
+      { code: req.body.code },
+      { _id: 0, code: 1, discountType: 1, discountAmount: 1, expiryDate: 1 }
+    );
+
     if (!coupon) {
       throw new Error('Coupon not found');
     }
@@ -25,7 +29,9 @@ const validateCoupon = async (req, res) => {
       throw new Error('This Coupon is Expired');
     }
 
-    res.status(200).send({ success: true });
+    delete coupon.expiryDate;
+
+    res.status(200).send(coupon);
   } catch (e) {
     errorHandler(e, 400, res);
   }

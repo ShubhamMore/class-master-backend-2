@@ -1,5 +1,6 @@
 const Razorpay = require('razorpay');
 const Order = require('../../models/order.model');
+const Coupon = require('../../models/coupon.model');
 const PaymentReceipt = require('../../models/payment-receipt.model');
 const errorHandler = require('../../handler/error.handler');
 
@@ -12,8 +13,24 @@ const generateOrder = async (req, res) => {
   try {
     const receiptData = req.body;
 
-    const gstCalculatedAmount = req.body.amount;
-    receiptData.amount = gstCalculatedAmount;
+    let coupon = null;
+
+    if (req.body.coupon) {
+      coupon = await Coupon.findOne({ code: req.body.coupon });
+    }
+
+    let amount = receiptData.amount;
+
+    if (coupon) {
+      let discountAmount = coupon.discountAmount;
+      if (coupon.discountType === 'percentage') {
+        discountAmount = (amount / 100) * coupon.discountAmount;
+      }
+      amount = amount - discountAmount;
+    }
+
+    // const gstCalculatedAmount = req.body.amount;
+    receiptData.amount = amount;
 
     const paymentReceipt = new PaymentReceipt(receiptData);
 

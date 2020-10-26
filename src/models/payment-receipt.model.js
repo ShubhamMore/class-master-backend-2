@@ -17,6 +17,10 @@ const paymentReceiptSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  coupon: {
+    type: String,
+    default: null,
+  },
   amount: {
     type: String,
     required: true,
