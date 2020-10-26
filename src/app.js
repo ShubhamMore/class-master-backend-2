@@ -11,7 +11,7 @@ const branchMembershipValidation = require('./cron-jobs/branch-membership.cron')
 require('./database/mongoose');
 
 // MANAGEMENT
-const adminRouter = require('./routers/admin.route');
+const adminZoomRouter = require('./routers/admin-zoom.route');
 const attendanceRouter = require('./routers/attendance.route');
 const branchRouter = require('./routers/branch.route');
 const budgetRouter = require('./routers/budget.route');
@@ -91,7 +91,7 @@ app.use((req, res, next) => {
 });
 
 // MANAGEMENT
-app.use(adminRouter);
+app.use(adminZoomRouter);
 app.use(attendanceRouter);
 app.use(branchRouter);
 app.use(budgetRouter);

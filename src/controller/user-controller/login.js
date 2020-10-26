@@ -9,6 +9,10 @@ const login = async (req, res) => {
   try {
     const user = await User.findByCredentials(req.body.email, req.body.password);
 
+    if (!user.status) {
+      throw new Error('This user is Blocked by Admin');
+    }
+
     const token = await user.generateAuthToken();
     let _id = user._id;
 

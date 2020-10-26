@@ -21,6 +21,10 @@ const paymentReceiptSchema = mongoose.Schema({
     type: String,
     default: null,
   },
+  branch: {
+    type: String,
+    required: true,
+  },
   amount: {
     type: String,
     required: true,

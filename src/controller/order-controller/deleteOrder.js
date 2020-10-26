@@ -11,6 +11,7 @@ const deleteOrder = async (req, res) => {
     }
 
     await Order.findByIdAndDelete(paymentReceipt.orderId);
+
     res.status(200).send({ success: true });
   } catch (e) {
     errorHandler(e, 400, res);

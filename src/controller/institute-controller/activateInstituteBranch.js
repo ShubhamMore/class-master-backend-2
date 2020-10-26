@@ -1,4 +1,3 @@
-const PaymentReceipt = require('../../models/payment-receipt.model');
 const Branch = require('../../models/branch.model');
 const errorHandler = require('../../handler/error.handler');
 
@@ -12,12 +11,6 @@ const getDate = (date) => {
 
 const activateBranch = async (req, res) => {
   try {
-    const paymentReceipt = await PaymentReceipt.findById(req.body.paymentDetails.receiptId);
-
-    if (!paymentReceipt || !paymentReceipt.status) {
-      throw new Error('Payment Not Done');
-    }
-
     const date = new Date();
     const dateMilliseconds = date.getTime();
     const month = date.getMonth();
@@ -27,16 +20,16 @@ const activateBranch = async (req, res) => {
 
     const day = 24 * 60 * 60 * 1000;
 
-    if (req.body.paymentDetails.planType === 'monthly') {
+    if (req.body.planType === 'monthly') {
       const nextDate = dateMilliseconds + day * 30 * 1;
       expiryDate = getDate(nextDate);
-    } else if (req.body.paymentDetails.planType === 'quarterly') {
-      const nextDate = dateMilliseconds + day * (month % 4 === 0 ? 3 : 2) + day * 30 * 3;
+    } else if (req.body.planType === 'quarterly') {
+      const nextDate = dateMilliseconds + day * (month % 4 === 0 ? 3 : 2) + day * 30 * duration;
       expiryDate = getDate(nextDate);
-    } else if (req.body.paymentDetails.planType === 'half-yearly') {
+    } else if (req.body.planType === 'half-yearly') {
       const nextDate = dateMilliseconds + day * (month % 2 === 0 ? 3 : 2) + day * 30 * 6;
       expiryDate = getDate(nextDate);
-    } else if (req.body.paymentDetails.planType === 'yearly') {
+    } else if (req.body.planType === 'yearly') {
       const nextDate = dateMilliseconds + day * 5 + day * 30 * 12;
       expiryDate = getDate(nextDate);
     } else {
@@ -46,14 +39,14 @@ const activateBranch = async (req, res) => {
 
     const branch = await Branch.findByIdAndUpdate(req.body.id, {
       currentPlanDetails: {
-        planType: req.body.paymentDetails.planType,
+        planType: req.body.planType,
         activationDate,
         expiryDate,
       },
       status: true,
     });
     if (!branch) {
-      throw new Error('Branch Updation Failed');
+      throw new Error('Branch Activation Failed');
     }
     res.status(200).send({ success: true });
   } catch (e) {

@@ -1,6 +1,9 @@
 const express = require('express');
 const auth = require('../middleware/auth');
+const adminAuth = require('../middleware/admin-auth');
 
+const getUsers = require('../controller/user-controller/getUsers');
+const changeUserStatus = require('../controller/user-controller/changeUserStatus');
 const newUser = require('../controller/user-controller/newUser');
 const checkUser = require('../controller/user-controller/checkUser');
 const login = require('../controller/user-controller/login');
@@ -13,6 +16,14 @@ const logout = require('../controller/user-controller/logout');
 const logoutAll = require('../controller/user-controller/logoutAll');
 
 const router = new express.Router();
+
+router.post('/getUsers', auth, adminAuth, async (req, res) => {
+  await getUsers(req, res);
+});
+
+router.post('/changeUserStatus', auth, adminAuth, async (req, res) => {
+  await changeUserStatus(req, res);
+});
 
 router.post('/newUser', async (req, res) => {
   await newUser(req, res);

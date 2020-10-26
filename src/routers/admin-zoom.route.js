@@ -3,9 +3,9 @@ const express = require('express');
 const auth = require('../middleware/auth');
 const adminAuth = require('../middleware/admin-auth');
 
-const saveAdminZoomKeys = require('../controller/admin-controller/saveAdminZoomKeys');
-const getAdminZoomAuthLink = require('../controller/admin-controller/getAdminZoomAuthLink');
-const getAdminZoomKeys = require('../controller/admin-controller/getAdminZoomKeys');
+const saveAdminZoomKeys = require('../controller/admin-zoom-controller/saveAdminZoomKeys');
+const getAdminZoomAuthLink = require('../controller/admin-zoom-controller/getAdminZoomAuthLink');
+const getAdminZoomKeys = require('../controller/admin-zoom-controller/getAdminZoomKeys');
 
 const router = new express.Router();
 
