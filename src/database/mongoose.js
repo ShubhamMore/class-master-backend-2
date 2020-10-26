@@ -9,4 +9,7 @@ mongoose
   })
   .then(() => {
     console.log('connected');
+  })
+  .catch((e) => {
+    console.log(e);
   });

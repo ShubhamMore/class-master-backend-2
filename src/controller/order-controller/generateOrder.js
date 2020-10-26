@@ -1,6 +1,7 @@
 const Razorpay = require('razorpay');
 const Order = require('../../models/order.model');
 const Coupon = require('../../models/coupon.model');
+const MembershipPlan = require('../../models/membership-plan.model');
 const PaymentReceipt = require('../../models/payment-receipt.model');
 const errorHandler = require('../../handler/error.handler');
 
@@ -11,6 +12,12 @@ const instance = new Razorpay({
 
 const generateOrder = async (req, res) => {
   try {
+    const membershipPlan = await MembershipPlan.findOne({ name: req.body.packageType });
+
+    if (!membershipPlan) {
+      throw new Error('Membership Plan not Found');
+    }
+
     const receiptData = req.body;
 
     let coupon = null;
@@ -19,7 +26,7 @@ const generateOrder = async (req, res) => {
       coupon = await Coupon.findOne({ code: req.body.coupon });
     }
 
-    let amount = receiptData.amount;
+    let amount = membershipPlan.price;
 
     if (coupon) {
       let discountAmount = coupon.discountAmount;
@@ -29,7 +36,6 @@ const generateOrder = async (req, res) => {
       amount = amount - discountAmount;
     }
 
-    // const gstCalculatedAmount = req.body.amount;
     receiptData.amount = amount;
 
     const paymentReceipt = new PaymentReceipt(receiptData);
