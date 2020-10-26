@@ -6,7 +6,7 @@ const changeUserStatus = async (req, res) => {
   try {
     const user = await User.findOneAndUpdate(
       { imsMasterId: req.body.user },
-      { status: req.body.status }
+      { status: req.body.status, tokens: [] }
     );
 
     if (!user) {

@@ -1,6 +1,3 @@
-deactivateInstituteBranch;
-
-branch;
 const Branch = require('../../models/branch.model');
 const errorHandler = require('../../handler/error.handler');
 
