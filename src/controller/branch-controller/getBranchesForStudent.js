@@ -7,6 +7,7 @@ const getBranchesForStudent = async (req, res) => {
       {
         $match: {
           student: req.user.imsMasterId,
+          status: true,
         },
       },
       {

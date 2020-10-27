@@ -13,7 +13,7 @@ const changeUserStatus = async (req, res) => {
       throw new Error('User Not Found');
     }
 
-    res.send(data);
+    res.send({ success: true });
   } catch (e) {
     errorHandler(e, 400, res);
   }

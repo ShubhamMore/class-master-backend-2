@@ -3,7 +3,6 @@ const Course = require('../../models/course.model');
 const BranchEmployee = require('../../models/branch-employee.model');
 const BranchStudent = require('../../models/branch-student.model');
 const Lead = require('../../models/lead.model');
-const Budget = require('../../models/budget.model');
 
 const errorHandler = require('../../handler/error.handler');
 
