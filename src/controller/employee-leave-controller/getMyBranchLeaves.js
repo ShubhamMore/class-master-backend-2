@@ -6,61 +6,51 @@ const getMyBranchLeaves = async (req, res) => {
     const searchQuery = {
       branch: req.body.branch,
       employee: req.user.imsMasterId,
-      status: true,
     };
 
-    let date = null;
-
     if (req.body.year !== '' && req.body.month === '') {
-      date = new RegExp('.*' + req.body.year + '.*');
+      searchQuery.date = new RegExp('.*' + req.body.year + '.*');
+    } else if (req.body.month !== '' && req.body.year !== '') {
+      searchQuery.date = new RegExp('.*' + req.body.year + '-' + req.body.month + '.*');
     }
 
-    if (req.body.month !== '' && req.body.year !== '') {
-      date = new RegExp('.*' + req.body.year + '-' + req.body.month + '.*');
-    }
-
-    if (date) {
-      searchQuery.date = date;
-    }
-
-    const employeeSalaries = await EmployeeLeave.aggregate([
-      {
-        $match: searchQuery,
-      },
+    const employeeLeaves = await EmployeeLeave.aggregate([
+      { $match: searchQuery },
       {
         $lookup: {
           from: 'employees',
-          localField: 'employee', // field in the studentCourses collection
-          foreignField: 'imsMasterId', // field in the Students collection
+          localField: 'monitoredBy',
+          foreignField: 'imsMasterId',
           as: 'employees',
         },
       },
       {
         $addFields: {
-          employeeData: {
-            $arrayElemAt: ['$employees', 0],
-          },
+          employee: { $arrayElemAt: ['$employees', 0] },
         },
       },
       {
         $project: {
+          monitoredBy: 0,
           employees: 0,
         },
       },
       {
         $addFields: {
-          name: '$employeeData.name',
+          monitoredBy: '$employee.name',
         },
       },
       {
         $project: {
-          employeeData: 0,
+          employee: 0,
         },
       },
     ]);
 
-    res.status(200).send(employeeSalaries);
+    res.status(200).send(employeeLeaves);
   } catch (e) {
+    console.log(e);
+
     errorHandler(e, 400, res);
   }
 };

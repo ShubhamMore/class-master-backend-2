@@ -1,13 +1,24 @@
 const EmployeeLeave = require('../../models/employee-leave.model');
+const BranchEmployee = require('../../models/branch-employee.model');
 const errorHandler = require('../../handler/error.handler');
 
 const getBranchAllEmployeeLeaves = async (req, res) => {
   try {
+    let employeeUser = null;
+
+    if (req.user.userRole === 'employee') {
+      employeeUser = await BranchEmployee.findOne({ employee: req.user.imsMasterId });
+
+      if (!employeeUser || employeeUser.role !== 'manager') {
+        throw new Error('You are not authorized user to Access this Data');
+      }
+    }
+
     const searchQuery = {
       branch: req.body.branch,
     };
 
-    if (req.body.employee !== '') {
+    if (req.body.employee !== '' && req.body.employee !== req.user.employee) {
       searchQuery.employee = req.body.employee;
     }
 
@@ -17,10 +28,48 @@ const getBranchAllEmployeeLeaves = async (req, res) => {
       searchQuery.date = new RegExp('.*' + req.body.year + '-' + req.body.month + '.*');
     }
 
-    const employeeLeaves = await EmployeeLeave.find(searchQuery);
+    const employeeLeaves = await EmployeeLeave.aggregate([
+      { $match: searchQuery },
+      {
+        $match: {
+          employee: { $ne: req.user.imsMasterId },
+        },
+      },
+      {
+        $lookup: {
+          from: 'employees',
+          localField: 'monitoredBy',
+          foreignField: 'imsMasterId',
+          as: 'employees',
+        },
+      },
+      {
+        $addFields: {
+          employee: { $arrayElemAt: ['$employees', 0] },
+        },
+      },
+      {
+        $project: {
+          monitoredBy: 0,
+          employees: 0,
+        },
+      },
+      {
+        $addFields: {
+          monitoredBy: '$employee.name',
+        },
+      },
+      {
+        $project: {
+          employee: 0,
+        },
+      },
+    ]);
 
     res.status(200).send(employeeLeaves);
   } catch (e) {
+    console.log(e);
+
     errorHandler(e, 400, res);
   }
 };

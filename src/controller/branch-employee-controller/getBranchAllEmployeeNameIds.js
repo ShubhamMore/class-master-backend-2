@@ -1,13 +1,12 @@
 const BranchEmployee = require('../../models/branch-employee.model');
 const errorHandler = require('../../handler/error.handler');
 
-const getBranchEmployeeNameIds = async (req, res) => {
+const getBranchAllEmployeeNameIds = async (req, res) => {
   try {
     const branchEmployees = await BranchEmployee.aggregate([
       {
         $match: {
           branch: req.body.branch,
-          status: req.body.type === 'active',
         },
       },
       {
@@ -43,12 +42,10 @@ const getBranchEmployeeNameIds = async (req, res) => {
       },
     ]);
 
-    console.log(branchEmployees);
-
     res.status(200).send(branchEmployees);
   } catch (e) {
     errorHandler(e, 400, res);
   }
 };
 
-module.exports = getBranchEmployeeNameIds;
+module.exports = getBranchAllEmployeeNameIds;

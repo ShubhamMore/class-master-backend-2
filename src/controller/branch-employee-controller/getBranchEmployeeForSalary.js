@@ -8,6 +8,7 @@ const getBranchEmployeeForSalary = async (req, res) => {
     if (!employee) {
       throw new Error('No employee Found');
     }
+
     const branchEmployee = await BranchEmployee.findById(req.body.id);
     if (!branchEmployee) {
       throw new Error('No Branch Employee Found');

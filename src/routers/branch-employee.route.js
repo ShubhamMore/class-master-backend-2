@@ -5,6 +5,7 @@ const auth = require('../middleware/auth');
 const getBranchEmployees = require('../controller/branch-employee-controller/getBranchEmployees');
 const getBranchEmployeesForBatch = require('../controller/branch-employee-controller/getBranchEmployeesForBatch');
 const getBranchEmployeeNameIds = require('../controller/branch-employee-controller/getBranchEmployeeNameIds');
+const getBranchAllEmployeeNameIds = require('../controller/branch-employee-controller/getBranchAllEmployeeNameIds');
 const getBranchEmployeeNameIdsForBatch = require('../controller/branch-employee-controller/getBranchEmployeeNameIdsForBatch');
 const getBranchEmployee = require('../controller/branch-employee-controller/getBranchEmployee');
 const getBranchEmployeeRole = require('../controller/branch-employee-controller/getBranchEmployeeRole');
@@ -27,6 +28,10 @@ router.post('/getBranchEmployeesForBatch', auth, async (req, res) => {
 
 router.post('/getBranchEmployeeNameIds', auth, async (req, res) => {
   await getBranchEmployeeNameIds(req, res);
+});
+
+router.post('/getBranchAllEmployeeNameIds', auth, async (req, res) => {
+  await getBranchAllEmployeeNameIds(req, res);
 });
 
 router.post('/getBranchEmployeeNameIdsForBatch', auth, async (req, res) => {

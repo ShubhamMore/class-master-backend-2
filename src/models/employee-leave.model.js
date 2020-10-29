@@ -38,11 +38,11 @@ const employeeLeaveSchema = new mongoose.Schema({
   },
   monitoredBy: {
     type: String,
-    required: true,
+    default: null,
   },
   monitoredDate: {
     type: String,
-    required: true,
+    default: null,
   },
   comment: {
     type: String,
