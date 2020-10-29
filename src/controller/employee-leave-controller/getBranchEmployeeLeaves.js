@@ -1,7 +1,7 @@
-const EmployeeSalary = require('../../models/employee-salary.model');
+const EmployeeLeave = require('../../models/employee-leave.model');
 const errorHandler = require('../../handler/error.handler');
 
-const getBranchEmployeeSalaries = async (req, res) => {
+const getBranchEmployeeLeaves = async (req, res) => {
   try {
     const searchQuery = {
       branch: req.body.branch,
@@ -22,12 +22,12 @@ const getBranchEmployeeSalaries = async (req, res) => {
       searchQuery.date = date;
     }
 
-    const employeeSalaries = await EmployeeSalary.find(searchQuery);
+    const employeeLeaves = await EmployeeLeave.find(searchQuery);
 
-    res.status(200).send(employeeSalaries);
+    res.status(200).send(employeeLeaves);
   } catch (e) {
     errorHandler(e, 400, res);
   }
 };
 
-module.exports = getBranchEmployeeSalaries;
+module.exports = getBranchEmployeeLeaves;

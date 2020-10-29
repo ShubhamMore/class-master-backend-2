@@ -3,6 +3,7 @@ const errorHandler = require('../../handler/error.handler');
 
 const getBranchEmployeeNameIds = async (req, res) => {
   try {
+    console.log(req.body);
     const branchEmployees = await BranchEmployee.aggregate([
       {
         $match: {
@@ -42,6 +43,8 @@ const getBranchEmployeeNameIds = async (req, res) => {
         },
       },
     ]);
+
+    console.log(branchEmployees);
 
     res.status(200).send(branchEmployees);
   } catch (e) {
