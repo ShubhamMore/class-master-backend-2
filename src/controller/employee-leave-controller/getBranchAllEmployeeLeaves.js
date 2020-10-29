@@ -44,24 +44,44 @@ const getBranchAllEmployeeLeaves = async (req, res) => {
         },
       },
       {
+        $lookup: {
+          from: 'institutes',
+          localField: 'monitoredBy',
+          foreignField: 'imsMasterId',
+          as: 'institutes',
+        },
+      },
+      {
         $addFields: {
-          employee: { $arrayElemAt: ['$employees', 0] },
+          monitoredUser: { $setUnion: ['$employees', '$institutes'] },
+        },
+      },
+
+      {
+        $project: {
+          employees: 0,
+          institutes: 0,
+        },
+      },
+      {
+        $addFields: {
+          myEmployee: { $arrayElemAt: ['$monitoredUser', 0] },
         },
       },
       {
         $project: {
           monitoredBy: 0,
-          employees: 0,
+          monitoredUser: 0,
         },
       },
       {
         $addFields: {
-          monitoredBy: '$employee.name',
+          monitoredBy: '$myEmployee.name',
         },
       },
       {
         $project: {
-          employee: 0,
+          myEmployee: 0,
         },
       },
     ]);

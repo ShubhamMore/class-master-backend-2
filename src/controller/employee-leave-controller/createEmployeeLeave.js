@@ -5,8 +5,6 @@ const createEmployeeLeave = async (req, res) => {
   try {
     req.body.employee = req.user.imsMasterId;
 
-    console.log(req.body);
-
     const employeeLeave = new EmployeeLeave(req.body);
     await employeeLeave.save();
 
