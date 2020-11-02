@@ -13,6 +13,8 @@ require('./database/mongoose');
 // MANAGEMENT
 const adminZoomRouter = require('./routers/admin-zoom.route');
 const attendanceRouter = require('./routers/attendance.route');
+const assignmentRouter = require('./routers/assignment.route');
+const assignmentSubmissionRouter = require('./routers/assignment-submission.route');
 const branchRouter = require('./routers/branch.route');
 const budgetRouter = require('./routers/budget.route');
 const courseRouter = require('./routers/course.route');
@@ -95,6 +97,8 @@ app.use((req, res, next) => {
 // MANAGEMENT
 app.use(adminZoomRouter);
 app.use(attendanceRouter);
+app.use(assignmentRouter);
+app.use(assignmentSubmissionRouter);
 app.use(branchRouter);
 app.use(budgetRouter);
 app.use(courseRouter);
