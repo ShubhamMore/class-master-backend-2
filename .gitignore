@@ -3,3 +3,5 @@ course-materials/*
 !course-materials/.gitkeep
 lecture-materials/*
 !lecture-materials/.gitkeep
+assignments/*
+!assignments/.gitkeep

@@ -36,6 +36,30 @@ const assignmentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  description: {
+    type: String,
+    required: true,
+  },
+  fileName: {
+    type: String,
+    default: null,
+  },
+  fileSize: {
+    type: String,
+    default: null,
+  },
+  fileType: {
+    type: String,
+    default: null,
+  },
+  secureUrl: {
+    type: String,
+    default: null,
+  },
+  publicId: {
+    type: String,
+    default: null,
+  },
   generatedBy: {
     type: String,
     required: true,
