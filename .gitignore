@@ -5,3 +5,5 @@ lecture-materials/*
 !lecture-materials/.gitkeep
 assignments/*
 !assignments/.gitkeep
+assignment-submissions/*
+!assignment-submissions/.gitkeep

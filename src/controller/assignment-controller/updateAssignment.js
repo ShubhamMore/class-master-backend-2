@@ -81,7 +81,10 @@ const editAssignment = async (req, res) => {
         fileType = 'IMAGE';
       }
 
-      const fileName = `${file.filename.substring(0, file.filename.lastIndexOf('-'))}.${fileType}`;
+      const fileName = `${file.filename.substring(
+        0,
+        file.filename.lastIndexOf('-')
+      )}.${curFileType}`;
 
       attachment.fileName = fileName;
       attachment.fileSize = fileSize;

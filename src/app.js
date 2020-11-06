@@ -66,6 +66,7 @@ app.use(cookieParser());
 app.use('/course-materials', express.static(path.join('course-materials')));
 app.use('/lecture-materials', express.static(path.join('lecture-materials')));
 app.use('/assignments', express.static(path.join('assignments')));
+app.use('/assignment-submissions', express.static(path.join('assignment-submissions')));
 
 app.use('/', express.static(path.join(__dirname, '../dist')));
 

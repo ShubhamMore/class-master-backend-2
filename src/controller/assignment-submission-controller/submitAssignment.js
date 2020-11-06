@@ -7,7 +7,11 @@ const errorHandler = require('../../handler/error.handler');
 
 const newAssignmentSubmission = async (req, res) => {
   try {
-    const files = req.files;
+    const file = req.file;
+
+    if (!file) {
+      throw new Error('Submission File is Required');
+    }
 
     const branchStorage = await BranchStorage.findOne({ branch: req.body.branch });
 
@@ -25,77 +29,60 @@ const newAssignmentSubmission = async (req, res) => {
     let usedBranchStorage = branchStorage.totalStorageUsed;
     let totalFileUploadSize = 0;
 
-    const overStorageFiles = new Array();
-
-    if (files !== undefined && files.length > 0) {
-      const assignmentSubmissions = new Array();
-      for (let i = 0; i < files.length; i++) {
-        const fileSize = files[i].size;
-        if (fileSize > availableBranchStorage) {
-          overStorageFiles.push(files[i].path);
-          continue;
-        }
-
-        usedBranchStorage += fileSize;
-        totalFileUploadSize += fileSize;
-        availableBranchStorage -= fileSize;
-
-        let fileType;
-        const curFileType = files[i].filename.substring(files[i].filename.lastIndexOf('.') + 1);
-        if (curFileType === 'pdf') {
-          fileType = 'PDF';
-        } else if (curFileType === 'mp4') {
-          fileType = 'MP4';
-        } else {
-          fileType = 'IMAGE';
-        }
-
-        const title = `${files[i].filename.substring(0, files[i].filename.lastIndexOf('-'))}`
-          .split('-')
-          .join(' ')
-          .toUpperCase();
-
-        const fileName = `${files[i].filename.substring(
-          0,
-          files[i].filename.lastIndexOf('-')
-        )}.${fileType}`;
-
-        const submissionData = {
-          assignment: req.body.assignment,
-          student: req.user.imsMasterId,
-          title: title,
-          fileName: fileName,
-          fileSize: fileSize,
-          fileType: fileType,
-          secureUrl: process.env.API_URI + '\\' + files[i].path,
-          publicId: files[i].path,
-          createdAt: Date.now().toLocaleString(),
-          status: true,
-        };
-
-        const assignmentSubmission = new AssignmentSubmission(submissionData);
-        assignmentSubmissions.push(assignmentSubmission);
-      }
-
-      overStorageFiles.forEach(async (publicId) => {
-        await deleteFile(publicId);
-      });
-
-      await BranchStorage.findOneAndUpdate(
-        { branch: req.body.branch },
-        {
-          $inc: {
-            totalStorageUsed: totalFileUploadSize,
-          },
-        }
-      );
-
-      await AssignmentSubmission.insertMany(assignmentSubmissions);
-
-      res.status(200).send({ success: true, overStorageFiles: overStorageFiles.length });
-    } else {
-      throw new Error('files Not Found');
+    const fileSize = file.size;
+    if (fileSize > availableBranchStorage) {
+      await deleteFile(file.path);
+      throw new Error('Branch Storage is full');
     }
+
+    usedBranchStorage += fileSize;
+    totalFileUploadSize += fileSize;
+    availableBranchStorage -= fileSize;
+
+    let fileType;
+    const curFileType = file.filename.substring(file.filename.lastIndexOf('.') + 1);
+    if (curFileType === 'pdf') {
+      fileType = 'PDF';
+    } else if (curFileType === 'mp4') {
+      fileType = 'MP4';
+    } else {
+      fileType = 'IMAGE';
+    }
+
+    const fileName = `${file.filename.substring(0, file.filename.lastIndexOf('-'))}.${curFileType}`;
+
+    const title = `${file.filename.substring(0, file.filename.lastIndexOf('-'))}`
+      .split('-')
+      .join(' ')
+      .toUpperCase();
+
+    const submissionData = {
+      assignment: req.body.assignment,
+      student: req.user.imsMasterId,
+      title: title,
+      description: req.body.description,
+      fileName: fileName,
+      fileSize: fileSize,
+      fileType: fileType,
+      secureUrl: process.env.API_URI + '\\' + file.path,
+      publicId: file.path,
+      createdAt: Date.now().toLocaleString(),
+      status: true,
+    };
+
+    await BranchStorage.findOneAndUpdate(
+      { branch: req.body.branch },
+      {
+        $inc: {
+          totalStorageUsed: totalFileUploadSize,
+        },
+      }
+    );
+
+    const assignmentSubmission = new AssignmentSubmission(submissionData);
+    await assignmentSubmission.save();
+
+    res.status(200).send(assignmentSubmission);
   } catch (e) {
     console.log(e);
     errorHandler(e, 400, res);

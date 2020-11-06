@@ -1,18 +1,32 @@
 const BranchStorage = require('../../models/branch-storage.model');
-const AssignmentSubmission = require('../../models/course-material.model');
+const AssignmentSubmission = require('../../models/assignment-submission.model');
 
 const deleteFile = require('../../uploads/delete-file');
-const sortArrayOfObjects = require('../../functions/sortArrayOfObjects');
 
 const errorHandler = require('../../handler/error.handler');
 
 const newAssignmentSubmissions = async (req, res) => {
   try {
-    const files = sortArrayOfObjects(req.files, 'size');
+    const file = req.file;
+
+    console.log(req.body);
+
+    const assignmentSubmission = await AssignmentSubmission.findById(req.body._id);
+
+    if (!assignmentSubmission) {
+      if (file) {
+        await deleteFile(file.path);
+      }
+
+      throw new Error('Submission Not Found');
+    }
 
     const branchStorage = await BranchStorage.findOne({ branch: req.body.branch });
 
     if (!branchStorage) {
+      if (file) {
+        await deleteFile(file.path);
+      }
       throw new Error('Branch Storage not Found');
     }
 
@@ -26,63 +40,57 @@ const newAssignmentSubmissions = async (req, res) => {
     let usedBranchStorage = branchStorage.totalStorageUsed;
     let totalFileUploadSize = 0;
 
-    const overStorageFiles = new Array();
+    let submissionFile = {
+      fileName: assignmentSubmission.fileName,
+      fileSize: assignmentSubmission.fileSize,
+      fileType: assignmentSubmission.fileType,
+      secureUrl: assignmentSubmission.secureUrl,
+      publicId: assignmentSubmission.publicId,
+    };
 
-    if (files !== undefined && files.length > 0) {
-      const assignmentSubmissions = new Array();
-      for (let i = 0; i < files.length; i++) {
-        const fileSize = files[i].size;
-        if (fileSize > availableBranchStorage) {
-          overStorageFiles.push(files[i].path);
-          continue;
-        }
-
-        usedBranchStorage += fileSize;
-        totalFileUploadSize += fileSize;
-        availableBranchStorage -= fileSize;
-
-        let fileType;
-        const curFileType = files[i].filename.substring(files[i].filename.lastIndexOf('.') + 1);
-        if (curFileType === 'pdf') {
-          fileType = 'PDF';
-        } else if (curFileType === 'mp4') {
-          fileType = 'MP4';
-        } else {
-          fileType = 'IMAGE';
-        }
-
-        const title = `${files[i].filename.substring(0, files[i].filename.lastIndexOf('-'))}`
-          .split('-')
-          .join(' ')
-          .toUpperCase();
-
-        const fileName = `${files[i].filename.substring(
-          0,
-          files[i].filename.lastIndexOf('-')
-        )}.${fileType}`;
-
-        const materialData = {
-          branch: req.body.branch,
-          category: req.body.category,
-          course: req.body.course,
-          subject: req.body.subject,
-          title: title,
-          fileName: fileName,
-          fileSize: fileSize,
-          fileType: fileType,
-          secureUrl: process.env.API_URI + '\\' + files[i].path,
-          publicId: files[i].path,
-          createdAt: Date.now().toLocaleString(),
-          status: true,
-        };
-
-        const assignmentSubmission = new AssignmentSubmission(materialData);
-        assignmentSubmissions.push(assignmentSubmission);
+    if (file && file !== undefined) {
+      if (submissionFile.fileSize) {
+        usedBranchStorage -= submissionFile.fileSize;
+        totalFileUploadSize -= submissionFile.fileSize;
+        availableBranchStorage += submissionFile.fileSize;
       }
 
-      overStorageFiles.forEach(async (publicId) => {
-        await deleteFile(publicId);
-      });
+      const fileSize = file.size;
+
+      if (fileSize > availableBranchStorage) {
+        await deleteFile(file.path);
+        throw new Error('Branch Storage is full');
+      }
+
+      if (submissionFile.publicId) {
+        await deleteFile(submissionFile.publicId);
+      }
+
+      usedBranchStorage += fileSize;
+      totalFileUploadSize += fileSize;
+      availableBranchStorage -= fileSize;
+
+      let fileType;
+      const curFileType = file.filename.substring(file.filename.lastIndexOf('.') + 1);
+
+      if (curFileType === 'pdf') {
+        fileType = 'PDF';
+      } else if (curFileType === 'mp4') {
+        fileType = 'MP4';
+      } else {
+        fileType = 'IMAGE';
+      }
+
+      const fileName = `${file.filename.substring(
+        0,
+        file.filename.lastIndexOf('-')
+      )}.${curFileType}`;
+
+      submissionFile.fileName = fileName;
+      submissionFile.fileSize = fileSize;
+      submissionFile.fileType = fileType;
+      submissionFile.secureUrl = process.env.API_URI + '\\' + file.path;
+      submissionFile.publicId = file.path;
 
       await BranchStorage.findOneAndUpdate(
         { branch: req.body.branch },
@@ -92,13 +100,16 @@ const newAssignmentSubmissions = async (req, res) => {
           },
         }
       );
-
-      await AssignmentSubmission.insertMany(assignmentSubmissions);
-
-      res.status(200).send({ success: true, overStorageFiles: overStorageFiles.length });
-    } else {
-      throw new Error('files Not Found');
     }
+
+    const newAssignmentSubmission = {
+      ...req.body,
+      ...submissionFile,
+    };
+
+    await AssignmentSubmission.findByIdAndUpdate(req.body._id, newAssignmentSubmission);
+
+    res.status(200).send(newAssignmentSubmission);
   } catch (e) {
     console.log(e);
     errorHandler(e, 400, res);
