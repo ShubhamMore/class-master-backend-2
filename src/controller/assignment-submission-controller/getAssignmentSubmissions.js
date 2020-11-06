@@ -1,5 +1,6 @@
 const Assignment = require('../../models/assignment.model');
 const StudentCourse = require('../../models/student-course.model');
+
 const errorHandler = require('../../handler/error.handler');
 
 const getAssignmentSubmissions = async (req, res) => {
@@ -42,19 +43,7 @@ const getAssignmentSubmissions = async (req, res) => {
         },
       },
       {
-        $project: {
-          _id: 1,
-          assignment: 1,
-          student: 1,
-          title: 1,
-          grades: 1,
-          fileName: 1,
-          fileSize: 1,
-          fileType: 1,
-          secureUrl: 1,
-          publicId: 1,
-          createdAt: 1,
-          studentName: '$students.name',
+        $addFields: {
           submission: {
             $arrayElemAt: [
               {
@@ -69,6 +58,14 @@ const getAssignmentSubmissions = async (req, res) => {
               0,
             ],
           },
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          student: 1,
+          studentName: '$students.name',
+          submission: 1,
         },
       },
     ]);
