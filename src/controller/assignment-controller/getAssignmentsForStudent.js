@@ -28,7 +28,7 @@ const getAssignmentsForStudent = async (req, res) => {
       query.date = date;
     }
 
-    const assignments = await Assignment.db.getCollection('assignments').aggregate([
+    const assignments = await Assignment.aggregate([
       {
         $match: query,
       },

@@ -7,6 +7,7 @@ const storage = require('../uploads/assignment.upload');
 
 const saveAssignment = require('../controller/assignment-controller/newAssignment');
 const getAssignments = require('../controller/assignment-controller/getAssignments');
+const getAssignmentsForStudent = require('../controller/assignment-controller/getAssignmentsForStudent');
 const getAssignment = require('../controller/assignment-controller/getAssignment');
 const changeAssignmentStatus = require('../controller/assignment-controller/changeAssignmentStatus');
 const updateAssignment = require('../controller/assignment-controller/updateAssignment');
@@ -26,6 +27,10 @@ router.post(
 
 router.post('/getAssignments', auth, async (req, res) => {
   await getAssignments(req, res);
+});
+
+router.post('/getAssignmentsForStudent', auth, async (req, res) => {
+  await getAssignmentsForStudent(req, res);
 });
 
 router.post('/getAssignment', auth, async (req, res) => {

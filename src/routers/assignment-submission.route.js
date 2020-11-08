@@ -9,6 +9,7 @@ const submitAssignment = require('../controller/assignment-submission-controller
 const getAssignmentSubmissions = require('../controller/assignment-submission-controller/getAssignmentSubmissions');
 const getAssignmentSubmission = require('../controller/assignment-submission-controller/getAssignmentSubmission');
 const getSubmissionOfAssignment = require('../controller/assignment-submission-controller/getSubmissionOfAssignment');
+const saveAssignmentSubmissionGrades = require('../controller/assignment-submission-controller/saveAssignmentSubmissionGrades');
 const updateAssignmentSubmission = require('../controller/assignment-submission-controller/updateAssignmentSubmission');
 const deleteAssignmentSubmission = require('../controller/assignment-submission-controller/deleteAssignmentSubmission');
 
@@ -33,6 +34,10 @@ router.post('/getAssignmentSubmission', auth, async (req, res) => {
 
 router.post('/getSubmissionOfAssignment', auth, async (req, res) => {
   await getSubmissionOfAssignment(req, res);
+});
+
+router.post('/saveAssignmentSubmissionGrades', auth, async (req, res) => {
+  await saveAssignmentSubmissionGrades(req, res);
 });
 
 router.post(

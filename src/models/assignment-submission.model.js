@@ -20,6 +20,10 @@ const assignmentSubmissionSchema = new mongoose.Schema({
     type: String,
     default: null,
   },
+  remark: {
+    type: String,
+    default: null,
+  },
   fileName: {
     type: String,
     default: null,
@@ -42,7 +46,7 @@ const assignmentSubmissionSchema = new mongoose.Schema({
   },
   createdAt: {
     type: String,
-    default: Date.now.toString(),
+    default: new Date().toISOString(),
   },
   status: {
     type: Boolean,

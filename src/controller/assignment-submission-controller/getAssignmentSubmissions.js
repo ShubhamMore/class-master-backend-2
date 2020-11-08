@@ -11,10 +11,13 @@ const getAssignmentSubmissions = async (req, res) => {
       throw new Error('Assignment Not Found');
     }
 
+    console.log(assignment._id);
+
     const assignmentSubmissions = await StudentCourse.aggregate([
       {
         $match: {
           branch: assignment.branch,
+          category: assignment.category,
           course: assignment.course,
           batch: assignment.batch,
         },
@@ -22,7 +25,7 @@ const getAssignmentSubmissions = async (req, res) => {
       {
         $lookup: {
           from: 'students',
-          localFields: 'student',
+          localField: 'student',
           foreignField: 'imsMasterId',
           as: 'students',
         },
@@ -37,7 +40,7 @@ const getAssignmentSubmissions = async (req, res) => {
       {
         $lookup: {
           from: 'assignmentsubmissions',
-          localFields: 'student',
+          localField: 'student',
           foreignField: 'student',
           as: 'assignmentSubmissions',
         },
@@ -51,7 +54,7 @@ const getAssignmentSubmissions = async (req, res) => {
                   input: '$assignmentSubmissions',
                   as: 'assignmentSubmission',
                   cond: {
-                    $eq: ['$$assignmentSubmission.assignment', assignment._id],
+                    $eq: ['$$assignmentSubmission.assignment', assignment._id.toString()],
                   },
                 },
               },
@@ -62,13 +65,21 @@ const getAssignmentSubmissions = async (req, res) => {
       },
       {
         $project: {
-          _id: 1,
+          _id: 0,
           student: 1,
           studentName: '$students.name',
           submission: 1,
         },
       },
+      {
+        $replaceRoot: {
+          newRoot: { $mergeObjects: ['$submission', '$$ROOT'] },
+        },
+      },
+      { $project: { submission: 0 } },
     ]);
+
+    console.log(assignmentSubmissions);
 
     res.status(200).send(assignmentSubmissions);
   } catch (e) {
