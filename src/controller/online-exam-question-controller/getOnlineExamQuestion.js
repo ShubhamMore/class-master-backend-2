@@ -3,7 +3,7 @@ const errorHandler = require('../../handler/error.handler');
 
 const getOnlineExamQuestion = async (req, res) => {
   try {
-    const onlineExamQuestion = await OnlineExamQuestion.findById(req.body._id);
+    const onlineExamQuestion = await OnlineExamQuestion.findById(req.body.id);
 
     if (!onlineExamQuestion) {
       throw new Error('No Content Available');

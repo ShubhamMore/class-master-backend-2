@@ -13,7 +13,7 @@ const getOnlineExamQuestions = async (req, res) => {
       onlineExam: req.body.id,
     });
 
-    res.status(200).send({ onlineExam, onlineExamQuestions });
+    res.status(200).send(onlineExamQuestions);
   } catch (e) {
     errorHandler(e, 400, res);
   }
