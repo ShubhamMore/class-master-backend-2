@@ -11,22 +11,21 @@ const newOnlineExam = async (req, res) => {
       examTitle: onlineExam.title,
       onlineExam: onlineExam._id,
       outOfMarks: onlineExam.totalMarks,
-      passingMarks: Math.ceil(onlineExam.totalMarks * (onlineExam.passingMarks / 100)),
+      passingMarks: onlineExam.passingMarks,
       date: onlineExam.date,
+      time: onlineExam.time,
+      duration: onlineExam.duration,
       branch: onlineExam.branch,
-      courseType: onlineExam.courseType,
+      category: onlineExam.category,
       course: onlineExam.course,
       batch: onlineExam.batch,
+      subject: onlineExam.subject,
       marks: [],
     };
 
     await new Exam(exam).save();
 
-    const data = {
-      success: true,
-    };
-
-    res.status(201).send(data);
+    res.status(201).send(onlineExam);
   } catch (e) {
     errorHandler(e, 400, res);
   }

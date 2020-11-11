@@ -3,7 +3,7 @@ const errorHandler = require('../../handler/error.handler');
 
 const changeOnlineExamStatus = async (req, res) => {
   try {
-    const onlineExam = await OnlineExam.findByIdAndUpdate(req.body._id, {
+    const onlineExam = await OnlineExam.findByIdAndUpdate(req.body.id, {
       status: req.body.status,
     });
 

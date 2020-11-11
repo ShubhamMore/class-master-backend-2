@@ -10,7 +10,7 @@ const getOnlineExamResult = async (req, res) => {
     }
 
     const onlineExamResult = await OnlineExamResult.findOne({
-      onlineExam: req.body._id,
+      onlineExam: req.body.id,
       student: req.body.student,
     });
     if (!onlineExam) {

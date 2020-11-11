@@ -5,7 +5,7 @@ const examSchema = new mongoose.Schema({
     required: true,
   },
   onlineExam: {
-    type: Number,
+    type: String,
     default: null,
   },
   outOfMarks: {

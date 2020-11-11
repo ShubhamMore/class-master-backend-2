@@ -4,13 +4,13 @@ const errorHandler = require('../../handler/error.handler');
 
 const getOnlineExamQuestions = async (req, res) => {
   try {
-    const onlineExam = await OnlineExam.findById(req.body._id);
+    const onlineExam = await OnlineExam.findById(req.body.id);
     if (!onlineExam) {
       throw new Error('No Online Exam Available');
     }
 
     const onlineExamQuestions = await OnlineExamQuestion.find({
-      onlineExam: req.body._id,
+      onlineExam: req.body.id,
     });
 
     res.status(200).send({ onlineExam, onlineExamQuestions });
