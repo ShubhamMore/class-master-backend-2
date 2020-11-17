@@ -91,6 +91,10 @@ const saveOnlineExamResult = async (req, res) => {
           answers: 1,
         });
 
+        if (!question) {
+          continue;
+        }
+
         const answers = question.answers;
 
         const correctAnswers = new Array();

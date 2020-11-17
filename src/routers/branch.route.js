@@ -7,6 +7,7 @@ const getBranches = require('../controller/branch-controller/getBranches');
 const getBranchCoursesAndBatches = require('../controller/branch-controller/getBranchCoursesAndBatches');
 const getBranchesForEmployee = require('../controller/branch-controller/getBranchesForEmployee');
 const getBranchesForStudent = require('../controller/branch-controller/getBranchesForStudent');
+const checkBranchStatus = require('../controller/branch-controller/checkBranchStatus');
 const getBranch = require('../controller/branch-controller/getBranch');
 const getBranchForStudent = require('../controller/branch-controller/getBranchForStudent');
 const getBranchForEditing = require('../controller/branch-controller/getBranchForEditing');
@@ -40,6 +41,10 @@ router.post('/getBranchesForStudent', auth, async (req, res) => {
 
 router.post('/getBranchForStudent', auth, async (req, res) => {
   await getBranchForStudent(req, res);
+});
+
+router.post('/checkBranchStatus', auth, async (req, res) => {
+  await checkBranchStatus(req, res);
 });
 
 router.post('/getBranch', auth, async (req, res) => {
