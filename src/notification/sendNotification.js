@@ -19,7 +19,9 @@ const sendNotification = async (title, message, receiverId) => {
     }
 
     return;
-  } catch (e) {}
+  } catch (e) {
+    throw new Error(e);
+  }
 };
 
 module.exports = sendNotification;
