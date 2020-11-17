@@ -12,7 +12,7 @@ const forgotPassword = async (req, res) => {
 
     const token = await user.generateAuthToken();
 
-    const link = process.env.MAIL_URI + '/#/resetPassword?key=' + token;
+    const link = process.env.MAIL_URI + '/#/reset-password?key=' + token;
 
     const mail = {
       to: user.email,
@@ -24,7 +24,7 @@ const forgotPassword = async (req, res) => {
 
     await sendMail(mail);
 
-    res.status(200).send({ data: 'success' });
+    res.status(200).send({ success: true });
   } catch (e) {
     errorHandler(e, 400, res);
   }
