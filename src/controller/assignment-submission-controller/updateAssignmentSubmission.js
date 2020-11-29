@@ -5,7 +5,7 @@ const deleteFile = require('../../uploads/delete-file');
 
 const errorHandler = require('../../handler/error.handler');
 
-const newAssignmentSubmissions = async (req, res) => {
+const updateAssignmentSubmissions = async (req, res) => {
   try {
     const file = req.file;
 
@@ -116,4 +116,4 @@ const newAssignmentSubmissions = async (req, res) => {
   }
 };
 
-module.exports = newAssignmentSubmissions;
+module.exports = updateAssignmentSubmissions;

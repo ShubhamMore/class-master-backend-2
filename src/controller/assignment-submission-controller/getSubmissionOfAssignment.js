@@ -1,7 +1,7 @@
 const AssignmentSubmission = require('../../models/assignment-submission.model');
 const errorHandler = require('../../handler/error.handler');
 
-const saveAssignmentSubmissionGrades = async (req, res) => {
+const getSubmissionOfAssignment = async (req, res) => {
   try {
     const assignmentSubmission = await AssignmentSubmission.findOne({
       assignment: req.body.assignment,
@@ -14,4 +14,4 @@ const saveAssignmentSubmissionGrades = async (req, res) => {
   }
 };
 
-module.exports = saveAssignmentSubmissionGrades;
+module.exports = getSubmissionOfAssignment;

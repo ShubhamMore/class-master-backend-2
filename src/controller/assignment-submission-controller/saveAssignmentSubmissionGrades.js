@@ -2,7 +2,7 @@ const AssignmentSubmission = require('../../models/assignment-submission.model')
 
 const errorHandler = require('../../handler/error.handler');
 
-const deleteAssignmentSubmission = async (req, res) => {
+const saveAssignmentSubmissionGrades = async (req, res) => {
   try {
     const assignmentSubmission = await AssignmentSubmission.findByIdAndUpdate(
       req.body._id,
@@ -19,4 +19,4 @@ const deleteAssignmentSubmission = async (req, res) => {
   }
 };
 
-module.exports = deleteAssignmentSubmission;
+module.exports = saveAssignmentSubmissionGrades;

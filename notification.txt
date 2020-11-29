@@ -1,0 +1,42 @@
+
+instant notification
+
+newStudent
+newEmployee
+
+
+
+newStudentCourse
+editStudentCourse
+deleteStudentCourse
+
+newBranchEmployee
+editBranchEmployee
+changeBranchEmployeeStatus
+
+newBranchStudent
+editBranchStudent
+changeBranchStudentStatus
+
+deleteLecture
+
+newEmployeeSalary
+
+saveAssignmentSubmissionGrades
+
+newStudentCourseInstallmentReceipt
+editStudentCourseInstallmentReceipt
+deleteStudentCourseInstallmentReceipt
+
+newAssignment
+
+scheduled notification
+branch
+lecture
+exam
+onlineExam
+
+
+other notifications
+
+lectureQuestionAnswer
