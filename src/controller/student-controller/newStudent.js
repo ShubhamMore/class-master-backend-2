@@ -1,7 +1,10 @@
 const Student = require('../../models/student.model');
 const BranchStudent = require('../../models/branch-student.model');
 const User = require('../../models/user.model');
+
+const sendMail = require('../../email/mail');
 const getImsMasterId = require('../../functions/getImsMasterId');
+const getNewUserMailTemplate = require('../../html-template/newUserTemplate');
 const errorHandler = require('../../handler/error.handler');
 
 const newStudent = async (req, res) => {
@@ -38,6 +41,15 @@ const newStudent = async (req, res) => {
     branchStudent.student = student.imsMasterId;
 
     await new BranchStudent(branchStudent).save();
+
+    const mail = {
+      to: user.email,
+      from: process.env.EMAIL,
+      subject: 'New Student Registered at Class Master',
+      html: await getNewUserMailTemplate(user),
+    };
+
+    await sendMail(mail);
 
     res.status(201).send({ success: true });
   } catch (e) {

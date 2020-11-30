@@ -1,6 +1,7 @@
 const express = require('express');
 
 const auth = require('../middleware/auth');
+const serverAuth = require('../middleware/server-auth');
 
 const sendNotification = require('../controller/notification-controller/sendNotification');
 const getNotification = require('../controller/notification-controller/getNotification');
@@ -10,7 +11,7 @@ const changeNotificationStatus = require('../controller/notification-controller/
 
 const router = new express.Router();
 
-router.post('/sendNotification', auth, async (req, res) => {
+router.post('/sendNotification', serverAuth, async (req, res) => {
   await sendNotification(req, res);
 });
 

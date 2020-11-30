@@ -33,7 +33,6 @@ lecture // new lecture, cancel lecture
 exam // new exam, cancel exam
 onlineExam // new exam, cancel exam
 
-
 other notifications
 
 lectureQuestionAnswer // nwe Question and answer to author
