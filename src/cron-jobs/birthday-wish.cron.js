@@ -1,5 +1,5 @@
 const cron = require('node-cron');
-const Branch = require('../models/branch.model');
+const Student = require('../models/student.model');
 
 const getDate = () => {
   const d = new Date();
@@ -12,33 +12,33 @@ const getDate = () => {
   return date;
 };
 
-const branchMembershipValidation = async () => {
+const birthdayWishes = async () => {
   cron.schedule(
-    '45 59 23 * * *', // Every day on 23:59:45
+    '00 00 07 * * *', // Every day on 07:00:00
     async () => {
       const date = getDate();
 
       try {
-        await Branch.updateMany(
-          { 'currentPlanDetails.expiryDate': { $lte: date } },
-          { $set: { status: false } },
-          { multi: true }
-        );
-
-        const branches = await Branch.find(
-          { 'currentPlanDetails.expiryDate': { $lte: date } },
-          { _id: 0, branchName: '$basicDetails.branchName', imsMasterId: '$parentUser' }
+        const users = await Student.find(
+          {
+            birthDate: date,
+          },
+          {
+            imsMasterId: 1,
+            name: 1,
+            _id: 0,
+          }
         );
 
         const userNotificationRequests = new Array();
 
-        for (let branch of branches) {
-          const deactivationMessage = `Your Membership expired of Institute ${branch.branchName}`;
+        for (let user of users) {
+          const birthdayMessage = `Class Master wishes a very happy birthday to one of the brightest student. May you keep shining like that always.`;
 
           const newNotification = {
-            receiverId: branch.imsMasterId,
-            title: 'Institute Deactivated',
-            message: deactivationMessage,
+            receiverId: user.imsMasterId,
+            title: 'Happy Birthday',
+            message: birthdayMessage,
           };
           const options = {
             method: 'POST',
@@ -68,4 +68,4 @@ const branchMembershipValidation = async () => {
   );
 };
 
-module.exports = branchMembershipValidation;
+module.exports = birthdayWishes;

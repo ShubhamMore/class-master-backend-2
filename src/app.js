@@ -6,7 +6,12 @@ const morgan = require('morgan');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
+const birthdayWish = require('./cron-jobs/birthday-wish.cron');
 const branchMembershipValidation = require('./cron-jobs/branch-membership.cron');
+const lectureReminder = require('./cron-jobs/lecture-reminder.cron');
+const examReminder = require('./cron-jobs/exam-reminder.cron');
+const installmentReminder = require('./cron-jobs/installment-reminder.cron');
+const pendingInstallmentReminder = require('./cron-jobs/pending-installment-reminder.cron');
 
 require('./database/mongoose');
 
@@ -153,6 +158,11 @@ app.use((error, req, res, next) => {
   });
 });
 
+birthdayWish();
 branchMembershipValidation();
+lectureReminder();
+examReminder();
+installmentReminder();
+pendingInstallmentReminder();
 
 module.exports = app;
