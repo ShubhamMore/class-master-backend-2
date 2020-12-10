@@ -44,7 +44,7 @@ const newEmployee = async (req, res) => {
     const mail = {
       to: user.email,
       from: process.env.EMAIL,
-      subject: 'New Student Registered at Class Master',
+      subject: 'New Employee Registered at Class Master',
       html: await getNewUserMailTemplate(user),
     };
 

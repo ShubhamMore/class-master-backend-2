@@ -132,7 +132,7 @@ const newStudentCourse = async (req, res) => {
     } (${studentCourseDetails.category.category}) - ${studentCourseDetails.branch.address.city}.`;
 
     const notificationTitle = 'New Course Registered';
-    const receiverId = studentCourseDetails.student.imsMAsterId;
+    const receiverId = studentCourseDetails.student.imsMasterId;
 
     await sendNotification(notificationTitle, notificationMessage, receiverId);
 
