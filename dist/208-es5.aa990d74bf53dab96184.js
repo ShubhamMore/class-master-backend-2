@@ -395,6 +395,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             var paymentDetails = {
               amount: this.paymentDetails.amount,
               planType: this.paymentDetails.planType,
+              packageType: this.paymentDetails.packageType,
               orderId: orderId,
               receiptId: ReceiptId
             };

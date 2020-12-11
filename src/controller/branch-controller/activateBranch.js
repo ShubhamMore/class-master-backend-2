@@ -27,16 +27,17 @@ const activateBranch = async (req, res) => {
 
     const day = 24 * 60 * 60 * 1000;
 
-    if (req.body.paymentDetails.planType === 'monthly') {
+    if (req.body.paymentDetails.packageType === 'monthly') {
       const nextDate = dateMilliseconds + day * 30 * 1;
       expiryDate = getDate(nextDate);
-    } else if (req.body.paymentDetails.planType === 'quarterly') {
+      console.log(1, dateMilliseconds, nextDate);
+    } else if (req.body.paymentDetails.packageType === 'quarterly') {
       const nextDate = dateMilliseconds + day * (month % 4 === 0 ? 3 : 2) + day * 30 * 3;
       expiryDate = getDate(nextDate);
-    } else if (req.body.paymentDetails.planType === 'half-yearly') {
+    } else if (req.body.paymentDetails.packageType === 'half-yearly') {
       const nextDate = dateMilliseconds + day * (month % 2 === 0 ? 3 : 2) + day * 30 * 6;
       expiryDate = getDate(nextDate);
-    } else if (req.body.paymentDetails.planType === 'yearly') {
+    } else if (req.body.paymentDetails.packageType === 'yearly') {
       const nextDate = dateMilliseconds + day * 5 + day * 30 * 12;
       expiryDate = getDate(nextDate);
     } else {
@@ -46,7 +47,7 @@ const activateBranch = async (req, res) => {
 
     const branch = await Branch.findByIdAndUpdate(req.body.id, {
       currentPlanDetails: {
-        planType: req.body.paymentDetails.planType,
+        planType: req.body.paymentDetails.packageType,
         activationDate,
         expiryDate,
       },

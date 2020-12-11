@@ -897,6 +897,7 @@ let AddInstituteComponent = /*@__PURE__*/ (() => {
             const paymentDetails = {
                 amount: this.paymentDetails.amount,
                 planType: this.paymentDetails.planType,
+                packageType: this.paymentDetails.packageType,
                 orderId: orderId,
                 receiptId: ReceiptId,
             };
