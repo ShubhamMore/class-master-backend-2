@@ -30,7 +30,6 @@ const activateBranch = async (req, res) => {
     if (req.body.paymentDetails.packageType === 'monthly') {
       const nextDate = dateMilliseconds + day * 30 * 1;
       expiryDate = getDate(nextDate);
-      console.log(1, dateMilliseconds, nextDate);
     } else if (req.body.paymentDetails.packageType === 'quarterly') {
       const nextDate = dateMilliseconds + day * (month % 4 === 0 ? 3 : 2) + day * 30 * 3;
       expiryDate = getDate(nextDate);
