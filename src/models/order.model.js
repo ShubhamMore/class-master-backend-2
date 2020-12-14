@@ -44,7 +44,7 @@ const orderSchema = mongoose.Schema({
   notes: [],
   created_at: {
     type: Date,
-    required: true,
+    default: new Date().toISOString(),
   },
 });
 
