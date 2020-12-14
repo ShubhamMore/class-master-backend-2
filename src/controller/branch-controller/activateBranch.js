@@ -2,6 +2,10 @@ const PaymentReceipt = require('../../models/payment-receipt.model');
 const Branch = require('../../models/branch.model');
 const errorHandler = require('../../handler/error.handler');
 
+const getBranchActivationMailTemplate = require('../../html-template/branchActivationMailTemplate');
+const paymentReceiptTemplate = require('../../html-template/paymentReceiptTemplate');
+const sendMail = require('../../email/mail');
+
 const getDate = (date) => {
   date = new Date(date);
   const year = date.getFullYear();
@@ -52,9 +56,32 @@ const activateBranch = async (req, res) => {
       },
       status: true,
     });
+
     if (!branch) {
       throw new Error('Branch Updation Failed');
     }
+
+    branch.currentPlanDetails.planType = req.body.paymentDetails.packageType;
+    branch.currentPlanDetails.activationDate = req.body.paymentDetails.activationDate;
+    branch.currentPlanDetails.expiryDate = req.body.paymentDetails.expiryDate;
+
+    const branchActivationMail = {
+      to: paymentReceipt.userEmail,
+      from: process.env.EMAIL,
+      subject: 'Branch Activated Successfully!',
+      html: await getBranchActivationMailTemplate(branch),
+    };
+
+    const paymentReceiptMail = {
+      to: paymentReceipt.userEmail,
+      from: process.env.EMAIL,
+      subject: 'Payment Receipt!',
+      html: await getBranchActivationMailTemplate(branch, paymentReceipt),
+    };
+
+    await sendMail(branchActivationMail);
+    await sendMail(paymentReceiptMail);
+
     res.status(200).send({ success: true });
   } catch (e) {
     errorHandler(e, 400, res);
