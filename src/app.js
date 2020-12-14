@@ -47,6 +47,7 @@ const studentCourseInstallmentReceiptRouter = require('./routers/student-course-
 const studentCourseInstallmentRouter = require('./routers/student-course-installment.route');
 const studentCourseRouter = require('./routers/student-course.route');
 const studentRouter = require('./routers/student.route');
+const transactionRouter = require('./routers/transaction.route');
 const orderRouter = require('./routers/order.route');
 const notificationRouter = require('./routers/notification.route');
 const paymentRouter = require('./routers/payment.route');
@@ -140,6 +141,7 @@ app.use(studentCourseInstallmentReceiptRouter);
 app.use(studentCourseInstallmentRouter);
 app.use(studentCourseRouter);
 app.use(studentRouter);
+app.use(transactionRouter);
 app.use(userRouter);
 app.use(zoomRouter);
 

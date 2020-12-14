@@ -17,6 +17,10 @@ const institutePaymentReceiptSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  imsMasterId: {
+    type: String,
+    required: true,
+  },
   amount: {
     type: String,
     required: true,
@@ -28,6 +32,10 @@ const institutePaymentReceiptSchema = mongoose.Schema({
   installment: {
     type: String,
     required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: new Date().toISOString(),
   },
   status: {
     type: Boolean,

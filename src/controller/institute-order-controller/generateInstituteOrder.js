@@ -107,7 +107,7 @@ const generateInstituteOrder = async (req, res) => {
           status: order.status,
           attempts: order.attempts.toString(),
           notes: order.notes,
-          created_at: new Date().toISOString(),
+          created_at: order.created_at,
         };
 
         const generatedInstituteOrder = new InstituteOrder(orderDetails);

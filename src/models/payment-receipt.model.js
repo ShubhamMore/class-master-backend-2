@@ -17,6 +17,10 @@ const paymentReceiptSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  imsMasterId: {
+    type: String,
+    required: true,
+  },
   coupon: {
     type: String,
     default: null,
@@ -36,6 +40,10 @@ const paymentReceiptSchema = mongoose.Schema({
   packageType: {
     type: String,
     required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: new Date().toISOString(),
   },
   status: {
     type: Boolean,
