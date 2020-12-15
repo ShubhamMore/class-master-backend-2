@@ -26,9 +26,7 @@ const getInstituteTransaction = async (req, res) => {
             {
               $match: {
                 $expr: {
-                  $cond: {
-                    $eq: ['$_id', '$$orderId'],
-                  },
+                  $eq: ['$_id', '$$orderId'],
                 },
               },
             },
@@ -36,7 +34,6 @@ const getInstituteTransaction = async (req, res) => {
               $project: {
                 _id: 0,
                 order_id: 1,
-                amount: 1,
               },
             },
           ],
@@ -44,11 +41,40 @@ const getInstituteTransaction = async (req, res) => {
         },
       },
       {
+        $lookup: {
+          from: 'branches',
+          let: { branch_id: '$branchId' },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: ['$_id', '$$branch_id'],
+                },
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                branchBasicDetails: '$basicDetails',
+                branchAddress: '$address',
+              },
+            },
+          ],
+          as: 'branches',
+        },
+      },
+
+      {
         $replaceRoot: {
           newRoot: { $mergeObjects: [{ $arrayElemAt: ['$orders', 0] }, '$$ROOT'] },
         },
       },
-      { $project: { orders: 0, order: 0 } },
+      {
+        $replaceRoot: {
+          newRoot: { $mergeObjects: [{ $arrayElemAt: ['$branches', 0] }, '$$ROOT'] },
+        },
+      },
+      { $project: { orders: 0, order: 0, branches: 0, branchId: 0 } },
     ]);
 
     if (!transaction[0]) {

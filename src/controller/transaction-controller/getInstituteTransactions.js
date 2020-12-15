@@ -7,12 +7,14 @@ const getInstituteTransactions = async (req, res) => {
     const transactions = await PaymentReceipt.aggregate([
       {
         $match: {
-          imsMasterId: req.user.imsMasterId,
+          // imsMasterId: req.user.imsMasterId,
+          status: true,
         },
       },
       {
         $addFields: {
           order: { $toObjectId: '$orderId' },
+          branchId: { $toObjectId: '$branch' },
         },
       },
       {
@@ -23,9 +25,7 @@ const getInstituteTransactions = async (req, res) => {
             {
               $match: {
                 $expr: {
-                  $cond: {
-                    $eq: ['$_id', '$$orderId'],
-                  },
+                  $eq: ['$_id', '$$orderId'],
                 },
               },
             },
@@ -33,7 +33,6 @@ const getInstituteTransactions = async (req, res) => {
               $project: {
                 _id: 0,
                 order_id: 1,
-                amount: 1,
               },
             },
           ],
@@ -41,11 +40,39 @@ const getInstituteTransactions = async (req, res) => {
         },
       },
       {
+        $lookup: {
+          from: 'branches',
+          let: { branch_id: '$branchId' },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: ['$_id', '$$branch_id'],
+                },
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                basicDetails: 1,
+                address: 1,
+              },
+            },
+          ],
+          as: 'branches',
+        },
+      },
+      {
         $replaceRoot: {
           newRoot: { $mergeObjects: [{ $arrayElemAt: ['$orders', 0] }, '$$ROOT'] },
         },
       },
-      { $project: { orders: 0, order: 0 } },
+      {
+        $replaceRoot: {
+          newRoot: { $mergeObjects: [{ $arrayElemAt: ['$branches', 0] }, '$$ROOT'] },
+        },
+      },
+      { $project: { orders: 0, order: 0, branches: 0, branchId: 0 } },
     ]);
 
     res.status(200).send(transactions);

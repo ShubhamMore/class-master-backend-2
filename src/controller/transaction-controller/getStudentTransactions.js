@@ -33,7 +33,6 @@ const getStudentTransactions = async (req, res) => {
               $project: {
                 _id: 0,
                 order_id: 1,
-                amount: 1,
               },
             },
           ],
