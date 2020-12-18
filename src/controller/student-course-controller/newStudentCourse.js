@@ -12,11 +12,22 @@ const newStudentCourse = async (req, res) => {
       branch: req.body.studentCourse.branch,
       category: req.body.studentCourse.category,
       course: req.body.studentCourse.course,
+      student: req.body.studentCourse.student,
+    });
+
+    if (studentCourse) {
+      throw new Error('Student Already Registered to this course');
+    }
+
+    const studentCourseRollNo = await StudentCourse.findOne({
+      branch: req.body.studentCourse.branch,
+      category: req.body.studentCourse.category,
+      course: req.body.studentCourse.course,
       batch: req.body.studentCourse.batch,
       rollNumber: req.body.studentCourse.rollNumber,
     });
 
-    if (studentCourse) {
+    if (studentCourseRollNo) {
       throw new Error('Student Roll Number for this Batch already Exist');
     }
 
@@ -138,6 +149,7 @@ const newStudentCourse = async (req, res) => {
 
     res.status(201).send({ success: true });
   } catch (e) {
+    console.log(e);
     errorHandler(e, 400, res);
   }
 };
