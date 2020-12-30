@@ -121,7 +121,7 @@ const zoomAuth = async (req, res, next) => {
       } else {
         await InstituteKeys.findOneAndUpdate(
           {
-            imsMasterId: decryptedImsMasterId,
+            imsMasterId: imsMasterId,
           },
           {
             $set: {
@@ -145,7 +145,6 @@ const zoomAuth = async (req, res, next) => {
 
     next();
   } catch (e) {
-    console.log(e);
     errorHandler(e, 400, res);
   }
 };
