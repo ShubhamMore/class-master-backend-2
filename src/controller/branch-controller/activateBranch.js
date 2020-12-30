@@ -76,7 +76,7 @@ const activateBranch = async (req, res) => {
       to: paymentReceipt.userEmail,
       from: process.env.EMAIL,
       subject: 'Payment Receipt!',
-      html: await getBranchActivationMailTemplate(branch, paymentReceipt),
+      html: await paymentReceiptTemplate(branch, paymentReceipt),
     };
 
     await sendMail(branchActivationMail);
