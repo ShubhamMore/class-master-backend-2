@@ -24,9 +24,9 @@ const paymentReceiptTemplate = async (branch, paymentReceipt) => {
         <h6>Thane, Thane - 400 605</h6>
       </div>
       <div class="col-12">
-        <p class="text-right"><strong>Date: </strong> ${
+        <p class="text-right"><strong>Date: </strong> ${getDate(
           branch.currentPlanDetails.activationDate
-        }</p>
+        )}</p>
       </div>
     </div>
     <br />
@@ -54,8 +54,6 @@ const paymentReceiptTemplate = async (branch, paymentReceipt) => {
           <tfoot>
             <tr>
               <th>Grand Total</th>
-            </tr>
-            <tr>
               <th>${paymentReceipt.amount}.00/-</th>
             </tr>
           </tfoot>

@@ -62,8 +62,8 @@ const activateBranch = async (req, res) => {
     }
 
     branch.currentPlanDetails.planType = req.body.paymentDetails.packageType;
-    branch.currentPlanDetails.activationDate = req.body.paymentDetails.activationDate;
-    branch.currentPlanDetails.expiryDate = req.body.paymentDetails.expiryDate;
+    branch.currentPlanDetails.activationDate = activationDate;
+    branch.currentPlanDetails.expiryDate = expiryDate;
 
     const branchActivationMail = {
       to: paymentReceipt.userEmail,

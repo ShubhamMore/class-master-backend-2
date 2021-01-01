@@ -69,6 +69,7 @@ app.use(compression());
 
 app.use(cookieParser());
 
+app.use('/assets', express.static(path.join('assets')));
 app.use('/course-materials', express.static(path.join('course-materials')));
 app.use('/lecture-materials', express.static(path.join('lecture-materials')));
 app.use('/assignments', express.static(path.join('assignments')));
