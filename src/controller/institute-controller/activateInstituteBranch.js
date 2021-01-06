@@ -1,4 +1,6 @@
 const Branch = require('../../models/branch.model');
+const BranchHistory = require('../../models/branch-history.model');
+
 const errorHandler = require('../../handler/error.handler');
 
 const getDate = (date) => {
@@ -24,7 +26,7 @@ const activateBranch = async (req, res) => {
       const nextDate = dateMilliseconds + day * 30 * 1;
       expiryDate = getDate(nextDate);
     } else if (req.body.planType === 'quarterly') {
-      const nextDate = dateMilliseconds + day * (month % 4 === 0 ? 3 : 2) + day * 30 * duration;
+      const nextDate = dateMilliseconds + day * (month % 4 === 0 ? 3 : 2) + day * 30 * 3;
       expiryDate = getDate(nextDate);
     } else if (req.body.planType === 'half-yearly') {
       const nextDate = dateMilliseconds + day * (month % 2 === 0 ? 3 : 2) + day * 30 * 6;
@@ -37,7 +39,7 @@ const activateBranch = async (req, res) => {
       expiryDate = getDate(nextDate);
     }
 
-    const branch = await Branch.findByIdAndUpdate(req.body.id, {
+    const branch = await Branch.findByIdAndUpdate(req.body.branch, {
       currentPlanDetails: {
         planType: req.body.planType,
         activationDate,
@@ -45,11 +47,25 @@ const activateBranch = async (req, res) => {
       },
       status: true,
     });
+
     if (!branch) {
       throw new Error('Branch Activation Failed');
     }
+
+    const branchHistory = {
+      branch: branch._id,
+      amount: req.body.amount,
+      activationDate: activationDate,
+      expiryDate: expiryDate,
+      planType: req.body.planType,
+    };
+
+    const saveBranchHistory = new BranchHistory(branchHistory);
+    await saveBranchHistory.save();
+
     res.status(200).send({ success: true });
   } catch (e) {
+    console.log(e);
     errorHandler(e, 400, res);
   }
 };
