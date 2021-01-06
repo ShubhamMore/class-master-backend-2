@@ -3,7 +3,7 @@ const errorHandler = require('../../handler/error.handler');
 
 const activateBranch = async (req, res) => {
   try {
-    const branch = await Branch.findByIdAndUpdate(req.body.id, {
+    const branch = await Branch.findByIdAndUpdate(req.body.branch, {
       status: false,
     });
 

@@ -7,12 +7,12 @@
   },
   "main": "index.js",
   "dependencies": {
-    "@zoomus/websdk": "^1.8.1",
-    "aws-sdk": "^2.715.0",
+    "@zoomus/websdk": "^1.8.5",
+    "aws-sdk": "^2.820.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "capitalize": "^2.0.3",
-    "cloudinary": "^1.22.0",
+    "cloudinary": "^1.23.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
@@ -23,15 +23,15 @@
     "googleapis": "^46.0.0",
     "image-size": "^0.8.3",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "^3.6.2",
-    "mongoose": "^5.9.25",
+    "mongodb": "^3.6.3",
+    "mongoose": "^5.11.9",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
     "node-cron": "^2.0.3",
     "node-xlsx": "^0.15.0",
-    "nodemailer": "^6.4.10",
+    "nodemailer": "^6.4.17",
     "number-to-words": "^1.2.4",
-    "prettier": "^2.1.2",
+    "prettier": "^2.2.1",
     "razorpay": "^2.0.6",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
@@ -39,7 +39,7 @@
     "validator": "^10.11.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.6"
   },
   "scripts": {
     "start": "env-cmd -f ./config/prod.env node class-master.js",

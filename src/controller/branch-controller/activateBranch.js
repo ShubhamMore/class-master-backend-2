@@ -1,5 +1,7 @@
 const PaymentReceipt = require('../../models/payment-receipt.model');
 const Branch = require('../../models/branch.model');
+const BranchHistory = require('../../models/branch-history.model');
+
 const errorHandler = require('../../handler/error.handler');
 
 const getBranchActivationMailTemplate = require('../../html-template/branchActivationMailTemplate');
@@ -60,6 +62,17 @@ const activateBranch = async (req, res) => {
     if (!branch) {
       throw new Error('Branch Updation Failed');
     }
+
+    const branchHistory = {
+      branch: branch._id,
+      amount: paymentReceipt.amount,
+      activationDate: activationDate,
+      expiryDate: expiryDate,
+      planType: req.body.paymentDetails.packageType,
+    };
+
+    const saveBranchHistory = new BranchHistory(branchHistory);
+    await saveBranchHistory.save();
 
     branch.currentPlanDetails.planType = req.body.paymentDetails.packageType;
     branch.currentPlanDetails.activationDate = activationDate;

@@ -4,7 +4,7 @@ const errorHandler = require('../../handler/error.handler');
 
 const getInstituteBranchHistory = async (req, res) => {
   try {
-    const branchHistory = PaymentReceipt.aggregate([
+    const branchHistory = await PaymentReceipt.aggregate([
       {
         $match: {
           userId: req.body.user,
@@ -34,8 +34,6 @@ const getInstituteBranchHistory = async (req, res) => {
     ]);
 
     res.status(200).send(branchHistory);
-
-    res.send(data);
   } catch (e) {
     errorHandler(e, 400, res);
   }

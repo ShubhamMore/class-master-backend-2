@@ -4,11 +4,9 @@ const errorHandler = require('../../handler/error.handler');
 
 const getInstituteBranches = async (req, res) => {
   try {
-    const institutes = Branch.find({ parentUser: req.body.institute });
+    const branches = await Branch.find({ parentUser: req.body.institute });
 
-    res.status(200).send(institutes);
-
-    res.send(data);
+    res.status(200).send(branches);
   } catch (e) {
     errorHandler(e, 400, res);
   }
