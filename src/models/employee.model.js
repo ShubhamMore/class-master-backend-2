@@ -30,6 +30,10 @@ const employeeSchema = new mongoose.Schema({
     unique: true,
     required: true,
   },
+  status: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 employeeSchema.methods.toJSON = function () {
