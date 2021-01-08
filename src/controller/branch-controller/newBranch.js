@@ -19,7 +19,7 @@ const newBranch = async (req, res) => {
       name: branch.basicDetails.branchName,
       address: `${branch.address.address1}, ${
         branch.address.address2 ? branch.address.address2 + ',' : ''
-      } ${branch.address.city} - ${branch.address.pincode}, ${branch.address.state}`,
+      } ${branch.address.city} - ${branch.address.pinCode}, ${branch.address.state}`,
     };
 
     const instituteBilling = new InstituteBilling(billingDetails);

@@ -130,20 +130,22 @@ const newStudentCourse = async (req, res) => {
     ]);
 
     const notificationMessage = `Hii ${
-      studentCourseDetails.student.name
+      studentCourseDetails[0].student.name
     }, you are successfully registered to ${
-      studentCourseDetails.batch.basicDetails.batchName
+      studentCourseDetails[0].batch.basicDetails.batchName
     } batch for ${
-      studentCourseDetails.course.basicDetails.courseName
-    } course starting from ${studentCourseDetails.batch.basicDetails.startDate
+      studentCourseDetails[0].course.basicDetails.courseName
+    } course starting from ${studentCourseDetails[0].batch.basicDetails.startDate
       .split('-')
       .reverse()
-      .join('-')} with Roll Number ${studentCourseDetails.rollNumber} in Institute ${
-      studentCourseDetails.branch.basicDetails.branchName
-    } (${studentCourseDetails.category.category}) - ${studentCourseDetails.branch.address.city}.`;
+      .join('-')} with Roll Number ${studentCourseDetails[0].rollNumber} in Institute ${
+      studentCourseDetails[0].branch.basicDetails.branchName
+    } (${studentCourseDetails[0].category.category}) - ${
+      studentCourseDetails[0].branch.address.city
+    }.`;
 
     const notificationTitle = 'New Course Registered';
-    const receiverId = studentCourseDetails.student.imsMasterId;
+    const receiverId = studentCourseDetails[0].student.imsMasterId;
 
     await sendNotification(notificationTitle, notificationMessage, receiverId);
 

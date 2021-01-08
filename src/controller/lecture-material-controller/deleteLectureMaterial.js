@@ -18,7 +18,7 @@ const deleteLectureMaterial = async (req, res) => {
     const branchStorageSizeToFree = lectureMaterial.fileSize * -1;
 
     await BranchStorage.findOneAndUpdate(
-      { branch: courseMaterial.branch },
+      { branch: lectureMaterial.branch },
       {
         $inc: {
           totalStorageUsed: branchStorageSizeToFree,
@@ -30,6 +30,7 @@ const deleteLectureMaterial = async (req, res) => {
 
     res.status(200).send({ success: true });
   } catch (e) {
+    console.log(e);
     errorHandler(e, 400, res);
   }
 };

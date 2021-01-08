@@ -68,10 +68,10 @@ const newBranchStudent = async (req, res) => {
       },
     ]);
 
-    const notificationMessage = `Hii ${studentBranchDetails.student.name}, you are successfully registered in Institute ${studentBranchDetails.branch.basicDetails.branchName} (${studentBranchDetails.category.category}) - ${studentBranchDetails.branch.address.city}.`;
+    const notificationMessage = `Hii ${studentBranchDetails[0].student.name}, you are successfully registered in Institute ${studentBranchDetails[0].branch.basicDetails.branchName} (${studentBranchDetails[0].category.category}) - ${studentBranchDetails[0].branch.address.city}.`;
 
     const notificationTitle = 'New Branch Registered';
-    const receiverId = studentBranchDetails.student.imsMasterId;
+    const receiverId = studentBranchDetails[0].student.imsMasterId;
 
     await sendNotification(notificationTitle, notificationMessage, receiverId);
 
