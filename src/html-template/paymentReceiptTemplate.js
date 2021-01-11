@@ -12,16 +12,17 @@ const getDate = (date) => {
 const paymentReceiptTemplate = async (branch, paymentReceipt) => {
   return `
     ${header()}
+  
     <div class="row">
       <div class="col-12">
-        <h5>Payment Receipt of Branch ${branch.basicDetails.branchName}.</h5>
+        <h4>Payment Receipt of Branch ${branch.basicDetails.branchName}.</h4>
       </div>
     </div>
     <hr />
     <div class="row">
       <div class="col-12 text-center">
-        <h3>Class Master</h3>
-        <h6>Thane, Thane - 400 605</h6>
+        <h2>Class Master</h2>
+        <h3>Thane, Thane - 400 605</h3>
       </div>
       <div class="col-12">
         <p class="text-right"><strong>Date: </strong> ${getDate(
@@ -34,7 +35,7 @@ const paymentReceiptTemplate = async (branch, paymentReceipt) => {
 
     <div class="row">
       <div class="col-12">
-        <table class="table table-sm table-bordered">
+        <table class="table">
           <thead>
             <tr>
               <th>Particular</th>
@@ -64,13 +65,12 @@ const paymentReceiptTemplate = async (branch, paymentReceipt) => {
     <br />
     <div class="row">
       <div class="col-12">
-        <h6 class="text-center">
-          <small>
-            This is Computer Generated Receipt, Does not Required any Stamp or Signature.
-          </small>
-        </h6>
+        <h4 class="text-center">
+          *This is Computer Generated Receipt, Does not Required any Stamp or Signature.
+        </h4>
       </div>
     </div>
+
     ${footer()}
     `;
 };

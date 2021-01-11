@@ -15,7 +15,7 @@ const branchActivationMailTemplate = async (branch) => {
     <div class="row">
         <div class="col-12">
           <h3>Your Branch ${branch.basicDetails.branchName} is Activated Successfully!!</h3>
-          <h5>Your Activation Details are as Follows:</h5>
+          <h4>Your Activation Details are as Follows:</h4>
           <p>
             <strong>Plan Type: </strong> ${branch.currentPlanDetails.planType}
             <br />

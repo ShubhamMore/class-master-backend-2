@@ -14,13 +14,13 @@ const getNewUserMailTemplate = async (user) => {
             <strong>Password: </strong> ${user.phone}
           </p>
           <div class="text-center">
-            <a class="btn btn-success" href="${process.env.SITE_URL}">Click Here</a>
+            <a class="btn" href="${process.env.SITE_URL}">Click Here</a>
           </div>
           <br />
           <hr />
           <br />
           <div class="text-center">
-            <h6>Having Trouble to Login click on Following Link</h6>
+            <h5>Having Trouble to Login click on Following Link</h5>
             <a href="${process.env.SITE_URL}">${process.env.SITE_URL}</a>
           </div>
         </div>
