@@ -4,7 +4,6 @@ const errorHandler = require('../../handler/error.handler');
 
 const getStudentsCourseAttendance = async (req, res) => {
   try {
-    console.log(req.body);
     const studentCourse = await StudentCourse.findById(req.body.studentCourse);
 
     if (!studentCourse) {

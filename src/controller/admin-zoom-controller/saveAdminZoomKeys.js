@@ -5,7 +5,6 @@ const saveAdminZoomKeys = async (req, res) => {
   try {
     const adminKeys = await AdminZoomKeys.findOneAndUpdate(
       { imsMasterId: req.user.imsMasterId },
-
       {
         $set: {
           accessKey: req.body.accessKey,

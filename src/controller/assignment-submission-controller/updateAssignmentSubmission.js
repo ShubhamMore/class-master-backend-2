@@ -9,8 +9,6 @@ const updateAssignmentSubmissions = async (req, res) => {
   try {
     const file = req.file;
 
-    console.log(req.body);
-
     const assignmentSubmission = await AssignmentSubmission.findById(req.body._id);
 
     if (!assignmentSubmission) {
@@ -111,7 +109,6 @@ const updateAssignmentSubmissions = async (req, res) => {
 
     res.status(200).send(newAssignmentSubmission);
   } catch (e) {
-    console.log(e);
     errorHandler(e, 400, res);
   }
 };

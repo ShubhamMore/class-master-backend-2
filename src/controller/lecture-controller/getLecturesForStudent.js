@@ -83,8 +83,6 @@ const getLecturesForStudent = async (req, res) => {
       },
     ]);
 
-    console.log(lectures);
-
     res.status(200).send(lectures);
   } catch (e) {
     errorHandler(e, 400, res);

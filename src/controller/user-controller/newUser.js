@@ -8,6 +8,7 @@ const getImsMasterId = require('../../functions/getImsMasterId');
 const newUser = async (req, res) => {
   try {
     req.body.imsMasterId = await getImsMasterId(req.body.userRole);
+
     const user = new User(req.body);
 
     await user.save();
@@ -37,7 +38,6 @@ const newUser = async (req, res) => {
 
     res.status(201).send({ success: true });
   } catch (e) {
-    console.log(e);
     errorHandler(e, e.status || 400, res);
   }
 };

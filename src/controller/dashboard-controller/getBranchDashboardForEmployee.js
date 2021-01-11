@@ -62,11 +62,9 @@ const getBranchDashboardForEmployee = async (req, res) => {
         res.status(200).send(dashboardInfo);
       })
       .catch((e) => {
-        console.log(e);
         errorHandler(e, 400, res);
       });
   } catch (e) {
-    console.log(e);
     errorHandler(e, 400, res);
   }
 };

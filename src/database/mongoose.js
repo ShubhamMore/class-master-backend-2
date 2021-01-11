@@ -1,3 +1,4 @@
+const admin = require('../admin');
 const mongoose = require('mongoose');
 
 mongoose
@@ -7,9 +8,11 @@ mongoose
     useFindAndModify: false,
     useUnifiedTopology: true,
   })
-  .then(() => {
-    console.log('connected');
+  .then(async () => {
+    try {
+      await admin();
+    } catch (e) {
+      throw new Error(e);
+    }
   })
-  .catch((e) => {
-    console.log(e);
-  });
+  .catch((e) => {});

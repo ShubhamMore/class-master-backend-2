@@ -119,8 +119,6 @@ const saveOnlineExamResult = async (req, res) => {
           }
         }
 
-        console.log(marks);
-
         if (marks) {
           correctAnswerCount++;
         } else {

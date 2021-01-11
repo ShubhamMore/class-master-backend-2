@@ -5,7 +5,8 @@ const request = require('request-promise');
 
 const getDate = () => {
   const d = new Date();
-  d.getFullYear() +
+  const date =
+    d.getFullYear() +
     '-' +
     (d.getMonth() + 1).toString().padStart(2, '0') +
     '-' +

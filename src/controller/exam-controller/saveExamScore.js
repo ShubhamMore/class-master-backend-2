@@ -13,7 +13,6 @@ const saveExamScore = async (req, res) => {
     const invalidStudentMarks = new Array();
 
     examMarks.forEach((student) => {
-      console.log(student.marks, Number.isInteger(student.marks));
       if (!Number.isInteger(student.marks)) {
         invalidStudentMarks.push(student.name);
       } else if (

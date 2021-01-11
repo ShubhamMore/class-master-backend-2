@@ -43,8 +43,6 @@ const getBranchEmployeeNameIds = async (req, res) => {
       },
     ]);
 
-    console.log(branchEmployees);
-
     res.status(200).send(branchEmployees);
   } catch (e) {
     errorHandler(e, 400, res);

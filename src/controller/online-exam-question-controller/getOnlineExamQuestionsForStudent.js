@@ -26,7 +26,6 @@ const getOnlineExamQuestions = async (req, res) => {
 
     res.status(200).send(onlineExamQuestions);
   } catch (e) {
-    console.log(e);
     errorHandler(e, 400, res);
   }
 };

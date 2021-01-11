@@ -84,7 +84,6 @@ const newAssignmentSubmission = async (req, res) => {
 
     res.status(200).send(assignmentSubmission);
   } catch (e) {
-    console.log(e);
     errorHandler(e, 400, res);
   }
 };

@@ -56,8 +56,6 @@ const generateZoomAuthToken = async (req, res) => {
     } else {
       adminZoomCredentials = await AdminKeys.findOne();
 
-      console.log(adminZoomCredentials);
-
       if (!adminZoomCredentials) {
         throw new Error('Invalid Zoom Credentials');
       }
@@ -134,7 +132,6 @@ const generateZoomAuthToken = async (req, res) => {
 
     res.status(200).send(success());
   } catch (e) {
-    console.log(e);
     errorHandler(e, 400, res);
   }
 };

@@ -49,8 +49,6 @@ const getMyBranchLeaves = async (req, res) => {
 
     res.status(200).send(employeeLeaves);
   } catch (e) {
-    console.log(e);
-
     errorHandler(e, 400, res);
   }
 };

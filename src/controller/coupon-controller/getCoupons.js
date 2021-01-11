@@ -6,7 +6,6 @@ const getCoupons = async (req, res) => {
     const coupons = await Coupon.find({});
     res.status(200).send(coupons);
   } catch (e) {
-    e;
     errorHandler(e, 400, res);
   }
 };

@@ -26,7 +26,6 @@ const verifyPayment = async (req, res) => {
       throw new Error('Payment Verification Failed');
     }
   } catch (e) {
-    e;
     res.status(400).send(e + '');
   }
 };

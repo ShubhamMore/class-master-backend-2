@@ -7,7 +7,6 @@ const getAdminZoomKeys = async (req, res) => {
 
     res.status(200).send(adminKeys);
   } catch (e) {
-    console.log(e);
     errorHandler(e, e.status || 400, res);
   }
 };

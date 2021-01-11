@@ -30,7 +30,6 @@ const getCourses = async (req, res) => {
     const courses = await Course.find(query);
     res.status(200).send(courses);
   } catch (e) {
-    e;
     errorHandler(e, 400, res);
   }
 };

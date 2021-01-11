@@ -17,7 +17,6 @@ const saveInstituteZoomKeys = async (req, res) => {
 
     res.status(200).send(instituteKeys);
   } catch (e) {
-    console.log(e);
     errorHandler(e, e.status || 400, res);
   }
 };

@@ -36,12 +36,12 @@ const generateOrder = async (req, res) => {
       amount = amount - discountAmount;
     }
 
-    receiptData.amount = amount;
+    receiptData.amount = +amount;
 
     const paymentReceipt = new PaymentReceipt(receiptData);
 
     const options = {
-      amount: +paymentReceipt.amount * 100, // amount in the smallest currency unit
+      amount: Math.round(+paymentReceipt.amount * 100), // amount in the smallest currency unit
       currency: 'INR',
       receipt: `order_rcptid_${paymentReceipt._id}`,
       payment_capture: '0',

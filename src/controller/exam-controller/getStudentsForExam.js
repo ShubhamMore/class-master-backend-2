@@ -124,8 +124,6 @@ const getStudentsForExam = async (req, res) => {
       ]);
     }
 
-    console.log(students);
-
     res.status(200).send(students);
   } catch (e) {
     errorHandler(e, 400, res);

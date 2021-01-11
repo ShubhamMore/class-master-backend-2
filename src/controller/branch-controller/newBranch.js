@@ -33,7 +33,6 @@ const newBranch = async (req, res) => {
         res.status(201).send({ branchId: branch._id });
       })
       .catch((e) => {
-        console.log(e);
         errorHandler(e, 400, res);
       });
   } catch (e) {

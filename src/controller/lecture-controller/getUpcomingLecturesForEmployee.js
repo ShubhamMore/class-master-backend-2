@@ -170,7 +170,6 @@ const getUpcomingLecturesForEmployee = async (req, res) => {
 
     res.status(200).send(upComingLectures);
   } catch (e) {
-    console.log(e);
     errorHandler(e, 400, res);
   }
 };

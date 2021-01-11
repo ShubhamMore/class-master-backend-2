@@ -14,6 +14,16 @@ const getCourseMaterialsForStudent = async (req, res) => {
       searchQuery.subject = req.body.subject;
     }
 
+    const courseMaterials = await CourseMaterial.find(searchQuery, {
+      _id: 1,
+      title: 1,
+      subject: 1,
+      fileName: 1,
+      fileType: 1,
+      secureUrl: 1,
+      createdAt: 1,
+    });
+
     res.status(200).send(courseMaterials);
   } catch (e) {
     errorHandler(e, 400, res);

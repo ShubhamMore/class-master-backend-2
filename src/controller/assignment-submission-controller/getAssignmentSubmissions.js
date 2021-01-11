@@ -11,8 +11,6 @@ const getAssignmentSubmissions = async (req, res) => {
       throw new Error('Assignment Not Found');
     }
 
-    console.log(assignment._id);
-
     const assignmentSubmissions = await StudentCourse.aggregate([
       {
         $match: {
@@ -78,8 +76,6 @@ const getAssignmentSubmissions = async (req, res) => {
       },
       { $project: { submission: 0 } },
     ]);
-
-    console.log(assignmentSubmissions);
 
     res.status(200).send(assignmentSubmissions);
   } catch (e) {

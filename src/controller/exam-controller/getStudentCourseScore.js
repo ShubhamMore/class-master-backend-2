@@ -166,7 +166,6 @@ const getStudentCourseScore = async (req, res) => {
 
     res.status(200).send(scores);
   } catch (e) {
-    console.log(e);
     errorHandler(e, 400, res);
   }
 };
