@@ -10,6 +10,12 @@ const getDate = (date) => {
 };
 
 const paymentReceiptTemplate = async (branch, paymentReceipt) => {
+  const receiptAmount = +paymentReceipt.amount;
+
+  const gstAmount = (receiptAmount * 0.18).toFixed(2);
+  const amount = (receiptAmount - gstAmount).toFixed(2);
+  const totalAmount = receiptAmount.toFixed(2);
+
   return `
     ${header()}
   
@@ -44,18 +50,18 @@ const paymentReceiptTemplate = async (branch, paymentReceipt) => {
           </thead>
           <tbody>
             <tr>
-              <td>${paymentReceipt.planType} Activation Plan</td>
-              <td>${paymentReceipt.amount}.00/-</td>
+              <td>${paymentReceipt.packageType}&nbsp;${paymentReceipt.planType} Activation Plan</td>
+              <td>${amount}/-</td>
             </tr>
             <tr>
-              <td>GST (Not Applicable)</td>
-              <td>0.00/-</td>
+              <td>GST (18%)</td>
+              <td>${gstAmount}/-</td>
             </tr>
           </tbody>
           <tfoot>
             <tr>
               <th>Grand Total</th>
-              <th>${paymentReceipt.amount}.00/-</th>
+              <th>${totalAmount}/-</th>
             </tr>
           </tfoot>
         </table>
