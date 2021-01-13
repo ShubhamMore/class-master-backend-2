@@ -70,7 +70,9 @@ const header = () => {
             <div class="container">
             <div class="row bg-light py-2">
                 <div class="col-12 text-center text-dark">
-                <img src="${process.env.API_URI + '/assets/class-master.png'}" alt="Class Master" />
+                <img src="${
+                  process.env.API_URI + '/assets/class-master.png'
+                }" alt="Class Master" width="25%" />
                 <h1>CLASS MASTER</h1>
                 </div>
             </div>
