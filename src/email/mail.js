@@ -15,38 +15,43 @@ oauth2Client.setCredentials({
 const accessToken = oauth2Client.getAccessToken();
 
 const sendMail = async (mail) => {
-  // create reusable transporter object using the default SMTP transport
-  const smtpTransport = nodemailer.createTransport({
-    service: 'gmail',
-    host: 'smtp.gmail.com',
-    auth: {
-      type: 'OAuth2',
-      user: process.env.GMAIL_USER,
-      clientId: process.env.GMAIL_CLIENT_ID,
-      clientSecret: process.env.GMAIL_CLIENT_SECRET,
-      refreshToken: process.env.GMAIL_REFRESH_TOKEN,
-      accessToken: accessToken,
-    },
-  });
+  try {
+    // create reusable transporter object using the default SMTP transport
+    const smtpTransport = nodemailer.createTransport({
+      service: 'gmail',
+      host: 'smtp.gmail.com',
+      auth: {
+        type: 'OAuth2',
+        user: process.env.GMAIL_USER,
+        clientId: process.env.GMAIL_CLIENT_ID,
+        clientSecret: process.env.GMAIL_CLIENT_SECRET,
+        refreshToken: process.env.GMAIL_REFRESH_TOKEN,
+        accessToken: accessToken,
+      },
+    });
 
-  const mailOptions = {
-    from: mail.from, // sender address
-    to: mail.to, // list of receivers
-    subject: mail.subject, // Subject line
-    generateTextFromHTML: true,
-    html: mail.html, // html body
-  };
+    const mailOptions = {
+      from: mail.from, // sender address
+      to: mail.to, // list of receivers
+      subject: mail.subject, // Subject line
+      generateTextFromHTML: true,
+      html: mail.html, // html body
+    };
 
-  // send mail with defined transport object
-  let info = await smtpTransport.sendMail(mailOptions);
+    // send mail with defined transport object
+    let info = await smtpTransport.sendMail(mailOptions);
 
-  smtpTransport.close();
+    smtpTransport.close();
 
-  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+    return info;
+    // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
-  // Preview only available when sending through an Ethereal account
+    // Preview only available when sending through an Ethereal account
 
-  // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+    // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+  } catch (e) {
+    throw new Error(e);
+  }
 };
 
 module.exports = sendMail;
