@@ -12,8 +12,8 @@ const getDate = (date) => {
 const paymentReceiptTemplate = async (branch, paymentReceipt) => {
   const receiptAmount = +paymentReceipt.amount;
 
-  const gstAmount = (receiptAmount * 0.18).toFixed(2);
-  const amount = (receiptAmount - gstAmount).toFixed(2);
+  const amount = (receiptAmount / 1.18).toFixed(2);
+  const gstAmount = (receiptAmount - amount).toFixed(2);
   const totalAmount = receiptAmount.toFixed(2);
 
   return `
@@ -21,6 +21,7 @@ const paymentReceiptTemplate = async (branch, paymentReceipt) => {
   
     <div class="row">
       <div class="col-12">
+        <h5 class="text-right">GSTN: ${process.env.GST_NO}</h5>
         <h4>Payment Receipt of Branch ${branch.basicDetails.branchName}.</h4>
       </div>
     </div>

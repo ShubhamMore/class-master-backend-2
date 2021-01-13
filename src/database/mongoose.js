@@ -11,6 +11,7 @@ mongoose
   .then(async () => {
     try {
       await admin();
+      console.log('Connected to Database');
     } catch (e) {
       throw new Error(e);
     }

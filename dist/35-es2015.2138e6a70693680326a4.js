@@ -22,35 +22,35 @@ const MENU_ITEMS = [
     // 2
     {
         title: 'Institutes',
-        icon: '',
+        icon: 'layers-outline',
         link: '/admin/institutes',
         hidden: false,
     },
     // 3
     {
         title: 'Membership Plans',
-        icon: '',
+        icon: 'pricetags-outline',
         link: '/admin/membership-plans',
         hidden: false,
     },
     // 4
     {
         title: 'Coupon Codes',
-        icon: '',
+        icon: 'credit-card-outline',
         link: '/admin/coupon',
         hidden: false,
     },
     // 5
     {
         title: 'Users',
-        icon: '',
+        icon: 'people-outline',
         link: '/admin/users',
         hidden: false,
     },
     // 6
     {
         title: 'Setting',
-        icon: '',
+        icon: 'settings-2-outline',
         link: '/admin/settings',
         hidden: false,
     },
