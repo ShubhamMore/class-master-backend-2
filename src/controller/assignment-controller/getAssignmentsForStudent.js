@@ -70,6 +70,7 @@ const getAssignmentsForStudent = async (req, res) => {
           batch: 1,
           subject: 1,
           topic: 1,
+          description: 1,
           date: 1,
           submissionDate: 1,
           totalGrades: 1,

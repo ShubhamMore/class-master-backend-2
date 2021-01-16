@@ -78,6 +78,8 @@ const activateBranch = async (req, res) => {
     branch.currentPlanDetails.activationDate = activationDate;
     branch.currentPlanDetails.expiryDate = expiryDate;
 
+    res.status(200).send({ success: true });
+
     const branchActivationMail = {
       to: paymentReceipt.userEmail,
       from: process.env.EMAIL,
@@ -94,8 +96,6 @@ const activateBranch = async (req, res) => {
 
     await sendMail(branchActivationMail);
     await sendMail(paymentReceiptMail);
-
-    res.status(200).send({ success: true });
   } catch (e) {
     errorHandler(e, 400, res);
   }

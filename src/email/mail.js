@@ -50,7 +50,7 @@ const sendMail = async (mail) => {
 
     // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
   } catch (e) {
-    throw new Error(e);
+    return e;
   }
 };
 
