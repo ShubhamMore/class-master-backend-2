@@ -7,3 +7,4 @@ assignments/*
 !assignments/.gitkeep
 assignment-submissions/*
 !assignment-submissions/.gitkeep
+test.js
