@@ -1,5 +1,6 @@
 const Branch = require('../../models/branch.model');
 const BranchStorage = require('../../models/branch-storage.model');
+const BranchSMS = require('../../models/branch-sms.model');
 const Course = require('../../models/course.model');
 const BranchEmployee = require('../../models/branch-employee.model');
 const BranchStudent = require('../../models/branch-student.model');
@@ -42,6 +43,7 @@ const getBranchDashboard = async (req, res) => {
     const openLeads = Lead.find({ branch: req.body.branch, status: 'open' }).countDocuments();
     const lostLeads = Lead.find({ branch: req.body.branch, status: 'lost' }).countDocuments();
     const wonLeads = Lead.find({ branch: req.body.branch, status: 'won' }).countDocuments();
+    const branchSMS = BranchSMS.findOne({ branch: req.body.branch });
 
     Promise.all([
       branchStorage,
@@ -54,6 +56,7 @@ const getBranchDashboard = async (req, res) => {
       openLeads,
       lostLeads,
       wonLeads,
+      branchSMS,
     ])
       .then((resData) => {
         const dashboardInfo = {
@@ -67,6 +70,7 @@ const getBranchDashboard = async (req, res) => {
           openLeads: resData[7],
           lostLeads: resData[8],
           wonLeads: resData[9],
+          branchSMS: resData[10],
         };
         res.status(200).send(dashboardInfo);
       })

@@ -24,6 +24,10 @@ const lectureMaterialSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  storageType: {
+    type: String,
+    default: null,
+  },
   fileName: {
     type: String,
     required: true,

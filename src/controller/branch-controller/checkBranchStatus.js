@@ -9,11 +9,7 @@ const checkBranchStatus = async (req, res) => {
       throw new Error('No Branch Found');
     }
 
-    if (branch.status) {
-      res.status(200).send({ activated: true });
-    } else {
-      res.status(200).send({ activated: false });
-    }
+    res.status(200).send({ activated: branch.status });
   } catch (e) {
     errorHandler(e, 400, res);
   }

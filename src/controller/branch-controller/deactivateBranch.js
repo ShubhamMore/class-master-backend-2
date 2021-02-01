@@ -3,10 +3,12 @@ const errorHandler = require('../../handler/error.handler');
 
 const deactivateBranch = async (req, res) => {
   try {
-    const branch = await Branch.findByIdAndUpdate(req.body._id, req.body);
+    const branch = await Branch.findByIdAndUpdate(req.body._id, { status: false });
+
     if (!branch) {
-      throw new Error('Branch Updation Failed');
+      throw new Error('Branch Deactivation Failed');
     }
+
     res.status(200).send({ success: true });
   } catch (e) {
     errorHandler(e, 400, res);

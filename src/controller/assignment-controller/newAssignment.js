@@ -28,6 +28,7 @@ const saveAssignment = async (req, res) => {
     let totalFileUploadSize = 0;
 
     let attachment = {
+      storageType: null,
       fileName: null,
       fileSize: null,
       fileType: null,

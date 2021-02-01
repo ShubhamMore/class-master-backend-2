@@ -4,6 +4,7 @@ const errorHandler = require('../../handler/error.handler');
 const getBranchForStudent = async (req, res) => {
   try {
     const branch = await Branch.findById(req.body.id, { basicDetails: 1 });
+
     if (!branch) {
       throw new Error('No Branch Found');
     }

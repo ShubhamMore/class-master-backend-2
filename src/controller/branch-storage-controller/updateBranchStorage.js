@@ -1,21 +1,21 @@
 const BranchStorage = require('../../models/branch-storage.model');
-const ExtraStorage = require('../../models/extra-storage.model');
+const StoragePackage = require('../../models/storage-package.model');
 
 const errorHandler = require('../../handler/error.handler');
 
 const updateBranchStorage = async (req, res) => {
   try {
-    const extraStorage = await ExtraStorage.findById(req.body.extraStorage);
+    const storagePackage = await StoragePackage.findById(req.body.storagePackage);
 
     const date = new Date();
 
-    const expireOn = new Date().setDate(date.getDate() + +extraStorage.validity);
+    const expireOn = new Date().setDate(date.getDate() + +storagePackage.validity);
 
     const branchStorage = await BranchStorage.findOneAndUpdate(
       { branch: req.body.branch },
       {
-        extraStorage: extraStorage._id,
-        extraStorageAssigned: +extraStorage.storageSize,
+        storagePackage: storagePackage._id,
+        extraStorageAssigned: +storagePackage.storageSize,
         extraStorageExpireOn: expireOn,
         $inc: { totalStorageAssigned: +extraStorage.storageSize },
       }

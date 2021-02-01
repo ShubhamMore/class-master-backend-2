@@ -1,5 +1,6 @@
 const PaymentReceipt = require('../../models/payment-receipt.model');
 const Branch = require('../../models/branch.model');
+const BranchSMS = require('../../models/branch-sms.model');
 const BranchHistory = require('../../models/branch-history.model');
 
 const errorHandler = require('../../handler/error.handler');
@@ -62,6 +63,8 @@ const activateBranch = async (req, res) => {
     if (!branch) {
       throw new Error('Branch Updation Failed');
     }
+
+    await BranchSMS.findByIdAndUpdate(branch._id, { $inc: { smsCount: 500 } });
 
     const branchHistory = {
       branch: branch._id,

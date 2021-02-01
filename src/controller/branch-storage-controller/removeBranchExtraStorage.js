@@ -14,6 +14,7 @@ const removeBranchExtraStorage = async (req, res) => {
       {
         extraStorage: null,
         extraStorageAssigned: 0,
+        storagePackage: null,
         extraStorageExpireOn: null,
         totalStorageAssigned,
         totalStorageUsed,

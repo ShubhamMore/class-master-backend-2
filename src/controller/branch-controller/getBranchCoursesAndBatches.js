@@ -6,6 +6,7 @@ const errorHandler = require('../../handler/error.handler');
 const getBranchCoursesAndBatches = async (req, res) => {
   try {
     const branchId = req.body.branch;
+
     if (!branchId) {
       throw new Error('Branch ID is required');
     }

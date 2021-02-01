@@ -10,7 +10,7 @@ const branchStorageSchema = new mongoose.Schema({
     type: Number,
     default: 2147483648,
   },
-  extraStorage: {
+  storagePackage: {
     type: String,
     default: null,
   },

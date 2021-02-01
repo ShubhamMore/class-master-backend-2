@@ -8,6 +8,7 @@ const changeBatchStatus = async (req, res) => {
     const batch = await Batch.findByIdAndUpdate(req.body.id, {
       status: req.body.status,
     });
+
     if (!batch) {
       throw new Error('Status Updation Failed, No Batch Found');
     }

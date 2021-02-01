@@ -24,6 +24,10 @@ const assignmentSubmissionSchema = new mongoose.Schema({
     type: String,
     default: null,
   },
+  storageType: {
+    type: String,
+    default: null,
+  },
   fileName: {
     type: String,
     default: null,

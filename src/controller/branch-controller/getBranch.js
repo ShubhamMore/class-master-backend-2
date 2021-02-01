@@ -1,11 +1,13 @@
 const BranchEmployee = require('../../models/branch-employee.model');
 const Branch = require('../../models/branch.model');
 const mongoose = require('mongoose');
+
 const errorHandler = require('../../handler/error.handler');
 
 const getBranch = async (req, res) => {
   try {
     let employeeUser = null;
+
     if (req.user.userRole === 'employee') {
       employeeUser = await BranchEmployee.findOne({ employee: req.user.imsMasterId });
 
