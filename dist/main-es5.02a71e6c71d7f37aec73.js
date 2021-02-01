@@ -845,7 +845,7 @@
 
               _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "a", 1);
 
-              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](4, "CLASS MASTER");
+              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](4, "THE CLASS MASTER");
 
               _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -4013,7 +4013,7 @@
         loadChildren: function loadChildren() {
           return __webpack_require__.e(
           /*! import() */
-          43).then(__webpack_require__.bind(null,
+          44).then(__webpack_require__.bind(null,
           /*! ./content/content.module */
           "./src/app/content/content.module.ts")).then(function (m) {
             return m.ContentModule;

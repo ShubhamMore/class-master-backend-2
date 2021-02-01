@@ -813,7 +813,7 @@
                 amount: '',
                 currency: 'INR',
                 name: 'IMS Master',
-                description: 'Class Master Transaction',
+                description: 'The Class Master Transaction',
                 image: '../../../assets/brand/class-master-mini.png',
                 // tslint:disable-next-line: max-line-length
                 order_id: '',

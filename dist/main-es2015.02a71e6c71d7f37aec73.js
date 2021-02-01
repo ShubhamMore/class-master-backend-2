@@ -440,7 +440,7 @@ let FooterComponent = /*@__PURE__*/ (() => {
                 _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, " Created with \u2665 by TEAM ");
                 _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "strong");
                 _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "a", 1);
-                _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](4, "CLASS MASTER");
+                _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](4, "THE CLASS MASTER");
                 _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
                 _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
                 _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](5, " 2020 ");
@@ -2603,7 +2603,7 @@ const routes = [
     },
     {
         path: '',
-        loadChildren: () => __webpack_require__.e(/*! import() */ 43).then(__webpack_require__.bind(null, /*! ./content/content.module */ "./src/app/content/content.module.ts")).then((m) => m.ContentModule),
+        loadChildren: () => __webpack_require__.e(/*! import() */ 44).then(__webpack_require__.bind(null, /*! ./content/content.module */ "./src/app/content/content.module.ts")).then((m) => m.ContentModule),
         canActivate: [_authentication_auth_guards_login_auth_guard__WEBPACK_IMPORTED_MODULE_0__["LoginAuthGuard"]],
     },
     { path: '**', redirectTo: '/' },

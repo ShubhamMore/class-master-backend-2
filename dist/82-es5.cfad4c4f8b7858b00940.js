@@ -162,7 +162,7 @@
 
               _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "h6");
 
-              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](6, " This Privacy Policy governs the manner in which Class Master collects, uses, maintains and discloses information collected from users (each, a \u201CUser\u201D) of the https://www.classmaster.in website (\u201CSite\u201D). ");
+              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](6, " This Privacy Policy governs the manner in which The Class Master collects, uses, maintains and discloses information collected from users (each, a \"User\") of the https://www.theclassmaster.in website (\"Site\"). ");
 
               _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -204,7 +204,7 @@
 
               _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](19, "p");
 
-              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](20, " How we use collected information Class Master may collect and use Users personal information for the following purposes: ");
+              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](20, " How we use collected information The Class Master may collect and use Users personal information for the following purposes: ");
 
               _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -304,7 +304,7 @@
 
               _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](52, "p");
 
-              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](53, " Class Master has the discretion to update this privacy policy at any time. When we do, we will post a notification on the main page of our Site. We encourage Users to frequently check this page for any changes to stay informed about how we are helping to protect the personal information we collect. You acknowledge and agree that it is your responsibility to review this privacy policy periodically and become aware of modifications. ");
+              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](53, " The Class Master has the discretion to update this privacy policy at any time. When we do, we will post a notification on the main page of our Site. We encourage Users to frequently check this page for any changes to stay informed about how we are helping to protect the personal information we collect. You acknowledge and agree that it is your responsibility to review this privacy policy periodically and become aware of modifications. ");
 
               _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -316,7 +316,7 @@
 
               _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](56, "p");
 
-              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](57, " By using Class Master.in, you signify your acceptance of this policy. If you do not agree to this policy, please do not use our Site. Your continued use of the Site following the posting of changes to this policy will be deemed your acceptance of those changes. ");
+              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](57, " By using The Class Master.in, you signify your acceptance of this policy. If you do not agree to this policy, please do not use our Site. Your continued use of the Site following the posting of changes to this policy will be deemed your acceptance of those changes. ");
 
               _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -328,7 +328,7 @@
 
               _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](60, "p");
 
-              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](61, " If you have any questions about this Privacy Policy, the practices of this site, or your dealings with this site, please contact us on contact@classmaster.com ");
+              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](61, " If you have any questions about this Privacy Policy, the practices of this site, or your dealings with this site, please contact us on contact@theclassmaster.in ");
 
               _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 

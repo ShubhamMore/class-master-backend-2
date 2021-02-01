@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[43],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[44],{
 
 /***/ "./src/app/content/content-routing.module.ts":
 /*!***************************************************!*\
@@ -25,7 +25,7 @@ const routes = [
         children: [
             {
                 path: 'home',
-                loadChildren: () => __webpack_require__.e(/*! import() */ 44).then(__webpack_require__.bind(null, /*! ./home/home.module */ "./src/app/content/home/home.module.ts")).then((m) => m.HomeModule),
+                loadChildren: () => __webpack_require__.e(/*! import() */ 43).then(__webpack_require__.bind(null, /*! ./home/home.module */ "./src/app/content/home/home.module.ts")).then((m) => m.HomeModule),
                 canActivate: [],
             },
             {
@@ -189,13 +189,13 @@ let ContentFooterComponent = /*@__PURE__*/ (() => {
         ngOnInit() { }
     }
     ContentFooterComponent.ɵfac = function ContentFooterComponent_Factory(t) { return new (t || ContentFooterComponent)(); };
-    ContentFooterComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: ContentFooterComponent, selectors: [["ngx-content-footer"]], decls: 12, vars: 0, consts: [[1, "created-by"], ["href", "https://www.google.com", "target", "_blank"], ["routerLink", "/terms-and-conditions", 1, "pointer"], ["routerLink", "/privacy-policy", 1, "pointer"]], template: function ContentFooterComponent_Template(rf, ctx) {
+    ContentFooterComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: ContentFooterComponent, selectors: [["ngx-content-footer"]], decls: 12, vars: 0, consts: [[1, "created-by"], ["href", "https://www.theclassmaster.in", "target", "_blank"], ["routerLink", "/terms-and-conditions", 1, "pointer"], ["routerLink", "/privacy-policy", 1, "pointer"]], template: function ContentFooterComponent_Template(rf, ctx) {
             if (rf & 1) {
                 _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "span", 0);
-                _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, " Created with \u2665 by Class Master ");
+                _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, " Created with \u2665 by The Class Master ");
                 _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "strong");
                 _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "a", 1);
-                _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](4, "CLASS MASTER");
+                _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](4, "THE CLASS MASTER");
                 _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
                 _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
                 _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](5, " 2020\n");
