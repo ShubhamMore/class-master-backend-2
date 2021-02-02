@@ -1,7 +1,6 @@
 const Razorpay = require('razorpay');
 const Order = require('../../models/order.model');
-const Coupon = require('../../models/coupon.model');
-const MembershipPlan = require('../../models/membership-plan.model');
+const StoragePackage = require('../../models/storage-package.model');
 const PaymentReceipt = require('../../models/payment-receipt.model');
 const errorHandler = require('../../handler/error.handler');
 
@@ -10,31 +9,17 @@ const instance = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
-const generateOrder = async (req, res) => {
+const generateStorageOrder = async (req, res) => {
   try {
-    const membershipPlan = await MembershipPlan.findOne({ name: req.body.packageType });
+    const storagePackage = await StoragePackage.findById(req.body.id);
 
-    if (!membershipPlan) {
-      throw new Error('Membership Plan not Found');
+    if (!storagePackage) {
+      throw new Error('Storage Package not Found');
     }
 
     const receiptData = req.body;
 
-    let coupon = null;
-
-    if (req.body.coupon) {
-      coupon = await Coupon.findOne({ code: req.body.coupon });
-    }
-
-    let amount = membershipPlan.price;
-
-    if (coupon) {
-      let discountAmount = coupon.discountAmount;
-      if (coupon.discountType === 'percentage') {
-        discountAmount = (amount / 100) * coupon.discountAmount;
-      }
-      amount = amount - discountAmount;
-    }
+    let amount = storagePackage.price;
 
     receiptData.amount = +amount;
 
@@ -85,4 +70,4 @@ const generateOrder = async (req, res) => {
   }
 };
 
-module.exports = generateOrder;
+module.exports = generateStorageOrder;

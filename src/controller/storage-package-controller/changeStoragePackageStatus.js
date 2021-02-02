@@ -3,7 +3,7 @@ const errorHandler = require('../../handler/error.handler');
 
 const changeStoragePackageStatus = async (req, res) => {
   try {
-    const storagePackage = await StoragePackage.findByIdAndUpdate(req.body.id, { success: true });
+    const storagePackage = await StoragePackage.findByIdAndUpdate(req.body.id, req.body);
 
     if (!storagePackage) {
       throw new Error('Storage Package Not Found');

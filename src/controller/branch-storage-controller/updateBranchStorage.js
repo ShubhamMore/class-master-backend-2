@@ -3,21 +3,30 @@ const StoragePackage = require('../../models/storage-package.model');
 
 const errorHandler = require('../../handler/error.handler');
 
+const convertToBytes = (value) => {
+  const MB = 1024 * 1024;
+  return +value * MB;
+};
+
+const storageExpireOn = (validity) => {
+  const date = new Date();
+  return new Date().setDate(date.getDate() + +validity);
+};
+
 const updateBranchStorage = async (req, res) => {
   try {
     const storagePackage = await StoragePackage.findById(req.body.storagePackage);
 
-    const date = new Date();
-
-    const expireOn = new Date().setDate(date.getDate() + +storagePackage.validity);
+    const extraStorage = convertToBytes(extraStorage.storageSize);
+    const expireOn = storageExpireOn(extraStorage.validity);
 
     const branchStorage = await BranchStorage.findOneAndUpdate(
       { branch: req.body.branch },
       {
         storagePackage: storagePackage._id,
-        extraStorageAssigned: +storagePackage.storageSize,
+        extraStorageAssigned: +extraStorage,
         extraStorageExpireOn: expireOn,
-        $inc: { totalStorageAssigned: +extraStorage.storageSize },
+        $inc: { totalStorageAssigned: +extraStorage },
       }
     );
 
