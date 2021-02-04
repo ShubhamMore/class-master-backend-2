@@ -1,6 +1,7 @@
 const Razorpay = require('razorpay');
 const Order = require('../../models/order.model');
 const StoragePackage = require('../../models/storage-package.model');
+const BranchStorage = require('../../models/branch-storage.model');
 const PaymentReceipt = require('../../models/payment-receipt.model');
 const errorHandler = require('../../handler/error.handler');
 
@@ -9,9 +10,30 @@ const instance = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
+const getDate = () => {
+  const d = new Date();
+  const date =
+    d.getFullYear() +
+    '-' +
+    (d.getMonth() + 1).toString().padStart(2, '0') +
+    '-' +
+    d.getDate().toString().padStart(2, '0');
+  return date;
+};
+
+const calcRemainingDays = (date) => {
+  const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+  const expiryDate = new Date(date).getTime();
+  const today = new Date(getDate()).getTime();
+  const dateDifference = expiryDate - today;
+  return dateDifference / oneDayInMilliseconds;
+};
+
 const generateStorageOrder = async (req, res) => {
   try {
-    const storagePackage = await StoragePackage.findById(req.body.id);
+    let branchStorage = null;
+
+    const storagePackage = await StoragePackage.findOne({ packageName: req.body.packageType });
 
     if (!storagePackage) {
       throw new Error('Storage Package not Found');
@@ -20,6 +42,27 @@ const generateStorageOrder = async (req, res) => {
     const receiptData = req.body;
 
     let amount = storagePackage.price;
+
+    if (req.body.type === 'upgrade') {
+      branchStorage = await BranchStorage.findOne({ branch: req.body.branch });
+
+      if (!branchStorage) {
+        throw new Error('Branch Storage not Found');
+      }
+
+      const remainingDays = calcRemainingDays(branchStorage.extraStorageExpireOn);
+
+      const branchStoragePackage = await StoragePackage.findOne({
+        packageName: branchStorage.storagePackage,
+      });
+
+      const remainingAmount =
+        (+branchStoragePackage.price / +branchStoragePackage.validity) * +remainingDays;
+
+      const upgradableAmount = Math.round(+(storagePackage.price - remainingAmount) * 1.1);
+
+      amount = +upgradableAmount;
+    }
 
     receiptData.amount = +amount;
 

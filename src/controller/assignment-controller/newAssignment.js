@@ -63,6 +63,10 @@ const saveAssignment = async (req, res) => {
         file.filename.lastIndexOf('-')
       )}.${curFileType}`;
 
+      const regularStorage = +branchStorage.regularStorageAssigned;
+      const storageType = usedBranchStorage > regularStorage ? 'extra' : 'regular';
+
+      attachment.storageType = storageType;
       attachment.fileName = fileName;
       attachment.fileSize = fileSize;
       attachment.fileType = fileType;

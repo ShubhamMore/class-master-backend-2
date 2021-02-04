@@ -28,6 +28,7 @@ const deleteAssignmentAttachment = async (req, res) => {
     let totalFileUploadSize = 0;
 
     let attachment = {
+      storageType: assignment.storageType,
       fileName: assignment.fileName,
       fileSize: assignment.fileSize,
       fileType: assignment.fileType,
@@ -41,6 +42,7 @@ const deleteAssignmentAttachment = async (req, res) => {
     totalFileUploadSize -= assignment.fileSize;
     availableBranchStorage += assignment.fileSize;
 
+    attachment.storageType = null;
     attachment.fileName = null;
     attachment.fileSize = null;
     attachment.fileType = null;

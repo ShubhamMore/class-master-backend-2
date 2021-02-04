@@ -73,6 +73,7 @@ const getInstituteTransactions = async (req, res) => {
         },
       },
       { $project: { orders: 0, order: 0, branches: 0, branchId: 0 } },
+      { $sort: { _id: -1 } },
     ]);
 
     res.status(200).send(transactions);

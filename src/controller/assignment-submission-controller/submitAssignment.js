@@ -56,11 +56,15 @@ const newAssignmentSubmission = async (req, res) => {
       .join(' ')
       .toUpperCase();
 
+    const regularStorage = +branchStorage.regularStorageAssigned;
+    const storageType = usedBranchStorage > regularStorage ? 'extra' : 'regular';
+
     const submissionData = {
       assignment: req.body.assignment,
       student: req.user.imsMasterId,
       title: title,
       description: req.body.description,
+      storageType: storageType,
       fileName: fileName,
       fileSize: fileSize,
       fileType: fileType,

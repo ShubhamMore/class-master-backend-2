@@ -1,5 +1,7 @@
 const User = require('./models/user.model');
 const MembershipPlan = require('./models/membership-plan.model');
+const StoragePackage = require('./models/storage-package.model');
+const SMSPackage = require('./models/sms-package.model');
 const ImsMasterId = require('./models/ims-master-id.model');
 const AdminOnlineClassesKeys = require('./models/admin-online-classes-keys.model');
 
@@ -53,10 +55,111 @@ const admin = async () => {
           price: '11999',
         },
       ];
+
+      const storagePackages = [
+        // {
+        //   packageName: '1GB01M',
+        //   storage: 1024,
+        //   validity: '30',
+        //   price: '100',
+        //   status: true,
+        // },
+        // {
+        //   packageName: '1GB03M',
+        //   storage: 1024,
+        //   validity: '90',
+        //   price: '275',
+        //   status: true,
+        // },
+        // {
+        //   packageName: '1GB06M',
+        //   storage: 1024,
+        //   validity: '183',
+        //   price: '500',
+        //   status: true,
+        // },
+        // {
+        //   packageName: '1GB12M',
+        //   storage: 1024,
+        //   validity: '365',
+        //   price: '950',
+        //   status: true,
+        // },
+
+        // {
+        //   packageName: '2GB01M',
+        //   storage: 2048,
+        //   validity: '30',
+        //   price: '200',
+        //   status: true,
+        // },
+        // {
+        //   packageName: '2GB03M',
+        //   storage: 2048,
+        //   validity: '90',
+        //   price: '500',
+        //   status: true,
+        // },
+        // {
+        //   packageName: '2GB06M',
+        //   storage: 2048,
+        //   validity: '183',
+        //   price: '950',
+        //   status: true,
+        // },
+        // {
+        //   packageName: '2GB12M',
+        //   storage: 2018,
+        //   validity: '365',
+        //   price: '1800',
+        //   status: true,
+        // },
+
+        {
+          packageName: '5GB01M',
+          storage: 5120,
+          validity: '30',
+          price: '500',
+          status: true,
+        },
+        {
+          packageName: '5GB03M',
+          storage: 5120,
+          validity: '90',
+          price: '1350',
+          status: true,
+        },
+        {
+          packageName: '5GB06M',
+          storage: 5120,
+          validity: '183',
+          price: '2600',
+          status: true,
+        },
+        {
+          packageName: '5GB12M',
+          storage: 5120,
+          validity: '365',
+          price: '5000',
+          status: true,
+        },
+      ];
+
+      const smsPackages = [];
+
       const newMembershipPlans = MembershipPlan.insertMany(membershipPlans);
+      const newStoragePackages = StoragePackage.insertMany(storagePackages);
+      const newSMSPackages = SMSPackage.insertMany(smsPackages);
 
       try {
-        Promise.all([newAdminUser, newImsMasterIds, newMembershipPlans, newAdminOnlineClassesKeys])
+        Promise.all([
+          newAdminUser,
+          newImsMasterIds,
+          newMembershipPlans,
+          newStoragePackages,
+          newSMSPackages,
+          newAdminOnlineClassesKeys,
+        ])
           .then((res) => {})
           .catch((e) => {
             throw new Error(e);

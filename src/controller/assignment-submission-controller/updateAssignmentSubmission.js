@@ -84,6 +84,10 @@ const updateAssignmentSubmissions = async (req, res) => {
         file.filename.lastIndexOf('-')
       )}.${curFileType}`;
 
+      const regularStorage = +branchStorage.regularStorageAssigned;
+      const storageType = usedBranchStorage > regularStorage ? 'extra' : 'regular';
+
+      submissionFile.storageType = storageType;
       submissionFile.fileName = fileName;
       submissionFile.fileSize = fileSize;
       submissionFile.fileType = fileType;

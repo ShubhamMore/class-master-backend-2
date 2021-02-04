@@ -42,6 +42,7 @@ const newCourseMaterials = async (req, res) => {
         availableBranchStorage -= fileSize;
 
         let fileType;
+
         const curFileType = files[i].filename.substring(files[i].filename.lastIndexOf('.') + 1);
         if (curFileType === 'pdf') {
           fileType = 'PDF';
@@ -61,12 +62,16 @@ const newCourseMaterials = async (req, res) => {
           files[i].filename.lastIndexOf('-')
         )}.${fileType}`;
 
+        const regularStorage = +branchStorage.regularStorageAssigned;
+        const storageType = usedBranchStorage > regularStorage ? 'extra' : 'regular';
+
         const materialData = {
           branch: req.body.branch,
           category: req.body.category,
           course: req.body.course,
           subject: req.body.subject,
           title: title,
+          storageType: storageType,
           fileName: fileName,
           fileSize: fileSize,
           fileType: fileType,

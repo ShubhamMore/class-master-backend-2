@@ -1,13 +1,27 @@
 const Assignment = require('../../models/assignment.model');
+const BranchStorage = require('../../models/branch-storage.model');
+
 const errorHandler = require('../../handler/error.handler');
 
 const getAssignmentsForStudent = async (req, res) => {
   try {
+    const branchStorage = await BranchStorage.findOne({ branch: req.body.branch });
+
+    const storageType = new Array();
+    storageType.push(null);
+    storageType.push('');
+    storageType.push('regular');
+
+    if (branchStorage.storagePackage) {
+      storageType.push('extra');
+    }
+
     const query = {
       branch: req.body.branch,
       category: req.body.category,
       course: req.body.course,
       batch: req.body.batch,
+      storageType: { $in: storageType },
     };
 
     if (req.body.subject && req.body.subject !== '') {

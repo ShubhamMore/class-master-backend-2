@@ -62,6 +62,9 @@ const newLectureMaterials = async (req, res) => {
           files[i].filename.lastIndexOf('-')
         )}.${fileType}`;
 
+        const regularStorage = +branchStorage.regularStorageAssigned;
+        const storageType = usedBranchStorage > regularStorage ? 'extra' : 'regular';
+
         const materialData = {
           branch: req.body.branch,
           category: req.body.category,
@@ -69,6 +72,7 @@ const newLectureMaterials = async (req, res) => {
           batch: req.body.batch,
           lecture: req.body.lecture,
           title: title,
+          storageType: storageType,
           fileName: fileName,
           fileSize: fileSize,
           fileType: fileType,
