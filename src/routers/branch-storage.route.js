@@ -2,9 +2,9 @@ const express = require('express');
 
 const auth = require('../middleware/auth');
 
-const getBranchStorage = require('../controller/branch-Storage-controller/getBranchStorage');
-const removeBranchExtraStorage = require('../controller/branch-Storage-controller/removeBranchExtraStorage');
-const updateBranchStorage = require('../controller/branch-Storage-controller/updateBranchStorage');
+const getBranchStorage = require('../controller/branch-storage-controller/getBranchStorage');
+const removeBranchExtraStorage = require('../controller/branch-storage-controller/removeBranchExtraStorage');
+const updateBranchStorage = require('../controller/branch-storage-controller/updateBranchStorage');
 
 const router = new express.Router();
 
