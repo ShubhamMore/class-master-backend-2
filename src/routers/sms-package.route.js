@@ -2,7 +2,7 @@ const express = require('express');
 
 const auth = require('../middleware/auth');
 
-const newSMSPackage = require('../controller/sms-package-controller/newSmSPackage');
+const newSMSPackage = require('../controller/sms-package-controller/newSmsPackage');
 const updateSMSPackage = require('../controller/sms-package-controller/updateSmsPackage');
 const getSMSPackages = require('../controller/sms-package-controller/getSmsPackages');
 const getSMSPackage = require('../controller/sms-package-controller/getSMSPackage');
