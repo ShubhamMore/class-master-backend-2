@@ -7,7 +7,7 @@ const updateSMSPackage = require('../controller/sms-package-controller/updateSms
 const getSMSPackages = require('../controller/sms-package-controller/getSmsPackages');
 const getSMSPackage = require('../controller/sms-package-controller/getSmsPackage');
 const changeSMSPackageStatus = require('../controller/sms-package-controller/changeSmsPackageStatus');
-const deleteSMSPackage = require('../controller/sms-package-controller/deleteSMSPackage');
+const deleteSMSPackage = require('../controller/sms-package-controller/deleteSmsPackage');
 
 const router = new express.Router();
 
