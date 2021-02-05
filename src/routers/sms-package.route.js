@@ -5,7 +5,7 @@ const auth = require('../middleware/auth');
 const newSMSPackage = require('../controller/sms-package-controller/newSmsPackage');
 const updateSMSPackage = require('../controller/sms-package-controller/updateSmsPackage');
 const getSMSPackages = require('../controller/sms-package-controller/getSmsPackages');
-const getSMSPackage = require('../controller/sms-package-controller/getSMSPackage');
+const getSMSPackage = require('../controller/sms-package-controller/getSmsPackage');
 const changeSMSPackageStatus = require('../controller/sms-package-controller/changeSmsPackageStatus');
 const deleteSMSPackage = require('../controller/sms-package-controller/deleteSMSPackage');
 

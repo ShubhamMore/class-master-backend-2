@@ -1,7 +1,7 @@
 const SMSPackage = require('../../models/sms-package.model');
 const errorHandler = require('../../handler/error.handler');
 
-const getSMSPackages = async (req, res) => {
+const getSmsPackages = async (req, res) => {
   try {
     let smsPackages = [];
 
@@ -17,4 +17,4 @@ const getSMSPackages = async (req, res) => {
   }
 };
 
-module.exports = getSMSPackages;
+module.exports = getSmsPackages;
