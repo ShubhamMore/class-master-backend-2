@@ -6,7 +6,7 @@ const getInstituteBranchHistory = async (req, res) => {
   try {
     const branchHistory = await BranchHistory.find({
       branch: req.body.branch,
-    });
+    }).sort({ _id: -1 });
 
     res.status(200).send(branchHistory);
   } catch (e) {

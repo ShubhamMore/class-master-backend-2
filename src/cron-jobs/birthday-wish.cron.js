@@ -33,7 +33,7 @@ const birthdayWishes = async () => {
         const userNotificationRequests = new Array();
 
         for (let user of users) {
-          const birthdayMessage = `Class Master wishes a very happy birthday to one of the brightest student. May you keep shining like that always.`;
+          const birthdayMessage = `The Class Master wishes a very happy birthday to one of the brightest student. May you keep shining like that always.`;
 
           const newNotification = {
             receiverId: user.imsMasterId,
