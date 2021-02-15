@@ -1,9 +1,16 @@
+const PaymentReceipt = require('../../models/payment-receipt.model');
 const BranchSMS = require('../../models/branch-sms.model');
 const SMSPackage = require('../../models/sms-package.model');
 const errorHandler = require('../../handler/error.handler');
 
 const updateBranchSMS = async (req, res) => {
   try {
+    const paymentReceipt = await PaymentReceipt.findById(req.body.receipt);
+
+    if (!paymentReceipt || !paymentReceipt.status) {
+      throw new Error('Payment Not Done');
+    }
+
     const smsPackage = await SMSPackage.findById(req.body.smsPackage);
 
     const branchSMS = await BranchSMS.findOneAndUpdate(

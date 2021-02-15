@@ -64,7 +64,11 @@ const activateBranch = async (req, res) => {
       throw new Error('Branch Updation Failed');
     }
 
-    await BranchSMS.findByIdAndUpdate(branch._id, { $inc: { smsCount: 500 } });
+    await BranchSMS.findOneAndUpdate(
+      { branch: branch._id },
+      { $inc: { smsCount: 500 } },
+      { upsert: true }
+    );
 
     const branchHistory = {
       branch: branch._id,

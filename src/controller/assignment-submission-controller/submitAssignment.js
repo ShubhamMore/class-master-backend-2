@@ -3,6 +3,8 @@ const AssignmentSubmission = require('../../models/assignment-submission.model')
 
 const deleteFile = require('../../uploads/delete-file');
 
+const awsUploadFile = require('../../uploads/aws-upload/awsUploadFile');
+
 const errorHandler = require('../../handler/error.handler');
 
 const newAssignmentSubmission = async (req, res) => {
@@ -30,10 +32,19 @@ const newAssignmentSubmission = async (req, res) => {
     let totalFileUploadSize = 0;
 
     const fileSize = file.size;
+
     if (fileSize > availableBranchStorage) {
       await deleteFile(file.path);
       throw new Error('Branch Storage is full');
     }
+
+    const filePath = file.path;
+    let fileName = file.filename;
+
+    const cloudDirectory = req.user.imsMasterId + '/' + req.body.branch + '/assignment-submissions';
+    const uploadResponce = await awsUploadFile(filePath, fileName, cloudDirectory);
+
+    const uploadRes = uploadResponce.uploadRes;
 
     usedBranchStorage += fileSize;
     totalFileUploadSize += fileSize;
@@ -49,7 +60,7 @@ const newAssignmentSubmission = async (req, res) => {
       fileType = 'IMAGE';
     }
 
-    const fileName = `${file.filename.substring(0, file.filename.lastIndexOf('-'))}.${curFileType}`;
+    fileName = `${file.filename.substring(0, file.filename.lastIndexOf('-'))}.${curFileType}`;
 
     const title = `${file.filename.substring(0, file.filename.lastIndexOf('-'))}`
       .split('-')
@@ -68,8 +79,8 @@ const newAssignmentSubmission = async (req, res) => {
       fileName: fileName,
       fileSize: fileSize,
       fileType: fileType,
-      secureUrl: process.env.API_URI + '\\' + file.path,
-      publicId: file.path,
+      secureUrl: uploadRes.Location,
+      publicId: uploadRes.key,
       createdAt: Date.now().toLocaleString(),
       status: true,
     };

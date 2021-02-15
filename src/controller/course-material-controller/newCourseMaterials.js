@@ -4,6 +4,8 @@ const CourseMaterial = require('../../models/course-material.model');
 const deleteFile = require('../../uploads/delete-file');
 const sortArrayOfObjects = require('../../functions/sortArrayOfObjects');
 
+const awsUploadFile = require('../../uploads/aws-upload/awsUploadFile');
+
 const errorHandler = require('../../handler/error.handler');
 
 const newCourseMaterials = async (req, res) => {
@@ -30,18 +32,26 @@ const newCourseMaterials = async (req, res) => {
 
     if (files !== undefined && files.length > 0) {
       const courseMaterials = new Array();
+
       for (let i = 0; i < files.length; i++) {
         const fileSize = files[i].size;
+
         if (fileSize > availableBranchStorage) {
           overStorageFiles.push(files[i].path);
           continue;
         }
 
+        const filePath = files[i].path;
+        let fileName = files[i].filename;
+
+        const cloudDirectory = req.user.imsMasterId + '/' + req.body.branch + '/course-materials';
+        const uploadResponce = await awsUploadFile(filePath, fileName, cloudDirectory);
+
+        const uploadRes = uploadResponce.uploadRes;
+
         usedBranchStorage += fileSize;
         totalFileUploadSize += fileSize;
         availableBranchStorage -= fileSize;
-
-        let fileType;
 
         const curFileType = files[i].filename.substring(files[i].filename.lastIndexOf('.') + 1);
         if (curFileType === 'pdf') {
@@ -57,7 +67,9 @@ const newCourseMaterials = async (req, res) => {
           .join(' ')
           .toUpperCase();
 
-        const fileName = `${files[i].filename.substring(
+        let fileType;
+
+        fileName = `${files[i].filename.substring(
           0,
           files[i].filename.lastIndexOf('-')
         )}.${fileType}`;
@@ -75,8 +87,8 @@ const newCourseMaterials = async (req, res) => {
           fileName: fileName,
           fileSize: fileSize,
           fileType: fileType,
-          secureUrl: process.env.API_URI + '\\' + files[i].path,
-          publicId: files[i].path,
+          secureUrl: uploadRes.Location,
+          publicId: uploadRes.key,
           createdAt: Date.now().toLocaleString(),
           status: true,
         };
@@ -105,6 +117,7 @@ const newCourseMaterials = async (req, res) => {
       throw new Error('files Not Found');
     }
   } catch (e) {
+    console.log(e);
     errorHandler(e, 400, res);
   }
 };

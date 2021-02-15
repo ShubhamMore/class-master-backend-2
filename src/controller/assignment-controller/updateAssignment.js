@@ -3,6 +3,9 @@ const BranchStorage = require('../../models/branch-storage.model');
 
 const deleteFile = require('../../uploads/delete-file');
 
+const awsUploadFile = require('../../uploads/aws-upload/awsUploadFile');
+const awsRemoveFile = require('../../uploads/aws-upload/awsRemoveFile');
+
 const errorHandler = require('../../handler/error.handler');
 
 const editAssignment = async (req, res) => {
@@ -63,8 +66,16 @@ const editAssignment = async (req, res) => {
       }
 
       if (attachment.publicId) {
-        await deleteFile(attachment.publicId);
+        await awsRemoveFile(attachment.publicId);
       }
+
+      const filePath = file.path;
+      let fileName = file.filename;
+
+      const cloudDirectory = req.user.imsMasterId + '/' + req.body.branch + '/assignments';
+      const uploadResponce = await awsUploadFile(filePath, fileName, cloudDirectory);
+
+      const uploadRes = uploadResponce.uploadRes;
 
       usedBranchStorage += fileSize;
       totalFileUploadSize += fileSize;
@@ -81,10 +92,7 @@ const editAssignment = async (req, res) => {
         fileType = 'IMAGE';
       }
 
-      const fileName = `${file.filename.substring(
-        0,
-        file.filename.lastIndexOf('-')
-      )}.${curFileType}`;
+      fileName = `${file.filename.substring(0, file.filename.lastIndexOf('-'))}.${curFileType}`;
 
       const regularStorage = +branchStorage.regularStorageAssigned;
       const storageType = usedBranchStorage > regularStorage ? 'extra' : 'regular';
@@ -93,8 +101,8 @@ const editAssignment = async (req, res) => {
       attachment.fileName = fileName;
       attachment.fileSize = fileSize;
       attachment.fileType = fileType;
-      attachment.secureUrl = process.env.API_URI + '\\' + file.path;
-      attachment.publicId = file.path;
+      attachment.secureUrl = uploadRes.Location;
+      attachment.publicId = uploadRes.key;
 
       await BranchStorage.findOneAndUpdate(
         { branch: req.body.branch },

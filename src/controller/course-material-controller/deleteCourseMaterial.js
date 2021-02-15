@@ -1,6 +1,7 @@
 const CourseMaterial = require('../../models/course-material.model');
 const BranchStorage = require('../../models/branch-storage.model');
-const deleteFile = require('../../uploads/delete-file');
+
+const awsRemoveFile = require('../../uploads/aws-upload/awsRemoveFile');
 
 const errorHandler = require('../../handler/error.handler');
 
@@ -13,7 +14,7 @@ const deleteCourseMaterial = async (req, res) => {
     }
     const publicId = courseMaterial.publicId;
 
-    await deleteFile(publicId);
+    await awsRemoveFile(publicId);
 
     const branchStorageSizeToFree = courseMaterial.fileSize * -1;
 

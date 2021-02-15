@@ -1,7 +1,7 @@
 const Assignment = require('../../models/assignment.model');
 const BranchStorage = require('../../models/branch-storage.model');
 
-const deleteFile = require('../../uploads/delete-file');
+const awsRemoveFile = require('../../uploads/aws-upload/awsRemoveFile');
 
 const errorHandler = require('../../handler/error.handler');
 
@@ -36,7 +36,7 @@ const deleteAssignmentAttachment = async (req, res) => {
       publicId: assignment.publicId,
     };
 
-    await deleteFile(assignment.publicId);
+    await awsRemoveFile(assignment.publicId);
 
     usedBranchStorage -= assignment.fileSize;
     totalFileUploadSize -= assignment.fileSize;

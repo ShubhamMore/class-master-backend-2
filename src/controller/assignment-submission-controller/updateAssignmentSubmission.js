@@ -3,6 +3,9 @@ const AssignmentSubmission = require('../../models/assignment-submission.model')
 
 const deleteFile = require('../../uploads/delete-file');
 
+const awsUploadFile = require('../../uploads/aws-upload/awsUploadFile');
+const awsRemoveFile = require('../../uploads/aws-upload/awsRemoveFile');
+
 const errorHandler = require('../../handler/error.handler');
 
 const updateAssignmentSubmissions = async (req, res) => {
@@ -61,8 +64,17 @@ const updateAssignmentSubmissions = async (req, res) => {
       }
 
       if (submissionFile.publicId) {
-        await deleteFile(submissionFile.publicId);
+        await awsRemoveFile(submissionFile.publicId);
       }
+
+      const filePath = file.path;
+      let fileName = file.filename;
+
+      const cloudDirectory =
+        req.user.imsMasterId + '/' + req.body.branch + '/assignment-submissions';
+      const uploadResponce = await awsUploadFile(filePath, fileName, cloudDirectory);
+
+      const uploadRes = uploadResponce.uploadRes;
 
       usedBranchStorage += fileSize;
       totalFileUploadSize += fileSize;
@@ -79,10 +91,7 @@ const updateAssignmentSubmissions = async (req, res) => {
         fileType = 'IMAGE';
       }
 
-      const fileName = `${file.filename.substring(
-        0,
-        file.filename.lastIndexOf('-')
-      )}.${curFileType}`;
+      fileName = `${file.filename.substring(0, file.filename.lastIndexOf('-'))}.${curFileType}`;
 
       const regularStorage = +branchStorage.regularStorageAssigned;
       const storageType = usedBranchStorage > regularStorage ? 'extra' : 'regular';
@@ -91,8 +100,8 @@ const updateAssignmentSubmissions = async (req, res) => {
       submissionFile.fileName = fileName;
       submissionFile.fileSize = fileSize;
       submissionFile.fileType = fileType;
-      submissionFile.secureUrl = process.env.API_URI + '\\' + file.path;
-      submissionFile.publicId = file.path;
+      submissionFile.secureUrl = uploadRes.Location;
+      submissionFile.publicId = uploadRes.key;
 
       await BranchStorage.findOneAndUpdate(
         { branch: req.body.branch },
