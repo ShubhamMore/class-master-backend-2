@@ -45,7 +45,8 @@
     "start": "env-cmd -f ./config/prod.env node class-master.js",
     "dev": "env-cmd -f ./config/dev.env nodemon class-master.js",
     "dev-prod": "env-cmd -f ./config/prod.env nodemon class-master.js",
-    "prod": "env-cmd -f ./config/prod.env pm2 start class-master.js"
+    "prod": "env-cmd -f ./config/prod.env pm2 start class-master.js",
+    "pretty": "prettier --write \"./**/*.{html,css,scss,ts,js,jsx,json}\""
   },
   "author": "",
   "license": "ISC",

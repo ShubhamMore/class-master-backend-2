@@ -7,7 +7,7 @@ const saveBudget = async (req, res) => {
 
     await budget.save();
 
-    res.status(201).send({success: true});
+    res.status(201).send({ success: true });
   } catch (e) {
     errorHandler(e, 400, res);
   }

@@ -3,9 +3,9 @@ const errorHandler = require('../../handler/error.handler');
 
 const getBudgetSummery = async (req, res) => {
   try {
- const query = {
-   branch : req.body.branch
- };
+    const query = {
+      branch: req.body.branch,
+    };
 
     if (req.body.month && req.body.year) {
       const date = new RegExp('.*' + req.body.year + '-' + req.body.month + '.*');
