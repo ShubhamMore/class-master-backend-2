@@ -6,16 +6,20 @@ const morgan = require('morgan');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
+// CRON JOBS
 const birthdayWish = require('./cron-jobs/birthday-wish.cron');
+const branchExtraStorageExpire = require('./cron-jobs/branch-extra-storage-expire.cron');
 const branchMembershipValidation = require('./cron-jobs/branch-membership.cron');
-const lectureReminder = require('./cron-jobs/lecture-reminder.cron');
+const deleteBranchExtraStorage = require('./cron-jobs/delete-branch-extra-storage.cron');
 const examReminder = require('./cron-jobs/exam-reminder.cron');
 const installmentReminder = require('./cron-jobs/installment-reminder.cron');
+const lectureReminder = require('./cron-jobs/lecture-reminder.cron');
 const pendingInstallmentReminder = require('./cron-jobs/pending-installment-reminder.cron');
 
+// DB CONNECTION
 require('./database/mongoose');
 
-// MANAGEMENT
+// ROUTES
 const adminZoomRouter = require('./routers/admin-zoom.route');
 const attendanceRouter = require('./routers/attendance.route');
 const assignmentRouter = require('./routers/assignment.route');
@@ -170,10 +174,12 @@ app.use((error, req, res, next) => {
 });
 
 birthdayWish();
+branchExtraStorageExpire();
 branchMembershipValidation();
-lectureReminder();
+deleteBranchExtraStorage();
 examReminder();
 installmentReminder();
+lectureReminder();
 pendingInstallmentReminder();
 
 module.exports = app;

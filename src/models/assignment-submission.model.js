@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 const assignmentSubmissionSchema = new mongoose.Schema({
+  branch: {
+    type: String,
+    required: true,
+  },
   assignment: {
     type: String,
     required: true,

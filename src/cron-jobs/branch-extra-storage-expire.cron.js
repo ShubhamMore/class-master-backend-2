@@ -83,6 +83,7 @@ const expireBranchExtraStorage = async () => {
             title: 'Extra Storage Expired',
             message: message,
           };
+
           const options = {
             method: 'POST',
             url: process.env.API_URI + '/sendNotification',

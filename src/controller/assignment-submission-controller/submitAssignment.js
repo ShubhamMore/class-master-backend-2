@@ -71,6 +71,7 @@ const newAssignmentSubmission = async (req, res) => {
     const storageType = usedBranchStorage > regularStorage ? 'extra' : 'regular';
 
     const submissionData = {
+      branch: req.body.branch,
       assignment: req.body.assignment,
       student: req.user.imsMasterId,
       title: title,
