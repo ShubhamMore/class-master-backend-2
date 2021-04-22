@@ -36,7 +36,6 @@ const getDiscountAndOffers = async (req, res) => {
 
     res.status(200).send(discountAndOffers);
   } catch (e) {
-    console.log(e);
     errorHandler(e, 400, res);
   }
 };

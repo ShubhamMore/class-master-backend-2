@@ -19,7 +19,6 @@ const removeAWSFile = async (key) => {
       .promise();
     return res;
   } catch (e) {
-    console.log(e);
     const err = 'Something bad happen while removing file, ' + e;
     throw new Error(err.replace('Error: ', ''));
   }

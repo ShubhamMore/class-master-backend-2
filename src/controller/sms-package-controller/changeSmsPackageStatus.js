@@ -3,8 +3,6 @@ const errorHandler = require('../../handler/error.handler');
 
 const changeSMSPackageStatus = async (req, res) => {
   try {
-    console.log(req.body);
-
     const smsPackage = await SMSPackage.findByIdAndUpdate(req.body.id, req.body);
 
     if (!smsPackage) {

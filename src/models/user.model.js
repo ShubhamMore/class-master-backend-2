@@ -88,8 +88,6 @@ userSchema.methods.generateAuthToken = async function () {
 userSchema.statics.findByCredentials = async (email, password) => {
   const user = await User.findOne({ email });
 
-  console.log(user, email);
-
   if (!user) {
     throw new Error('User does not found, Please Register');
   }

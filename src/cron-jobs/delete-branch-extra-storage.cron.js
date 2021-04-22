@@ -154,16 +154,10 @@ const deleteBranchExtraStorage = async () => {
                       },
                     }
                   );
-                } catch (e) {
-                  console.log('after promise.all', e);
-                }
+                } catch (e) {}
               })
-              .catch((e) => {
-                console.log('in promise.all', e);
-              });
-          } catch (e) {
-            console.log(e);
-          }
+              .catch((e) => {});
+          } catch (e) {}
         }
 
         await BranchStorage.updateMany(
