@@ -83,7 +83,7 @@ app.use('/lecture-materials', express.static(path.join('lecture-materials')));
 app.use('/assignments', express.static(path.join('assignments')));
 app.use('/assignment-submissions', express.static(path.join('assignment-submissions')));
 
-app.use('/', express.static(path.join(__dirname, '../dist')));
+app.use('/', express.static(path.join(__dirname, '../dist/the-class-master/')));
 
 app.use(express.static(path.join(__dirname, '../dist/online-meeting')));
 app.use('/online-meeting', express.static(path.join(__dirname, '../dist/online-meeting')));
