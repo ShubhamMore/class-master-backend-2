@@ -12,6 +12,7 @@ const getBranchesForEmployee = async (req, res) => {
       {
         $project: {
           _id: 0,
+          role: 1,
           branch: {
             $toObjectId: '$branch',
           },
@@ -38,6 +39,7 @@ const getBranchesForEmployee = async (req, res) => {
       },
       {
         $project: {
+          role: 1,
           address: 1,
           status: 1,
           basicDetails: 1,
