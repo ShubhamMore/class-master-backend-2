@@ -6,7 +6,10 @@ const getCourses = async (req, res) => {
   try {
     let employeeUser = null;
     if (req.user.userRole === 'employee') {
-      employeeUser = await BranchEmployee.findOne({ employee: req.user.imsMasterId });
+      employeeUser = await BranchEmployee.findOne({
+        branch: req.body.branch,
+        employee: req.user.imsMasterId,
+      });
 
       if (!employeeUser) {
         throw new Error('You are not authorized user to Access this Data');

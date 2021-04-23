@@ -7,7 +7,10 @@ const getBranchAllEmployeeLeaves = async (req, res) => {
     let employeeUser = null;
 
     if (req.user.userRole === 'employee') {
-      employeeUser = await BranchEmployee.findOne({ employee: req.user.imsMasterId });
+      employeeUser = await BranchEmployee.findOne({
+        branch: req.body.branch,
+        employee: req.user.imsMasterId,
+      });
 
       if (!employeeUser || employeeUser.role !== 'manager') {
         throw new Error('You are not authorized user to Access this Data');

@@ -15,7 +15,10 @@ const getDate = () => {
 const changeEmployeeLeaveStatus = async (req, res) => {
   try {
     if (req.user.userRole === 'employee') {
-      const employeeUser = await BranchEmployee.findOne({ employee: req.user.imsMasterId });
+      const employeeUser = await BranchEmployee.findOne({
+        branch: req.body.branch,
+        employee: req.user.imsMasterId,
+      });
 
       if (!employeeUser || employeeUser.role !== 'manager') {
         throw new Error('You are not authorized user to Access this Data');
