@@ -129,25 +129,27 @@ const newStudentCourse = async (req, res) => {
       },
     ]);
 
-    const notificationMessage = `Hii ${
-      studentCourseDetails[0].student.name
-    }, you are successfully registered to ${
-      studentCourseDetails[0].batch.basicDetails.batchName
-    } batch for ${
-      studentCourseDetails[0].course.basicDetails.courseName
-    } course starting from ${studentCourseDetails[0].batch.basicDetails.startDate
-      .split('-')
-      .reverse()
-      .join('-')} with Roll Number ${studentCourseDetails[0].rollNumber} in Institute ${
-      studentCourseDetails[0].branch.basicDetails.branchName
-    } (${studentCourseDetails[0].category.category}) - ${
-      studentCourseDetails[0].branch.address.city
-    }.`;
+    if (studentCourseDetails[0]) {
+      const notificationMessage = `Hii ${
+        studentCourseDetails[0].student.name
+      }, you are successfully registered to ${
+        studentCourseDetails[0].batch.basicDetails.batchName
+      } batch for ${
+        studentCourseDetails[0].course.basicDetails.courseName
+      } course starting from ${studentCourseDetails[0].batch.basicDetails.startDate
+        .split('-')
+        .reverse()
+        .join('-')} with Roll Number ${studentCourseDetails[0].rollNumber} in Institute ${
+        studentCourseDetails[0].branch.basicDetails.branchName
+      } (${studentCourseDetails[0].category.category}) - ${
+        studentCourseDetails[0].branch.address.city
+      }.`;
 
-    const notificationTitle = 'New Course Registered';
-    const receiverId = studentCourseDetails[0].student.imsMasterId;
+      const notificationTitle = 'New Course Registered';
+      const receiverId = studentCourseDetails[0].student.imsMasterId;
 
-    await sendNotification(notificationTitle, notificationMessage, receiverId);
+      await sendNotification(notificationTitle, notificationMessage, receiverId);
+    }
 
     res.status(201).send({ success: true });
   } catch (e) {

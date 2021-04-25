@@ -27,6 +27,7 @@ const changeEmployeeLeaveStatus = async (req, res) => {
 
     const leaveStatusBody = {
       status: req.body.status,
+      comment: req.body.comment,
       monitoredBy: req.user.imsMasterId,
       monitoredDate: getDate(),
     };

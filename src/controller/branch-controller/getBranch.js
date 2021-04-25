@@ -10,7 +10,7 @@ const getBranch = async (req, res) => {
 
     if (req.user.userRole === 'employee') {
       employeeUser = await BranchEmployee.findOne({
-        branch: req.body.branch,
+        branch: req.body.id,
         employee: req.user.imsMasterId,
       });
 

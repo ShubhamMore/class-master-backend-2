@@ -1,38 +1,33 @@
 instant notification
+newEmployeeSalary // pending
 
-newStudent
-newEmployee
+newStudentCourseInstallmentReceipt // pending
+deleteStudentCourseInstallmentReceipt // pending
 
-newStudentCourse
-editStudentCourse
-deleteStudentCourse
+lectureQuestionAnswer // new Question and answer to author    // pending
 
-newBranchEmployee
+newStudentCourse // done
+editStudentCourse // 
+deleteStudentCourse // done
+
+newBranchEmployee // done
 editBranchEmployee
-changeBranchEmployeeStatus
+changeBranchEmployeeStatus // done
 
-newBranchStudent
+newBranchStudent // done
 editBranchStudent
-changeBranchStudentStatus
+changeBranchStudentStatus // done
 
-deleteLecture
+deleteSchedule // done
 
-newEmployeeSalary
 
-saveAssignmentSubmissionGrades
+newAssignment // done
+saveAssignmentSubmissionGrades // done
 
-newStudentCourseInstallmentReceipt
-editStudentCourseInstallmentReceipt
-deleteStudentCourseInstallmentReceipt
-
-newAssignment
 
 scheduled notification
-branch // deactivate branch
-lecture // new lecture, cancel lecture
-exam // new exam, cancel exam
-onlineExam // new exam, cancel exam
+branch // deactivate branch // done
+lecture // new lecture, cancel lecture // done
+exam // new exam, cancel exam // done
 
 other notifications
-
-lectureQuestionAnswer // nwe Question and answer to author

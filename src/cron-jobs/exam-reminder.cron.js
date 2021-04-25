@@ -32,47 +32,6 @@ const examReminder = async () => {
               subjectId: { $toObjectId: '$subject' },
             },
           },
-
-          {
-            $lookup: {
-              from: 'branches',
-              let: { branch: '$branchId', category: '$categoryId' },
-              pipeline: [
-                {
-                  $match: { $expr: { $eq: ['$_id', '$$branch'] } },
-                },
-                { $project: { basicDetails: 1, categories: 1, _id: 0 } },
-                { $addFields: { categoryId: '$$category' } },
-                {
-                  $project: {
-                    basicDetails: 1,
-                    tempCategory: {
-                      $filter: {
-                        input: '$categories',
-                        as: 'category',
-                        cond: {
-                          $eq: ['$$category._id', '$categoryId'],
-                        },
-                      },
-                    },
-                  },
-                },
-                {
-                  $replaceRoot: {
-                    newRoot: { $mergeObjects: [{ $arrayElemAt: ['$tempCategory', 0] }, '$$ROOT'] },
-                  },
-                },
-                {
-                  $project: {
-                    _id: 0,
-                    categoryName: '$category',
-                    branchName: '$basicDetails.branchName',
-                  },
-                },
-              ],
-              as: 'branches',
-            },
-          },
           {
             $lookup: {
               from: 'courses',
@@ -210,19 +169,6 @@ const examReminder = async () => {
               newRoot: {
                 $mergeObjects: [
                   {
-                    $arrayElemAt: ['$branches', 0],
-                  },
-                  '$$ROOT',
-                ],
-              },
-            },
-          },
-
-          {
-            $replaceRoot: {
-              newRoot: {
-                $mergeObjects: [
-                  {
                     $arrayElemAt: ['$courses', 0],
                   },
                   '$$ROOT',
@@ -245,7 +191,6 @@ const examReminder = async () => {
           },
           {
             $project: {
-              branches: 0,
               courses: 0,
               batches: 0,
               branchId: 0,
@@ -259,11 +204,12 @@ const examReminder = async () => {
         ]);
 
         for (let exam of exams) {
-          const examMessage = `You Have exam on ${exam.examTitle} of Subject ${
-            exam.subjectName
-          } of course ${exam.courseName} on ${exam.date.split('-').reverse().join('-')} at ${
-            exam.time
-          } `;
+          const examMessage = `You Have ${exam.onlineExam ? 'Online' : ''} exam on ${
+            exam.examTitle
+          } of Subject ${exam.subjectName} of course ${exam.courseName} on ${exam.date
+            .split('-')
+            .reverse()
+            .join('-')} at ${exam.time} `;
 
           const userNotificationRequests = new Array();
 
@@ -291,10 +237,16 @@ const examReminder = async () => {
           try {
             Promise.all(userNotificationRequests)
               .then((resData) => {})
-              .catch((e) => {});
-          } catch (e) {}
+              .catch((e) => {
+                console.log(e);
+              });
+          } catch (e) {
+            console.log(e);
+          }
         }
-      } catch (e) {}
+      } catch (e) {
+        console.log(e);
+      }
     },
     {
       scheduled: true,

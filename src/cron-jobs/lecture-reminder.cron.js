@@ -15,6 +15,21 @@ const getDate = () => {
   return date;
 };
 
+const getNotificationRequest = (notification) => {
+  const options = {
+    method: 'POST',
+    url: process.env.API_URI + '/sendNotification',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: 'Bearer ' + process.env.SERVER_TOKEN,
+    },
+    body: notification,
+    json: true,
+  };
+
+  return request(options);
+};
+
 const lectureReminder = async () => {
   cron.schedule(
     '00 00 19 * * *', // Every day on 19:00:00
@@ -43,46 +58,6 @@ const lectureReminder = async () => {
             },
           },
 
-          {
-            $lookup: {
-              from: 'branches',
-              let: { branch: '$branchId', category: '$categoryId' },
-              pipeline: [
-                {
-                  $match: { $expr: { $eq: ['$_id', '$$branch'] } },
-                },
-                { $project: { basicDetails: 1, categories: 1, _id: 0 } },
-                { $addFields: { categoryId: '$$category' } },
-                {
-                  $project: {
-                    basicDetails: 1,
-                    tempCategory: {
-                      $filter: {
-                        input: '$categories',
-                        as: 'category',
-                        cond: {
-                          $eq: ['$$category._id', '$categoryId'],
-                        },
-                      },
-                    },
-                  },
-                },
-                {
-                  $replaceRoot: {
-                    newRoot: { $mergeObjects: [{ $arrayElemAt: ['$tempCategory', 0] }, '$$ROOT'] },
-                  },
-                },
-                {
-                  $project: {
-                    _id: 0,
-                    categoryName: '$category',
-                    branchName: '$basicDetails.branchName',
-                  },
-                },
-              ],
-              as: 'branches',
-            },
-          },
           {
             $lookup: {
               from: 'courses',
@@ -264,7 +239,6 @@ const lectureReminder = async () => {
           {
             $project: {
               employees: 0,
-              branches: 0,
               courses: 0,
               batches: 0,
               branchId: 0,
@@ -292,7 +266,9 @@ const lectureReminder = async () => {
             message: lectureMessage,
           };
 
-          userNotificationRequests.push(notification);
+          let notificationRequest = getNotificationRequest(notification);
+
+          userNotificationRequests.push(notificationRequest);
 
           for (let student of lecture.students) {
             const newNotification = {
@@ -301,18 +277,9 @@ const lectureReminder = async () => {
               message: lectureMessage,
             };
 
-            const options = {
-              method: 'POST',
-              url: process.env.API_URI + '/sendNotification',
-              headers: {
-                'Content-Type': 'application/json',
-                authorization: 'Bearer ' + process.env.SERVER_TOKEN,
-              },
-              body: newNotification,
-              json: true,
-            };
+            notificationRequest = getNotificationRequest(newNotification);
 
-            userNotificationRequests.push(request(options));
+            userNotificationRequests.push(notificationRequest);
           }
 
           try {

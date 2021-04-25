@@ -3,7 +3,24 @@ const BranchStorage = require('../../models/branch-storage.model');
 
 const deleteFile = require('../../uploads/delete-file');
 
+const request = require('request-promise');
+
 const awsUploadFile = require('../../uploads/aws-upload/awsUploadFile');
+
+const getNotificationRequest = (notification) => {
+  const options = {
+    method: 'POST',
+    url: process.env.API_URI + '/sendNotification',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: 'Bearer ' + process.env.SERVER_TOKEN,
+    },
+    body: notification,
+    json: true,
+  };
+
+  return request(options);
+};
 
 const errorHandler = require('../../handler/error.handler');
 
@@ -100,6 +117,225 @@ const saveAssignment = async (req, res) => {
     await assignment.save();
 
     res.status(200).send(assignment);
+
+    const assinmentDetails = await Assignment.aggregate([
+      { $match: { _id: assignment._id } },
+      {
+        $addFields: {
+          branchId: { $toObjectId: '$branch' },
+          categoryId: { $toObjectId: '$category' },
+          courseId: { $toObjectId: '$course' },
+          batchId: { $toObjectId: '$batch' },
+          subjectId: { $toObjectId: '$subject' },
+        },
+      },
+
+      {
+        $lookup: {
+          from: 'courses',
+          let: { course: '$courseId', subject: '$subjectId' },
+          pipeline: [
+            {
+              $match: { $expr: { $eq: ['$_id', '$$course'] } },
+            },
+            { $project: { basicDetails: 1, subjects: 1, _id: 0 } },
+            { $addFields: { subjectId: '$$subject' } },
+            {
+              $project: {
+                basicDetails: 1,
+                tempSubject: {
+                  $filter: {
+                    input: '$subjects',
+                    as: 'subject',
+                    cond: {
+                      $eq: ['$$subject._id', '$subjectId'],
+                    },
+                  },
+                },
+              },
+            },
+            {
+              $replaceRoot: {
+                newRoot: { $mergeObjects: [{ $arrayElemAt: ['$tempSubject', 0] }, '$$ROOT'] },
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                subjectName: '$subject',
+                courseName: '$basicDetails.courseName',
+              },
+            },
+          ],
+          as: 'courses',
+        },
+      },
+      {
+        $lookup: {
+          from: 'batches',
+          let: { batch: '$batchId' },
+          pipeline: [
+            {
+              $match: { $expr: { $eq: ['$_id', '$$batch'] } },
+            },
+            { $project: { basicDetails: 1, _id: 0 } },
+            { $project: { batchName: '$basicDetails.batchName' } },
+          ],
+          as: 'batches',
+        },
+      },
+
+      {
+        $lookup: {
+          from: 'studentcourses',
+          let: {
+            branchId: '$branch',
+            categoryId: '$category',
+            courseId: '$course',
+            batchId: '$batch',
+          },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    { $eq: ['$branch', '$$branchId'] },
+                    { $eq: ['$category', '$$categoryId'] },
+                    { $eq: ['$course', '$$courseId'] },
+                    { $eq: ['$batch', '$$batchId'] },
+                  ],
+                },
+              },
+            },
+
+            {
+              $project: {
+                _id: 0,
+                student: 1,
+              },
+            },
+
+            {
+              $lookup: {
+                from: 'students',
+                let: {
+                  imsId: '$student',
+                },
+                pipeline: [
+                  {
+                    $match: {
+                      $expr: {
+                        $eq: ['$imsMasterId', '$$imsId'],
+                      },
+                    },
+                  },
+
+                  {
+                    $project: {
+                      _id: 0,
+                      imsMasterId: 1,
+                      phone: 1,
+                      name: 1,
+                      email: 1,
+                    },
+                  },
+                ],
+                as: 'students',
+              },
+            },
+            {
+              $replaceRoot: {
+                newRoot: {
+                  $mergeObjects: [
+                    {
+                      $arrayElemAt: ['$students', 0],
+                    },
+                    '$$ROOT',
+                  ],
+                },
+              },
+            },
+
+            { $project: { students: 0, student: 0 } },
+          ],
+          as: 'students',
+        },
+      },
+
+      {
+        $replaceRoot: {
+          newRoot: {
+            $mergeObjects: [
+              {
+                $arrayElemAt: ['$courses', 0],
+              },
+              '$$ROOT',
+            ],
+          },
+        },
+      },
+
+      {
+        $replaceRoot: {
+          newRoot: {
+            $mergeObjects: [
+              {
+                $arrayElemAt: ['$batches', 0],
+              },
+              '$$ROOT',
+            ],
+          },
+        },
+      },
+      {
+        $project: {
+          courses: 0,
+          batches: 0,
+          branchId: 0,
+          categoryId: 0,
+          courseId: 0,
+          batchId: 0,
+          subjectId: 0,
+          __v: 0,
+        },
+      },
+    ]);
+
+    if (assinmentDetails[0]) {
+      const _assignment = assinmentDetails[0];
+
+      const userNotificationRequests = new Array();
+
+      const assignmentMessage = `You Have new Assignment on topic ${_assignment.topic} of Subject ${
+        _assignment.subjectName
+      } of course ${_assignment.courseName} submit before ${_assignment.submissionDate
+        .split('-')
+        .reverse()
+        .join('-')}
+    } `;
+
+      for (let student of _assignment.students) {
+        const newNotification = {
+          receiverId: student.imsMasterId,
+          title: 'New Assignment',
+          message: assignmentMessage,
+        };
+
+        notificationRequest = getNotificationRequest(newNotification);
+
+        userNotificationRequests.push(notificationRequest);
+      }
+
+      try {
+        Promise.all(userNotificationRequests)
+          .then((resData) => {})
+          .catch((e) => {
+            console.log(e);
+          });
+      } catch (e) {
+        console.log(e);
+      }
+    }
   } catch (e) {
     errorHandler(e, 400, res);
   }

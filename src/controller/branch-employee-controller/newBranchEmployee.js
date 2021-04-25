@@ -68,12 +68,14 @@ const newBranchEmployee = async (req, res) => {
       },
     ]);
 
-    const notificationMessage = `Hii ${employeeBranchDetails[0].employee.name}, you are successfully registered in Institute ${employeeBranchDetails[0].branch.basicDetails.branchName} (${employeeBranchDetails[0].category.category}) - ${employeeBranchDetails[0].branch.address.city} for ${branchEmployee.role} Role.`;
+    if (employeeBranchDetails[0]) {
+      const notificationMessage = `Hii ${employeeBranchDetails[0].employee.name}, you are successfully registered in Institute ${employeeBranchDetails[0].branch.basicDetails.branchName} (${employeeBranchDetails[0].category.category}) - ${employeeBranchDetails[0].branch.address.city} for ${branchEmployee.role} Role.`;
 
-    const notificationTitle = 'New Branch Registered';
-    const receiverId = employeeBranchDetails[0].employee.imsMasterId;
+      const notificationTitle = 'New Branch Registered';
+      const receiverId = employeeBranchDetails[0].employee.imsMasterId;
 
-    await sendNotification(notificationTitle, notificationMessage, receiverId);
+      await sendNotification(notificationTitle, notificationMessage, receiverId);
+    }
 
     res.status(200).send({ success: true });
   } catch (e) {
